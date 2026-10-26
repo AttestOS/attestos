@@ -1,9 +1,10 @@
 import json
 import os
+import base64
 
 base_dir = '/home/user/attestos'
 
-# Read static assets
+# Read static HTML & script deliverables
 with open(f'{base_dir}/src/public/index.html', 'r', encoding='utf-8') as f:
     index_html = json.dumps(f.read())
 
@@ -12,6 +13,9 @@ with open(f'{base_dir}/src/public/console.html', 'r', encoding='utf-8') as f:
 
 with open(f'{base_dir}/src/public/portal.html', 'r', encoding='utf-8') as f:
     portal_html = json.dumps(f.read())
+
+with open(f'{base_dir}/src/public/manual.html', 'r', encoding='utf-8') as f:
+    manual_html = json.dumps(f.read())
 
 with open(f'{base_dir}/src/public/scanner.html', 'r', encoding='utf-8') as f:
     scanner_html = json.dumps(f.read())
@@ -27,6 +31,28 @@ with open(f'{base_dir}/src/public/downloads/robots.ai', 'r', encoding='utf-8') a
 
 with open(f'{base_dir}/src/public/attestos.js', 'r', encoding='utf-8') as f:
     attestos_js = json.dumps(f.read())
+
+# Read and encode webp assets
+assets_dir = f'{base_dir}/src/public/assets'
+all_assets = [
+    'logo.webp', 'cover.webp', 'promo.webp',
+    'cover-integrity.webp', 'cover-hardware.webp',
+    'cover-agentpass.webp', 'cover-enterprise.webp',
+    'promo-architecture.webp',
+    'screenshots/owner-console.webp',
+    'screenshots/customer-portal.webp',
+    'screenshots/landing-page.webp',
+    'screenshots/bot-scanner.webp'
+]
+
+assets_map = {}
+for rel in all_assets:
+    p = os.path.join(assets_dir, rel)
+    if os.path.exists(p):
+        b64 = base64.b64encode(open(p, 'rb').read()).decode('utf-8')
+        assets_map[rel] = b64
+
+assets_map_json = json.dumps(assets_map)
 
 worker_template = '''/**
  * AttestOS - Cloudflare Worker Production Edge Engine
@@ -44,17 +70,19 @@ worker_template = '''/**
 
 const HMAC_SECRET_STR = "attestos_prod_hmac_secret_5f8a92b3c4d1e6";
 const BRAND = "AttestOS";
-const VERSION = "2.1.0-edge";
+const VERSION = "2.2.0-edge";
 
 // Embedded Static Deliverables
 const INDEX_HTML = __INDEX_HTML__;
 const CONSOLE_HTML = __CONSOLE_HTML__;
 const PORTAL_HTML = __PORTAL_HTML__;
+const MANUAL_HTML = __MANUAL_HTML__;
 const SCANNER_HTML = __SCANNER_HTML__;
 const GHOST_POW_JS = __GHOST_POW_JS__;
 const ATTESTKIT_JS = __ATTESTKIT_JS__;
 const ROBOTS_AI_TXT = __ROBOTS_AI_TXT__;
 const ATTESTOS_JS = __ATTESTOS_JS__;
+const ASSETS_MAP = __ASSETS_MAP__;
 
 // Cache HMAC CryptoKey in worker global scope
 let cachedHmacKey = null;
@@ -179,7 +207,7 @@ async function handleRequest(request) {
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 3. UI ROUTES: LANDING PAGE, OWNER CONSOLE, CUSTOMER PORTAL
+  // 3. UI ROUTES: LANDING PAGE, OWNER CONSOLE, CUSTOMER PORTAL, MANUAL
   // ─────────────────────────────────────────────────────────────
   if (pathname === "/" || pathname === "/index.html") {
     return new Response(INDEX_HTML, {
@@ -214,6 +242,17 @@ async function handleRequest(request) {
     });
   }
 
+  if (pathname === "/manual" || pathname === "/docs" || pathname === "/guide") {
+    return new Response(MANUAL_HTML, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "public, max-age=3600",
+        "X-Powered-By": BRAND
+      }
+    });
+  }
+
   if (pathname === "/scanner") {
     return new Response(SCANNER_HTML, {
       status: 200,
@@ -226,7 +265,32 @@ async function handleRequest(request) {
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 4. FREEBIE DOWNLOADS & CLIENT EMBED SCRIPT
+  // 4. STATIC BRAND & SCREENSHOT ASSETS (/assets/*)
+  // Cached at Edge CDN (Cache-Control: 1 week)
+  // ─────────────────────────────────────────────────────────────
+  if (pathname.startsWith("/assets/")) {
+    const rawKey = pathname.replace(/^\/assets\//, "");
+    const cleanKey = rawKey.endsWith(".png") ? rawKey.replace(/\.png$/, ".webp") : rawKey;
+    if (ASSETS_MAP[cleanKey]) {
+      const binStr = atob(ASSETS_MAP[cleanKey]);
+      const u8 = new Uint8Array(binStr.length);
+      for (let i = 0; i < binStr.length; i++) {
+        u8[i] = binStr.charCodeAt(i);
+      }
+      return new Response(u8, {
+        status: 200,
+        headers: {
+          "Content-Type": "image/webp",
+          "Cache-Control": "public, max-age=604800, s-maxage=2592000",
+          "Access-Control-Allow-Origin": "*",
+          "X-Powered-By": BRAND
+        }
+      });
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 5. FREEBIE DOWNLOADS & CLIENT EMBED SCRIPT
   // ─────────────────────────────────────────────────────────────
   if (pathname === "/download/ghost-pow.js") {
     return new Response(GHOST_POW_JS, {
@@ -276,7 +340,7 @@ async function handleRequest(request) {
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 5. PIVOT C (FREEBIE): /.well-known/robots.ai
+  // 6. PIVOT C (FREEBIE): /.well-known/robots.ai
   // ─────────────────────────────────────────────────────────────
   if (pathname === "/.well-known/robots.ai" || pathname === "/robots.ai.json") {
     return jsonResponse({
@@ -318,7 +382,7 @@ async function handleRequest(request) {
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 6. PIVOT A (FREEBIE): Ghost-PoW Stateless Edge Endpoints
+  // 7. PIVOT A (FREEBIE): Ghost-PoW Stateless Edge Endpoints
   // ─────────────────────────────────────────────────────────────
   if (pathname === "/api/pow/challenge" && method === "GET") {
     const diff = parseInt(url.searchParams.get("difficulty") || "4", 10);
@@ -391,7 +455,7 @@ async function handleRequest(request) {
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 7. MASTER WATERFALL PIPELINE EVALUATION AT EDGE
+  // 8. MASTER WATERFALL PIPELINE EVALUATION AT EDGE
   // ─────────────────────────────────────────────────────────────
   if (pathname === "/api/pipeline/evaluate" && method === "POST") {
     try {
@@ -475,7 +539,7 @@ async function handleRequest(request) {
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 8. PIVOT C (PRODUCT): AgentPass HTTP 402 Settlement
+  // 9. PIVOT C (PRODUCT): AgentPass HTTP 402 Settlement
   // ─────────────────────────────────────────────────────────────
   if (pathname === "/api/agentpass/request") {
     const authHeader = request.headers.get("authorization") || "";
@@ -522,13 +586,15 @@ full_script = worker_template \
     .replace('__INDEX_HTML__', index_html) \
     .replace('__CONSOLE_HTML__', console_html) \
     .replace('__PORTAL_HTML__', portal_html) \
+    .replace('__MANUAL_HTML__', manual_html) \
     .replace('__SCANNER_HTML__', scanner_html) \
     .replace('__GHOST_POW_JS__', ghost_pow_js) \
     .replace('__ATTESTKIT_JS__', attestkit_js) \
     .replace('__ROBOTS_AI_TXT__', robots_ai_txt) \
-    .replace('__ATTESTOS_JS__', attestos_js)
+    .replace('__ATTESTOS_JS__', attestos_js) \
+    .replace('__ASSETS_MAP__', assets_map_json)
 
 with open(f'{base_dir}/worker/worker.js', 'w', encoding='utf-8') as f:
     f.write(full_script)
 
-print(f'Successfully generated worker/worker.js! Size: {len(full_script) / 1024:.1f} KB')
+print(f'Successfully built worker/worker.js! Size: {len(full_script) / 1024:.1f} KB')

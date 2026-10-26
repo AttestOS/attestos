@@ -19,11 +19,18 @@ Your full platform is live across Cloudflare's global edge network:
 * **👑 Owner Console & Command Center:** [`https://attestos-edge.attestos.workers.dev/console`](https://attestos-edge.attestos.workers.dev/console)  
   *Executive pipeline switchboard: real-time attack radar, auto-tuner threshold knobs, tenant management, emergency lockdown, and live attack test-bench.*
 * **🌐 Public Landing Page & Freebies Store:** [`https://attestos-edge.attestos.workers.dev/`](https://attestos-edge.attestos.workers.dev/)  
-  *Brand landing page with official logo, product cover, promotional paradigm shift graphics, interactive freebie testbenches, 1-click downloads, and direct Whop checkout links.*
+  *Brand landing page with official logo, all product covers, promotional paradigm shift graphics, interactive freebie testbenches, 1-click downloads, and direct Whop checkout links.*
 * **📊 Paying Customer Portal & Analytics:** [`https://attestos-edge.attestos.workers.dev/portal`](https://attestos-edge.attestos.workers.dev/portal)  
   *Dedicated customer interface: tenant login, monthly quota utilization meters, neutralized bot stream, customer-in-the-loop defense sliders (Stealth vs Balanced vs Fortress), 1-click code generators (Next.js, Express, WP, JS), and CSV/JSON audit log export.*
+* **📖 Official User Guides & Operator Manuals:** [`https://attestos-edge.attestos.workers.dev/manual`](https://attestos-edge.attestos.workers.dev/manual)  
+  *Complete illustrated web documentation with screenshots for owner operations, paying customer setup, and developer API references.*
 * **🔍 Inbound Bot Leak Vulnerability Scanner:** [`https://attestos-edge.attestos.workers.dev/scanner`](https://attestos-edge.attestos.workers.dev/scanner)  
   *Inbound viral honeycomb tool testing websites against YOLOv8 CAPTCHA bypasses in 5 seconds.*
+
+### 📚 Official Markdown Manuals & Runbooks
+* **👑 [Owner & Operator Manual](docs/OWNER_OPERATOR_MANUAL.md):** Complete runbook for operating the pipeline, tuning difficulty, managing tenants, and emergency lockdown.
+* **📊 [Paying Customer Security Guide](docs/PAYING_CUSTOMER_GUIDE.md):** Integration guide for subscribers covering posture modes, IP whitelists, webhook alerts, and audit exports.
+* **💻 [Developer & Architecture Manual](docs/DEVELOPER_ARCHITECTURE_MANUAL.md):** Cryptographic specifications, product covers, stateless PoW algorithms, and edge API contracts.
 
 ### 🎁 Freebie Direct Downloads
 * **Pivot A Freebie:** [`https://attestos-edge.attestos.workers.dev/download/ghost-pow.js`](https://attestos-edge.attestos.workers.dev/download/ghost-pow.js)

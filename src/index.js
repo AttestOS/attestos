@@ -170,6 +170,15 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    if ((pathname === '/manual' || pathname === '/docs' || pathname === '/guide') && (method === 'GET' || method === 'HEAD')) {
+      const filePath = path.join(__dirname, 'public', 'manual.html');
+      if (fs.existsSync(filePath)) {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        if (method === 'HEAD') return res.end();
+        return fs.createReadStream(filePath).pipe(res);
+      }
+    }
+
     // ─────────────────────────────────────────────────────────────
     // FREEBIE DOWNLOADS
     // ─────────────────────────────────────────────────────────────
@@ -189,20 +198,22 @@ const server = http.createServer(async (req, res) => {
     // ─────────────────────────────────────────────────────────────
     // STATIC ASSETS (/assets/*)
     // ─────────────────────────────────────────────────────────────
-    if (pathname.startsWith('/assets/') && method === 'GET') {
-      const filename = path.basename(pathname);
-      const filePath = path.join(__dirname, 'public', 'assets', filename);
-      if (fs.existsSync(filePath)) {
+    if (pathname.startsWith('/assets/') && (method === 'GET' || method === 'HEAD')) {
+      const subPath = pathname.replace(/^\/assets\//, '');
+      const filePath = path.join(__dirname, 'public', 'assets', subPath);
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
         let contentType = 'application/octet-stream';
-        if (filename.endsWith('.webp')) contentType = 'image/webp';
-        else if (filename.endsWith('.png')) contentType = 'image/png';
-        else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) contentType = 'image/jpeg';
-        else if (filename.endsWith('.svg')) contentType = 'image/svg+xml';
+        if (filePath.endsWith('.webp')) contentType = 'image/webp';
+        else if (filePath.endsWith('.png')) contentType = 'image/png';
+        else if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) contentType = 'image/jpeg';
+        else if (filePath.endsWith('.svg')) contentType = 'image/svg+xml';
         
         res.writeHead(200, {
           'Content-Type': contentType,
-          'Cache-Control': 'public, max-age=86400'
+          'Cache-Control': 'public, max-age=86400',
+          'Access-Control-Allow-Origin': '*'
         });
+        if (method === 'HEAD') return res.end();
         return fs.createReadStream(filePath).pipe(res);
       }
     }
