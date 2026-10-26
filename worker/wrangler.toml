@@ -1,0 +1,16 @@
+name = "attestos-edge"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+account_id = "ad5b6ab933ddf4c5ea9a2c49cc3c2c30"
+
+# Quota Optimization & Performance Settings
+# Uses standard usage model with 0 KV overhead
+usage_model = "standard"
+
+[vars]
+BRAND = "AttestOS"
+ENVIRONMENT = "production"
+QUOTA_PROFILE = "2_10th_ultra_lean"
+
+[observability]
+enabled = true

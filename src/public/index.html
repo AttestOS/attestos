@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AttestOS — Client Integrity & Agentic Gateway Platform</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --danger: #ef4444;
+      --code-bg: #030712;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; line-height: 1.5; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 24px; border-bottom: 1px solid var(--card-border); margin-bottom: 32px; }
+    .logo-area { display: flex; align-items: center; gap: 12px; }
+    .badge { font-size: 11px; text-transform: uppercase; font-weight: 700; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px; }
+    .badge-free { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
+    .badge-whop { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+    .badge-enterprise { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid #7c3aed; }
+    
+    .hero { text-align: center; margin-bottom: 40px; }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 24px; }
+    
+    .nav-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 32px; }
+    .nav-btn { background: #1f2937; color: var(--text); border: 1px solid #374151; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .nav-btn:hover { background: #374151; }
+    .nav-btn.primary { background: var(--primary); border-color: var(--primary); }
+    .nav-btn.primary:hover { background: var(--primary-hover); }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 40px; }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+    .card-subtitle { font-size: 0.85rem; color: var(--text-muted); }
+    .tier-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 14px; margin-bottom: 16px; }
+    .tier-label { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .tier-val { font-size: 0.95rem; font-weight: 600; }
+    .card-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--card-border); }
+    
+    button { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
+    button:hover { background: var(--primary-hover); }
+    button.secondary { background: #374151; }
+    button.secondary:hover { background: #4b5563; }
+    button.whop-checkout { background: linear-gradient(135deg, #f59e0b, #d97706); color: black; font-weight: 700; }
+    button.whop-checkout:hover { opacity: 0.9; }
+
+    .console-box { background: var(--code-bg); border: 1px solid #1f2937; border-radius: 8px; padding: 14px; font-family: monospace; font-size: 0.82rem; color: #34d399; max-height: 180px; overflow-y: auto; margin-top: 12px; white-space: pre-wrap; word-break: break-all; }
+    
+    .pipeline-orchestrator { background: #131b2e; border: 1px solid #1e293b; border-radius: 12px; padding: 28px; margin-bottom: 40px; }
+    .waterfall-flow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+    .step-node { flex: 1; min-width: 220px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 14px; text-align: center; }
+    .step-arrow { font-size: 1.4rem; color: var(--text-muted); font-weight: bold; }
+    
+    .whop-banner { background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 40px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-area">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span style="font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px;">AttestOS</span>
+        <span class="badge badge-free">Unified Mesh</span>
+      </div>
+      <div>
+        <a href="/scanner" class="nav-btn primary">
+          <span>🔍 Run Bot Leak Scanner</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="hero">
+      <h1>Beyond CAPTCHAs: Client Integrity & Agentic Gateways</h1>
+      <p>
+        AI vision models killed traditional image CAPTCHAs. The battleground is now <strong>client environment integrity, hardware attestation, and programmatic agent negotiation</strong>.
+      </p>
+      <div class="nav-tabs">
+        <span class="badge badge-free">Pivot A: Client-Side PoW</span>
+        <span class="badge badge-free">Pivot B: Hardware Enclaves</span>
+        <span class="badge badge-free">Pivot C: Agentic Gateway</span>
+        <span class="badge badge-whop">Monetization: Whop Engine</span>
+      </div>
+    </div>
+
+    <!-- WHOP MONETIZATION BANNER -->
+    <div class="whop-banner">
+      <div>
+        <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: #fbbf24; margin-bottom: 4px;">Zero-Budget Monetization via Whop</div>
+        <div style="font-size: 1.25rem; font-weight: 800;">Integrated Whop Checkout & License Enforcement</div>
+        <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
+          All upgrades, subscriptions, and agent credit settlements run through Whop. $0 merchant overhead.
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px;">
+        <select id="whopLicenseSelect" style="background: #1f2937; color: white; border: 1px solid #374151; border-radius: 6px; padding: 10px; font-weight: 600;">
+          <option value="none">Tier: Free User (No Whop Key)</option>
+          <option value="whop_demo_integrity_pro">Tier: IntegrityRuntime Pro</option>
+          <option value="whop_demo_hardware_pro">Tier: Hardware Gateway Pro</option>
+          <option value="whop_demo_agentpass_pro">Tier: AgentPass Pro</option>
+          <option value="whop_demo_enterprise">Tier: All-in-One Enterprise Mesh</option>
+        </select>
+        <button onclick="testWhopValidation()" class="whop-checkout" style="width: auto;">Verify Whop Key</button>
+      </div>
+    </div>
+
+    <!-- THE THREE PIVOTS -->
+    <div class="grid-3">
+      
+      <!-- PIVOT A CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Pivot A: Compute & Integrity</div>
+            <div class="card-subtitle">Zero-Cost Client PoW + Anti-Stealth</div>
+          </div>
+          <span class="badge badge-free">Pivot A</span>
+        </div>
+
+        <div class="tier-box">
+          <div class="tier-label">
+            <span>Freebie Trojan Horse</span>
+            <span style="color: #34d399;">$0 Forever</span>
+          </div>
+          <div class="tier-val">Ghost-PoW OSS</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            Stateless Wasm/SHA-256 client hash. 100% visitor CPU, zero host server load.
+          </div>
+        </div>
+
+        <div class="tier-box">
+          <div class="tier-label">
+            <span>Paid Whop Upgrade</span>
+            <span style="color: #fbbf24;">From $39/mo on Whop</span>
+          </div>
+          <div class="tier-val">IntegrityRuntime Pro</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            Unmasks Playwright/CDP & Undetected-Chromedriver. Dynamically taxes bots 256x CPU.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <button onclick="testGhostPow()">Run Free PoW</button>
+          <button onclick="testIntegrityPro()" class="secondary">Test Anti-CDP</button>
+        </div>
+        <div id="powConsole" class="console-box">Ready to solve proof-of-work...</div>
+      </div>
+
+      <!-- PIVOT B CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Pivot B: Hardware Attestation</div>
+            <div class="card-subtitle">Secure Enclaves & Silent PATs</div>
+          </div>
+          <span class="badge badge-free">Pivot B</span>
+        </div>
+
+        <div class="tier-box">
+          <div class="tier-label">
+            <span>Freebie Trojan Horse</span>
+            <span style="color: #34d399;">25,000 / Month</span>
+          </div>
+          <div class="tier-val">AttestKit Free</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            WebAuthn/Passkey silent hardware check. Real humans pass in &lt;15ms with 0 puzzles.
+          </div>
+        </div>
+
+        <div class="tier-box">
+          <div class="tier-label">
+            <span>Paid Whop Upgrade</span>
+            <span style="color: #fbbf24;">$0.002 / Token on Whop</span>
+          </div>
+          <div class="tier-val">Hardware Gateway Pro</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            Apple RFC 9505 Private Access Tokens & Google Titan M2 hardware enclave verification.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <button onclick="testAttestKitFree()">Silent WebAuthn</button>
+          <button onclick="testHardwareGatewayPro()" class="secondary">Verify Apple PAT</button>
+        </div>
+        <div id="hardwareConsole" class="console-box">Waiting for hardware challenge...</div>
+      </div>
+
+      <!-- PIVOT C CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Pivot C: Agentic Gateway</div>
+            <div class="card-subtitle">Proof-of-Intent & Micro-Billing</div>
+          </div>
+          <span class="badge badge-free">Pivot C</span>
+        </div>
+
+        <div class="tier-box">
+          <div class="tier-label">
+            <span>Freebie Trojan Horse</span>
+            <span style="color: #34d399;">Open Source</span>
+          </div>
+          <div class="tier-val">robots.ai Standard</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            Granular agent policy manifest. Distinguishes search crawlers from scraping bots.
+          </div>
+        </div>
+
+        <div class="tier-box">
+          <div class="tier-label">
+            <span>Paid Whop Upgrade</span>
+            <span style="color: #fbbf24;">$0.002 / 402 Clear on Whop</span>
+          </div>
+          <div class="tier-val">AgentPass Clearinghouse</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            Turns bots into paying customers via HTTP 402 micro-settlements & signed AgentKeys.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <button onclick="viewRobotsAi()">View robots.ai</button>
+          <button onclick="testAgentPass402()" class="secondary">Simulate AI Agent</button>
+        </div>
+        <div id="agentConsole" class="console-box">Waiting for agent request...</div>
+      </div>
+
+    </div>
+
+    <!-- PIPELINE WATERFALL DEMO -->
+    <div class="pipeline-orchestrator">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800;">The Tri-Factor Waterfall Pipeline</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Incoming requests cascade through Pivot C (Agentic) &rarr; Pivot B (Hardware Enclave) &rarr; Pivot A (Runtime Integrity + PoW).
+          </p>
+        </div>
+        <button onclick="executeFullPipeline()" style="width: auto; padding: 10px 24px;">Run Full Pipeline Evaluation</button>
+      </div>
+
+      <div class="waterfall-flow">
+        <div class="step-node">
+          <div style="font-weight: 700; color: #a78bfa;">1. Agentic Check (Pivot C)</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Is caller an AI Agent?</div>
+          <div style="font-size: 0.75rem; color: #34d399; margin-top: 4px;">&rarr; Route to 402 / Clean Feed</div>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-node">
+          <div style="font-weight: 700; color: #38bdf8;">2. Hardware Enclave (Pivot B)</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Secure Enclave or Passkey?</div>
+          <div style="font-size: 0.75rem; color: #34d399; margin-top: 4px;">&rarr; 0ms Instant Pass (Human)</div>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-node">
+          <div style="font-weight: 700; color: #34d399;">3. Integrity & PoW (Pivot A)</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">CDP Analysis + Hash Challenge</div>
+          <div style="font-size: 0.75rem; color: #fbbf24; margin-top: 4px;">&rarr; 256x CPU Tax on Bots</div>
+        </div>
+      </div>
+
+      <div id="pipelineConsole" class="console-box" style="max-height: 220px;">Click "Run Full Pipeline Evaluation" to test the waterfall live...</div>
+    </div>
+
+  </div>
+
+  <script src="/client.js"></script>
+  <script>
+    function log(elementId, text) {
+      const el = document.getElementById(elementId);
+      el.textContent = typeof text === 'object' ? JSON.stringify(text, null, 2) : text;
+    }
+
+    function getWhopLicense() {
+      return document.getElementById('whopLicenseSelect').value;
+    }
+
+    async function testWhopValidation() {
+      const licenseKey = getWhopLicense();
+      log('pipelineConsole', 'Validating Whop License Key: ' + licenseKey);
+      const res = await fetch('/api/whop/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ licenseKey })
+      });
+      const data = await res.json();
+      log('pipelineConsole', data);
+    }
+
+    async function testGhostPow() {
+      log('powConsole', 'Requesting Ghost-PoW challenge (Pivot A Freebie)...');
+      const res = await fetch('/api/pow/challenge');
+      const challenge = await res.json();
+      log('powConsole', 'Challenge received. Computing in browser via WebCrypto...\nTarget difficulty: ' + challenge.difficulty);
+      
+      const solution = await AttestOS.solvePoW(challenge);
+      log('powConsole', 'PoW solved in ' + solution.clientSolveTimeMs + 'ms! Nonce: ' + solution.nonce + '\nVerifying with server...');
+
+      const verifyRes = await fetch('/api/pow/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(solution)
+      });
+      const verifyData = await verifyRes.json();
+      log('powConsole', verifyData);
+    }
+
+    async function testIntegrityPro() {
+      const license = getWhopLicense();
+      log('powConsole', 'Executing IntegrityRuntime Pro forensic analysis with Whop tier: ' + license);
+      const telemetry = AttestOS.collectTelemetry();
+      
+      const res = await fetch('/api/integrity/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Whop-License': license
+        },
+        body: JSON.stringify({ telemetry })
+      });
+      const data = await res.json();
+      log('powConsole', data);
+    }
+
+    async function testAttestKitFree() {
+      log('hardwareConsole', 'Requesting silent WebAuthn challenge (Pivot B Freebie)...');
+      const res = await fetch('/api/attest/challenge');
+      const challenge = await res.json();
+      log('hardwareConsole', challenge);
+    }
+
+    async function testHardwareGatewayPro() {
+      const license = getWhopLicense();
+      log('hardwareConsole', 'Verifying Apple PAT token with Hardware Gateway Pro (Whop tier: ' + license + ')...');
+      const tokenRes = await fetch('/api/hardware/demo-token');
+      const tokenPayload = await tokenRes.json();
+
+      const verifyRes = await fetch('/api/hardware/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Whop-License': license
+        },
+        body: JSON.stringify({ tokenPayload })
+      });
+      const data = await verifyRes.json();
+      log('hardwareConsole', data);
+    }
+
+    async function viewRobotsAi() {
+      log('agentConsole', 'Fetching /.well-known/robots.ai manifest (Pivot C Freebie)...');
+      const res = await fetch('/.well-known/robots.ai');
+      const data = await res.json();
+      log('agentConsole', data);
+    }
+
+    async function testAgentPass402() {
+      const license = getWhopLicense();
+      log('agentConsole', 'Simulating AI Agent request to protected resource (Pivot C Product)...');
+      const res = await fetch('/api/agentpass/request', {
+        headers: {
+          'User-Agent': 'OpenAI-Operator-Agent/1.0',
+          'X-Whop-License': license
+        }
+      });
+      const data = await res.json();
+      log('agentConsole', { httpStatus: res.status, data });
+    }
+
+    async function executeFullPipeline() {
+      const license = getWhopLicense();
+      log('pipelineConsole', 'Executing Waterfall Pipeline [Pivot C &rarr; Pivot B &rarr; Pivot A]...');
+      const telemetry = AttestOS.collectTelemetry();
+
+      const res = await fetch('/api/pipeline/evaluate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Whop-License': license
+        },
+        body: JSON.stringify({
+          url: '/api/v1/checkout',
+          telemetry
+        })
+      });
+      const data = await res.json();
+      log('pipelineConsole', data);
+    }
+  </script>
+</body>
+</html>
