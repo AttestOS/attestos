@@ -121,7 +121,7 @@ const server = http.createServer(async (req, res) => {
     // ─────────────────────────────────────────────────────────────
     // STATIC ASSETS & EMBEDDABLE CLIENT SCRIPTS
     // ─────────────────────────────────────────────────────────────
-    if ((pathname === '/attestos.js' || pathname === '/client.js') && method === 'GET') {
+    if ((pathname === '/attestos.js' || pathname === '/client.js') && (method === 'GET' || method === 'HEAD')) {
       const filePath = path.join(__dirname, 'public', 'attestos.js');
       if (fs.existsSync(filePath)) {
         res.writeHead(200, {
@@ -129,38 +129,43 @@ const server = http.createServer(async (req, res) => {
           'Cache-Control': 'public, max-age=3600',
           'Access-Control-Allow-Origin': '*'
         });
+        if (method === 'HEAD') return res.end();
         return fs.createReadStream(filePath).pipe(res);
       }
     }
 
-    if (pathname === '/' && method === 'GET') {
+    if (pathname === '/' && (method === 'GET' || method === 'HEAD')) {
       const filePath = path.join(__dirname, 'public', 'index.html');
       if (fs.existsSync(filePath)) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        if (method === 'HEAD') return res.end();
         return fs.createReadStream(filePath).pipe(res);
       }
     }
 
-    if ((pathname === '/console' || pathname === '/admin' || pathname === '/command') && method === 'GET') {
+    if ((pathname === '/console' || pathname === '/admin' || pathname === '/command') && (method === 'GET' || method === 'HEAD')) {
       const filePath = path.join(__dirname, 'public', 'console.html');
       if (fs.existsSync(filePath)) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        if (method === 'HEAD') return res.end();
         return fs.createReadStream(filePath).pipe(res);
       }
     }
 
-    if ((pathname === '/portal' || pathname === '/customer' || pathname === '/client') && method === 'GET') {
+    if ((pathname === '/portal' || pathname === '/customer' || pathname === '/client') && (method === 'GET' || method === 'HEAD')) {
       const filePath = path.join(__dirname, 'public', 'portal.html');
       if (fs.existsSync(filePath)) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        if (method === 'HEAD') return res.end();
         return fs.createReadStream(filePath).pipe(res);
       }
     }
 
-    if (pathname === '/scanner' && method === 'GET') {
+    if (pathname === '/scanner' && (method === 'GET' || method === 'HEAD')) {
       const filePath = path.join(__dirname, 'public', 'scanner.html');
       if (fs.existsSync(filePath)) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        if (method === 'HEAD') return res.end();
         return fs.createReadStream(filePath).pipe(res);
       }
     }
