@@ -145,11 +145,15 @@
     .cta-band h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
     .cta-band p { font-size: 1rem; color: var(--muted); max-width: 680px; margin: 0 auto 24px; }
 
-    /* Footer */
-    footer { padding: 32px 0 16px; border-top: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); }
-    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--text); }
+    /* TightBucket-style 5-Column Enterprise Footer */
+    .site-footer { border-top: 1px solid var(--card-border); margin-top: 56px; padding: 48px 0 24px; color: var(--muted); font-size: 13px; }
+    .footer-cols { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 28px; margin-bottom: 32px; }
+    @media (max-width: 960px) { .footer-cols { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .footer-cols { grid-template-columns: 1fr; } }
+    .footer-heading { font-weight: 700; color: #fff; text-transform: uppercase; font-size: 11px; letter-spacing: 0.6px; margin-bottom: 14px; }
+    .footer-col a { color: var(--muted); text-decoration: none; display: block; padding: 4px 0; font-size: 13px; transition: color 0.15s; }
+    .footer-col a:hover { color: var(--cyan); }
+    .footer-legal { padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
   </style>
 </head>
 <body>
@@ -688,19 +692,79 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-      <div>
-        <strong>AttestOS</strong> — Built for the Post-Computer-Vision Era. 100% $0 Operating Budget on Cloudflare Edge.
+    <!-- TightBucket-style 5-Column Enterprise Footer -->
+    <footer class="site-footer">
+      <div class="footer-cols">
+        <!-- Brand Column -->
+        <div class="footer-brand-col">
+          <div class="brand-area" style="margin-bottom:12px;">
+            <img src="/assets/logo.webp" alt="AttestOS Logo" class="brand-logo" onerror="this.src='/assets/logo.png'">
+            <div>
+              <div class="brand-title">AttestOS</div>
+              <div class="brand-sub">Client Environment Integrity</div>
+            </div>
+          </div>
+          <p style="color:var(--muted);font-size:12.5px;line-height:1.5;margin-bottom:14px;max-width:320px;">
+            The arms race has moved from computer vision to client environment integrity. Admitting humans in 0ms via Secure Enclaves and forcing automated bot swarms to burn billions of CPU hashes.
+          </p>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#34d399;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;"></span>
+            <span>Cloudflare Edge Live: &lt;0.03ms CPU (&lt;0.5% quota)</span>
+          </div>
+        </div>
+
+        <!-- Col 1: Defense Modules -->
+        <div class="footer-col">
+          <div class="footer-heading">Defense Modules</div>
+          <a href="/portal">SaaS Credential Defense</a>
+          <a href="/portal">E-Commerce Scalper Defense</a>
+          <a href="/portal">Media 402 Clearinghouse</a>
+          <a href="/console">Enterprise Hardware Gateway</a>
+          <a href="/scanner">Bot Vulnerability Scanner</a>
+        </div>
+
+        <!-- Col 2: Free Developer Tools -->
+        <div class="footer-col">
+          <div class="footer-heading">Free Developer Tools</div>
+          <a href="/download/ghost-pow.js" download="ghost-pow.js">Ghost-PoW Client (JS)</a>
+          <a href="/download/attestkit.js" download="attestkit.js">AttestKit Passkeys (JS)</a>
+          <a href="/download/robots.ai" download="robots.ai">RFC robots.ai Policy</a>
+          <a href="/attestos.js">Embeddable Edge SDK</a>
+          <a href="#calculators">Bot Savings Calculator</a>
+        </div>
+
+        <!-- Col 3: Whop Pro Store -->
+        <div class="footer-col">
+          <div class="footer-heading">Whop Pro Store</div>
+          <a href="https://whop.com/checkout/plan_integrity_pro" target="_blank">IntegrityRuntime Pro ($49/mo)</a>
+          <a href="https://whop.com/checkout/plan_hardware_pro" target="_blank">Hardware Gateway Pro ($149/mo)</a>
+          <a href="https://whop.com/checkout/plan_agentpass_pro" target="_blank">AgentPass Pro ($99/mo)</a>
+          <a href="https://whop.com/checkout/plan_enterprise_tri" target="_blank">Enterprise Suite ($299/mo)</a>
+          <a href="https://whop.com" target="_blank">Whop Customer Account</a>
+        </div>
+
+        <!-- Col 4: Operations & Documentation -->
+        <div class="footer-col">
+          <div class="footer-heading">Operations &amp; Manuals</div>
+          <a href="/console">👑 Owner Command Center</a>
+          <a href="/portal">📊 Paying Customer Portal</a>
+          <a href="/manual">📖 User Guides &amp; Manuals</a>
+          <a href="/healthz">⚡ Edge Health &amp; Telemetry</a>
+          <a href="https://github.com/AttestOS/attestos" target="_blank">💻 GitHub Repository</a>
+        </div>
       </div>
-      <div class="footer-links">
-        <a href="/manual">User Guides &amp; Manuals</a>
-        <a href="/portal">Customer Portal</a>
-        <a href="/console">Owner Console</a>
-        <a href="/scanner">Bot Scanner</a>
-        <a href="/.well-known/robots.ai">Robots.ai</a>
-        <a href="/healthz">Edge Health</a>
-        <a href="https://github.com/AttestOS/attestos" target="_blank">GitHub</a>
+
+      <!-- Legal & Architecture Bottom Strip -->
+      <div class="footer-legal">
+        <div style="font-size:12px;color:var(--muted);">
+          © 2026 <strong>AttestOS</strong>. Operating on a strict $0 budget at Cloudflare Edge. Zero KV operations, stateless HMAC cryptography.
+        </div>
+        <div style="display:flex;gap:16px;font-size:12px;flex-wrap:wrap;">
+          <a href="/manual" style="color:var(--muted);text-decoration:none;">Architecture Manual</a>
+          <a href="/.well-known/robots.ai" style="color:var(--muted);text-decoration:none;">Robots.ai Standard</a>
+          <a href="/healthz" style="color:var(--muted);text-decoration:none;">Edge Status</a>
+          <a href="https://github.com/AttestOS/attestos" target="_blank" style="color:var(--cyan);text-decoration:none;">GitHub Open Source</a>
+        </div>
       </div>
     </footer>
   </div>
