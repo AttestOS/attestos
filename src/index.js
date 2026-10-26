@@ -141,10 +141,63 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    if ((pathname === '/console' || pathname === '/admin' || pathname === '/command') && method === 'GET') {
+      const filePath = path.join(__dirname, 'public', 'console.html');
+      if (fs.existsSync(filePath)) {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        return fs.createReadStream(filePath).pipe(res);
+      }
+    }
+
+    if ((pathname === '/portal' || pathname === '/customer' || pathname === '/client') && method === 'GET') {
+      const filePath = path.join(__dirname, 'public', 'portal.html');
+      if (fs.existsSync(filePath)) {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        return fs.createReadStream(filePath).pipe(res);
+      }
+    }
+
     if (pathname === '/scanner' && method === 'GET') {
       const filePath = path.join(__dirname, 'public', 'scanner.html');
       if (fs.existsSync(filePath)) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        return fs.createReadStream(filePath).pipe(res);
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // FREEBIE DOWNLOADS
+    // ─────────────────────────────────────────────────────────────
+    if (pathname.startsWith('/download/') && method === 'GET') {
+      const filename = path.basename(pathname);
+      const filePath = path.join(__dirname, 'public', 'downloads', filename);
+      if (fs.existsSync(filePath)) {
+        const mimeType = filename.endsWith('.js') ? 'application/javascript' : 'text/plain';
+        res.writeHead(200, {
+          'Content-Type': `${mimeType}; charset=utf-8`,
+          'Content-Disposition': `attachment; filename="${filename}"`
+        });
+        return fs.createReadStream(filePath).pipe(res);
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // STATIC ASSETS (/assets/*)
+    // ─────────────────────────────────────────────────────────────
+    if (pathname.startsWith('/assets/') && method === 'GET') {
+      const filename = path.basename(pathname);
+      const filePath = path.join(__dirname, 'public', 'assets', filename);
+      if (fs.existsSync(filePath)) {
+        let contentType = 'application/octet-stream';
+        if (filename.endsWith('.webp')) contentType = 'image/webp';
+        else if (filename.endsWith('.png')) contentType = 'image/png';
+        else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) contentType = 'image/jpeg';
+        else if (filename.endsWith('.svg')) contentType = 'image/svg+xml';
+        
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=86400'
+        });
         return fs.createReadStream(filePath).pipe(res);
       }
     }

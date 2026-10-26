@@ -1,0 +1,56 @@
+# AttestOS RFC robots.ai Standard Configuration
+# Standard location: /.well-known/robots.ai
+# Authority: AttestOS Autonomous Agent Clearinghouse
+
+User-agent: PerplexityBot
+Action: Allow
+Rate-limit: 120/min
+Preferred-format: text/markdown
+
+User-agent: Applebot-Extended
+Action: Allow
+Rate-limit: 120/min
+Preferred-format: text/markdown
+
+User-agent: Google-Extended
+Action: Allow
+Rate-limit: 120/min
+Preferred-format: text/markdown
+
+User-agent: OpenAI-Operator
+Action: Negotiate
+Requires-proof-of-intent: true
+Action-policy: read_only_unless_signed
+
+User-agent: Anthropic-ComputerUse
+Action: Negotiate
+Requires-proof-of-intent: true
+Action-policy: read_only_unless_signed
+
+User-agent: Bytespider
+Action: Disallow
+Payment-required: true
+Clearinghouse: https://attestos-edge.attestos.workers.dev/api/agentpass/request
+Currency: USD
+Quote-cost-per-request: 0.002
+
+User-agent: CCBot
+Action: Disallow
+Payment-required: true
+Clearinghouse: https://attestos-edge.attestos.workers.dev/api/agentpass/request
+Currency: USD
+Quote-cost-per-request: 0.002
+
+User-agent: Diffbot
+Action: Disallow
+Payment-required: true
+Clearinghouse: https://attestos-edge.attestos.workers.dev/api/agentpass/request
+Currency: USD
+Quote-cost-per-request: 0.002
+
+# Fallback for all other autonomous agents
+User-agent: *
+Action: Allow
+Rate-limit: 60/min
+HTTP402-Clearinghouse: https://attestos-edge.attestos.workers.dev/api/agentpass/request
+Whop-Checkout: https://whop.com/checkout/plan_agentpass_pro

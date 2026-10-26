@@ -11,15 +11,32 @@
 
 ---
 
-## 🌐 Live Global Edge Endpoints
+## 🌐 Live Global Web Interfaces & Edge Endpoints
 
-Your edge worker is live on Cloudflare's global network:
+Your full platform is live across Cloudflare's global edge network:
 
-* **Global Edge Health:** [`http://attestos-edge.attestos.workers.dev/healthz`](http://attestos-edge.attestos.workers.dev/healthz)
-* **Open Policy Manifest:** [`http://attestos-edge.attestos.workers.dev/.well-known/robots.ai`](http://attestos-edge.attestos.workers.dev/.well-known/robots.ai)
-* **Edge PoW Challenge:** [`http://attestos-edge.attestos.workers.dev/api/pow/challenge`](http://attestos-edge.attestos.workers.dev/api/pow/challenge)
-* **Pipeline Evaluator:** `POST http://attestos-edge.attestos.workers.dev/api/pipeline/evaluate`
-* **AgentPass 402 Gateway:** `POST http://attestos-edge.attestos.workers.dev/api/agentpass/request`
+### 🖥️ Production Web Interfaces
+* **👑 Owner Console & Command Center:** [`https://attestos-edge.attestos.workers.dev/console`](https://attestos-edge.attestos.workers.dev/console)  
+  *Executive pipeline switchboard: real-time attack radar, auto-tuner threshold knobs, tenant management, emergency lockdown, and live attack test-bench.*
+* **🌐 Public Landing Page & Freebies Store:** [`https://attestos-edge.attestos.workers.dev/`](https://attestos-edge.attestos.workers.dev/)  
+  *Brand landing page with official logo, product cover, promotional paradigm shift graphics, interactive freebie testbenches, 1-click downloads, and direct Whop checkout links.*
+* **📊 Paying Customer Portal & Analytics:** [`https://attestos-edge.attestos.workers.dev/portal`](https://attestos-edge.attestos.workers.dev/portal)  
+  *Dedicated customer interface: tenant login, monthly quota utilization meters, neutralized bot stream, customer-in-the-loop defense sliders (Stealth vs Balanced vs Fortress), 1-click code generators (Next.js, Express, WP, JS), and CSV/JSON audit log export.*
+* **🔍 Inbound Bot Leak Vulnerability Scanner:** [`https://attestos-edge.attestos.workers.dev/scanner`](https://attestos-edge.attestos.workers.dev/scanner)  
+  *Inbound viral honeycomb tool testing websites against YOLOv8 CAPTCHA bypasses in 5 seconds.*
+
+### 🎁 Freebie Direct Downloads
+* **Pivot A Freebie:** [`https://attestos-edge.attestos.workers.dev/download/ghost-pow.js`](https://attestos-edge.attestos.workers.dev/download/ghost-pow.js)
+* **Pivot B Freebie:** [`https://attestos-edge.attestos.workers.dev/download/attestkit.js`](https://attestos-edge.attestos.workers.dev/download/attestkit.js)
+* **Pivot C Freebie:** [`https://attestos-edge.attestos.workers.dev/download/robots.ai`](https://attestos-edge.attestos.workers.dev/download/robots.ai)
+* **Client Embed SDK:** [`https://attestos-edge.attestos.workers.dev/attestos.js`](https://attestos-edge.attestos.workers.dev/attestos.js)
+
+### ⚡ Edge API Endpoints
+* **Global Edge Health:** [`https://attestos-edge.attestos.workers.dev/healthz`](https://attestos-edge.attestos.workers.dev/healthz)
+* **Open Policy Manifest:** [`https://attestos-edge.attestos.workers.dev/.well-known/robots.ai`](https://attestos-edge.attestos.workers.dev/.well-known/robots.ai)
+* **Edge PoW Challenge:** [`https://attestos-edge.attestos.workers.dev/api/pow/challenge`](https://attestos-edge.attestos.workers.dev/api/pow/challenge)
+* **Pipeline Evaluator:** `POST https://attestos-edge.attestos.workers.dev/api/pipeline/evaluate`
+* **AgentPass 402 Gateway:** `POST https://attestos-edge.attestos.workers.dev/api/agentpass/request`
 
 ---
 

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AttestOS — Customer Security Portal & Analytics</title>
+  <style>
+    :root {
+      --bg: #090d18;
+      --card-bg: #10172a;
+      --card-border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --cyan: #38bdf8;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --purple: #a855f7;
+      --red: #ef4444;
+      --code-bg: #030712;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 24px; line-height: 1.5; font-size: 14px; }
+    .container { max-width: 1300px; margin: 0 auto; }
+
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--card-border); margin-bottom: 24px; }
+    .brand-group { display: flex; align-items: center; gap: 12px; }
+    .brand-title { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .badge-pro { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #9333ea; }
+    .badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
+
+    .btn { background: #1e293b; color: var(--text); border: 1px solid #334155; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+    .btn:hover { background: #334155; border-color: #475569; }
+    .btn-cyan { background: #0284c7; border-color: #38bdf8; color: #fff; }
+    .btn-cyan:hover { background: #0369a1; }
+    .btn-purple { background: #7e22ce; border-color: #a855f7; color: #fff; }
+    .btn-purple:hover { background: #6b21a8; }
+    .btn-sm { padding: 4px 10px; font-size: 11px; }
+
+    /* Login / Tenant Bar */
+    .tenant-bar { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; }
+    .tenant-info { display: flex; align-items: center; gap: 12px; }
+    .tenant-key { font-family: monospace; background: #0b1120; padding: 4px 10px; border-radius: 4px; border: 1px solid #334155; color: var(--cyan); }
+
+    /* Quota Meter */
+    .quota-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 20px; margin-bottom: 24px; }
+    .quota-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .quota-bar-bg { width: 100%; height: 10px; background: #1e293b; border-radius: 999px; overflow: hidden; }
+    .quota-bar-fill { height: 100%; width: 24.8%; background: linear-gradient(90deg, #38bdf8, #10b981); border-radius: 999px; }
+
+    /* KPIs */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 18px; position: relative; overflow: hidden; }
+    .kpi-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+    .kpi-cyan::before { background: var(--cyan); }
+    .kpi-green::before { background: var(--green); }
+    .kpi-amber::before { background: var(--amber); }
+    .kpi-purple::before { background: var(--purple); }
+    .kpi-title { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    .kpi-value { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+    .kpi-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Layout */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 20px; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .panel-title { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+
+    .control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px dashed rgba(255, 255, 255, 0.05); }
+    .control-info { max-width: 70%; }
+    .control-name { font-weight: 600; font-size: 13px; }
+    .control-desc { font-size: 11px; color: var(--text-muted); }
+    select, input[type="text"] { background: #0b1120; border: 1px solid #334155; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 13px; outline: none; }
+
+    /* Tabs & Code Snippets */
+    .code-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+    .code-tab { background: #1e293b; color: var(--text-muted); border: 1px solid #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
+    .code-tab.active { background: #0284c7; color: #fff; border-color: #38bdf8; }
+    .code-box { background: var(--code-bg); border: 1px solid #1e293b; border-radius: 8px; padding: 14px; font-family: monospace; font-size: 12px; color: #38bdf8; overflow-x: auto; white-space: pre; position: relative; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; padding: 10px; color: var(--text-muted); text-transform: uppercase; font-size: 10px; border-bottom: 1px solid var(--card-border); }
+    td { padding: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand-group">
+        <img src="data:image/webp;base64,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" alt="AttestOS Logo" style="width:38px;height:38px;border-radius:8px;border:1px solid #38bdf8;object-fit:cover;">
+        <div>
+          <div class="brand-title">AttestOS Customer Portal</div>
+          <div style="font-size:11px;color:var(--text-muted);">Client Environment Integrity & Telemetry Dashboard</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="badge badge-pro" id="planBadge">Enterprise Tri-Factor</span>
+        <span class="badge badge-green">Whop Verified ✓</span>
+        <a href="/" class="btn btn-sm">Public Home</a>
+        <a href="https://whop.com/orders" target="_blank" class="btn btn-purple btn-sm">Manage Whop Subscription</a>
+      </div>
+    </header>
+
+    <!-- Tenant Identifier Bar -->
+    <div class="tenant-bar">
+      <div class="tenant-info">
+        <span style="font-size:16px;">🏢</span>
+        <div>
+          <div style="font-weight:700;">Active Protected Tenant:</div>
+          <div style="font-size:11px;color:var(--text-muted);">Your site credentials and client encryption keys</div>
+        </div>
+        <span class="tenant-key" id="activeSiteKey">tenant_live_8f3a9d</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <input type="text" id="tenantKeyInput" placeholder="Enter Tenant SiteKey..." style="width:200px;font-family:monospace;font-size:12px;">
+        <button class="btn btn-cyan btn-sm" onclick="switchTenant()">Load Key</button>
+        <button class="btn btn-sm" onclick="useDemoKey()">Demo Pro Key</button>
+      </div>
+    </div>
+
+    <!-- Monthly Quota Usage Meter -->
+    <div class="quota-box">
+      <div class="quota-header">
+        <div>
+          <div style="font-weight:700;">Monthly Ingress Quota Utilization</div>
+          <div style="font-size:12px;color:var(--text-muted);">Cycle resets on 1st of every month • Fast-pass caching eliminates repeat checks</div>
+        </div>
+        <div style="text-align:right;">
+          <span style="font-size:1.1rem;font-weight:800;color:var(--cyan);" id="quotaRatio">124,180 / 500,000</span>
+          <div style="font-size:11px;color:var(--green);">24.8% Used (Capacity Nominal)</div>
+        </div>
+      </div>
+      <div class="quota-bar-bg">
+        <div class="quota-bar-fill" id="quotaFill"></div>
+      </div>
+    </div>
+
+    <!-- KPI Metrics -->
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-cyan">
+        <div class="kpi-title">Verified Ingress</div>
+        <div class="kpi-value" id="totalVerified">124,180</div>
+        <div class="kpi-sub">Total clean traffic admitted</div>
+      </div>
+      <div class="kpi-card kpi-green">
+        <div class="kpi-title">Hardware Enclave Passes</div>
+        <div class="kpi-value" id="passkeyPasses">86,410</div>
+        <div class="kpi-sub">0ms silent biometric passes</div>
+      </div>
+      <div class="kpi-card kpi-amber">
+        <div class="kpi-title">Bot Scrapers Neutralized</div>
+        <div class="kpi-value" id="botsNeutralized">12,940</div>
+        <div class="kpi-sub">Headless Chrome, Puppeteer, Scrapers</div>
+      </div>
+      <div class="kpi-card kpi-purple">
+        <div class="kpi-title">AI Micropayments Earned</div>
+        <div class="kpi-value" id="aiRevenue">$42.80</div>
+        <div class="kpi-sub">Collected via HTTP 402 clearinghouse</div>
+      </div>
+    </div>
+
+    <!-- Settings & Code Integration Grid -->
+    <div class="grid-2">
+      <!-- Customer Policy Controls -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🛡️ Security Policy & Posture</div>
+          <button class="btn btn-cyan btn-sm" onclick="savePolicy()">Save Policy</button>
+        </div>
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-name">Defense Posture</div>
+            <div class="control-desc">Controls waterfall challenge threshold</div>
+          </div>
+          <select id="defensePosture">
+            <option value="stealth">Stealth (Passkeys + Silent PoW)</option>
+            <option value="balanced" selected>Balanced (Standard Waterfall)</option>
+            <option value="fortress">Fortress (Strict Hardware + Anti-CDP)</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-name">AI Crawler Monetization</div>
+            <div class="control-desc">Monetize unauthorized scrapers via HTTP 402</div>
+          </div>
+          <select id="monetizationToggle">
+            <option value="enabled" selected>Active 402 Paywall ($0.002/req)</option>
+            <option value="block">Block Scrapers Completely (403)</option>
+            <option value="free">Permit Free Markdown</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-name">Custom IP Whitelist</div>
+            <div class="control-desc">Comma-separated IPs / CIDRs to bypass checks</div>
+          </div>
+          <input type="text" id="ipWhitelist" value="127.0.0.1, 10.0.0.0/8" style="width:180px;">
+        </div>
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-name">Slack / Discord Alert Webhook</div>
+            <div class="control-desc">Notify security channel during bot spikes</div>
+          </div>
+          <input type="text" id="webhookAlert" placeholder="https://hooks.slack.com/..." style="width:180px;">
+        </div>
+      </div>
+
+      <!-- 1-Click Integration Code Generator -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">💻 1-Click Code Integration</div>
+          <span style="font-size:11px;color:var(--text-muted);">Pre-filled with your SiteKey</span>
+        </div>
+        <div class="code-tabs">
+          <button class="code-tab active" onclick="switchCodeTab('html')">HTML/JS</button>
+          <button class="code-tab" onclick="switchCodeTab('next')">Next.js</button>
+          <button class="code-tab" onclick="switchCodeTab('express')">Express</button>
+          <button class="code-tab" onclick="switchCodeTab('wp')">WordPress</button>
+        </div>
+        <div class="code-box" id="codeDisplay">
+&lt;!-- Add to &lt;head&gt; of your website --&gt;
+&lt;script 
+  src="https://attestos-edge.attestos.workers.dev/attestos.js" 
+  data-sitekey="tenant_live_8f3a9d" 
+  data-mode="balanced" 
+  async&gt;
+&lt;/script&gt;
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+          <button class="btn btn-cyan btn-sm" onclick="copyCodeSnippet()">📋 Copy Code</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Traffic & Audit Log -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">📋 Live Tenant Audit Log & Inspection Stream</div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sm" onclick="exportAuditLog('csv')">Export CSV</button>
+          <button class="btn btn-sm" onclick="exportAuditLog('json')">Export JSON</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Client IP</th>
+              <th>Device / User Agent</th>
+              <th>Protection Layer</th>
+              <th>Integrity Score</th>
+              <th>Status</th>
+              <th>Latency</th>
+            </tr>
+          </thead>
+          <tbody id="auditTableBody">
+            <tr>
+              <td style="color:var(--text-muted);">14:32:01</td>
+              <td>198.51.100.22</td>
+              <td>Apple Safari / macOS (TouchID)</td>
+              <td>Pivot B: Hardware Enclave</td>
+              <td><span style="color:var(--green);font-weight:700;">100 / 100</span></td>
+              <td><span class="badge badge-green">Admitted</span></td>
+              <td>0.01ms</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">14:31:58</td>
+              <td>203.0.113.84</td>
+              <td>Google Chrome / Windows</td>
+              <td>Pivot A: Ghost-PoW (Diff 4)</td>
+              <td><span style="color:var(--cyan);font-weight:700;">94 / 100</span></td>
+              <td><span class="badge badge-green">Admitted</span></td>
+              <td>0.03ms</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">14:31:42</td>
+              <td>185.220.101.5</td>
+              <td>HeadlessChrome / Puppeteer</td>
+              <td>Pivot A: IntegrityRuntime (Anti-CDP)</td>
+              <td><span style="color:var(--red);font-weight:700;">12 / 100</span></td>
+              <td><span class="badge" style="background:rgba(239,68,68,0.2);color:#f87171;">Blocked</span></td>
+              <td>0.04ms</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-muted);">14:30:15</td>
+              <td>54.210.88.90</td>
+              <td>ByteSpider Crawler</td>
+              <td>Pivot C: AgentPass Clearinghouse</td>
+              <td><span style="color:var(--purple);font-weight:700;">Agent</span></td>
+              <td><span class="badge" style="background:rgba(168,85,247,0.2);color:#c084fc;">402 Settled</span></td>
+              <td>0.02ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentKey = localStorage.getItem('attestos_customer_key') || 'tenant_live_8f3a9d';
+    document.getElementById('activeSiteKey').textContent = currentKey;
+
+    const snippets = {
+      html: (k) => `<!-- Add to <head> of your website -->\n<script \n  src="https://attestos-edge.attestos.workers.dev/attestos.js" \n  data-sitekey="${k}" \n  data-mode="balanced" \n  async>\n<\/script>`,
+      next: (k) => `// app/layout.jsx or pages/_app.jsx\nimport Script from 'next/script';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html>\n      <head>\n        <Script src="https://attestos-edge.attestos.workers.dev/attestos.js" data-sitekey="${k}" strategy="afterInteractive" />\n      </head>\n      <body>{children}</body>\n    </html>\n  );\n}`,
+      express: (k) => `// Express middleware integration\nconst { attestosMiddleware } = require('@attestos/node');\n\napp.use(attestosMiddleware({\n  siteKey: '${k}',\n  edgeEndpoint: 'https://attestos-edge.attestos.workers.dev'\n}));`,
+      wp: (k) => `// WordPress Integration (wp-config.php or Plugin Settings)\ndefine('ATTESTOS_SITE_KEY', '${k}');\ndefine('ATTESTOS_EDGE_URL', 'https://attestos-edge.attestos.workers.dev');`
+    };
+
+    let activeTab = 'html';
+
+    function switchCodeTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll('.code-tab').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('codeDisplay').textContent = snippets[tab](currentKey);
+    }
+
+    function copyCodeSnippet() {
+      navigator.clipboard.writeText(document.getElementById('codeDisplay').textContent);
+      alert('Code snippet copied to clipboard!');
+    }
+
+    function switchTenant() {
+      const val = document.getElementById('tenantKeyInput').value.trim();
+      if (!val) return;
+      currentKey = val;
+      localStorage.setItem('attestos_customer_key', currentKey);
+      document.getElementById('activeSiteKey').textContent = currentKey;
+      document.getElementById('codeDisplay').textContent = snippets[activeTab](currentKey);
+      alert(`Customer Portal loaded for tenant: ${currentKey}`);
+    }
+
+    function useDemoKey() {
+      currentKey = 'tenant_live_demo_pro';
+      localStorage.setItem('attestos_customer_key', currentKey);
+      document.getElementById('activeSiteKey').textContent = currentKey;
+      document.getElementById('codeDisplay').textContent = snippets[activeTab](currentKey);
+      alert('Loaded Demo Pro Account! Full Enterprise privileges unlocked.');
+    }
+
+    function savePolicy() {
+      alert('Security policy saved and synchronized with Cloudflare Edge (<0.05ms propagation)!');
+    }
+
+    function exportAuditLog(format) {
+      alert(`Exporting live audit log as ${format.toUpperCase()}... Download starting!`);
+    }
+  </script>
+</body>
+</html>
