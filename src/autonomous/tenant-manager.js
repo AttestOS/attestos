@@ -76,12 +76,19 @@ class TenantManager {
       whopLicenseKey: null,
       tier: 'free',
       
-      // Customer-In-The-Loop Configuration
+      // Customer-In-The-Loop Configuration (Customer input required for tools to operate)
       customerPolicies: {
         securityLevel: 'balanced', // 'frictionless' | 'balanced' | 'strict'
         allowSilentWebAuthn: true,
         basePowDifficulty: 4,
         escalateOnCdp: true,
+        protectedRoutes: ['/api/auth/*', '/checkout', '/account/*'],
+        exemptRoutes: ['/public/*', '/healthz', '/robots.txt'],
+        fallbackPolicy: 'pow_challenge', // 'pow_challenge' | 'block_403'
+        rpId: 'app.' + cleanDomain,
+        ipWhitelist: ['127.0.0.1'],
+        alertWebhookUrl: '',
+        autoTunerOverride: 'auto', // 'auto' | 'suppress_surge' | 'strict_lockdown'
         agentPolicies: {
           searchCrawlers: 'allow_markdown', // 'allow_markdown' | 'block' | '402_monetize'
           taskAgents: 'require_signed_key', // 'require_signed_key' | 'block' | 'free_allow'

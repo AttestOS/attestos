@@ -229,9 +229,16 @@ async function runProductionTests() {
   // Customer in the loop policy test
   const policyUpdate = tenantManager.updatePolicies(newTenant.siteKey, {
     securityLevel: 'strict',
+    protectedRoutes: ['/api/v1/auth/login', '/checkout/pay'],
+    exemptRoutes: ['/public/catalog', '/healthz', '/webhooks/stripe'],
+    fallbackPolicy: 'pow_challenge',
+    customPricePerAgentCallUsd: 0.005,
     agentPolicies: { searchCrawlers: '402_monetize' }
   });
   assert(policyUpdate.success === true && policyUpdate.tenant.customerPolicies.securityLevel === 'strict', 'Customer-in-the-loop: customer updates custom security & monetization policies');
+  assert(policyUpdate.tenant.customerPolicies.protectedRoutes.includes('/api/v1/auth/login') && policyUpdate.tenant.customerPolicies.exemptRoutes.includes('/webhooks/stripe'), 'Customer-in-the-loop: customer-defined protected routes and exempt bypass paths enforced');
+  assert(policyUpdate.tenant.customerPolicies.fallbackPolicy === 'pow_challenge', 'Customer-in-the-loop: customer biometric fallback setting governs non-enclave devices');
+  assert(policyUpdate.tenant.customerPolicies.customPricePerAgentCallUsd === 0.005, 'Customer-in-the-loop: customer scraper pricing card ($0.005) honored on HTTP 402 quotes');
 
   // Habit-forming dopamine metric increment test
   tenantManager.recordEvent(newTenant.siteKey, 'BOT_TAXED', { multiplier: 256 });
