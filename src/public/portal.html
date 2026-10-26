@@ -118,9 +118,10 @@
         </div>
         <span class="tenant-key" id="activeSiteKey">tenant_live_8f3a9d</span>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <input type="text" id="tenantKeyInput" placeholder="Enter Tenant SiteKey..." style="width:200px;font-family:monospace;font-size:12px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <input type="text" id="tenantKeyInput" placeholder="Enter Tenant SiteKey..." style="width:230px;font-family:monospace;font-size:12px;">
         <button class="btn btn-cyan btn-sm" onclick="switchTenant()">Load Key</button>
+        <button class="btn btn-green btn-sm" onclick="useVipEnterpriseKey()">⭐ VIP Enterprise</button>
         <button class="btn btn-sm" onclick="useDemoKey()">Demo Pro Key</button>
       </div>
     </div>
@@ -382,8 +383,11 @@
   </div>
 
   <script>
-    let currentKey = localStorage.getItem('attestos_customer_key') || 'tenant_live_8f3a9d';
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentKey = urlParams.get('siteKey') || localStorage.getItem('attestos_customer_key') || 'tenant_live_vip_enterprise';
+    localStorage.setItem('attestos_customer_key', currentKey);
     document.getElementById('activeSiteKey').textContent = currentKey;
+    document.getElementById('tenantKeyInput').value = currentKey;
 
     function getSnippet(tab, key) {
       const mode = document.getElementById('defensePosture') ? document.getElementById('defensePosture').value : 'balanced';
@@ -430,12 +434,40 @@
       alert(`Customer Portal loaded for tenant: ${currentKey}`);
     }
 
+    function useVipEnterpriseKey() {
+      currentKey = 'tenant_live_vip_enterprise';
+      localStorage.setItem('attestos_customer_key', currentKey);
+      document.getElementById('activeSiteKey').textContent = currentKey;
+      document.getElementById('tenantKeyInput').value = currentKey;
+      applyTenantMetrics(currentKey);
+      loadTenantPolicy();
+      updateSnippetPreview();
+      alert('⭐ VIP Enterprise Tenant loaded! Active Plan: Enterprise Tri-Factor Suite ($299/mo).');
+    }
+
     function useDemoKey() {
       currentKey = 'tenant_live_demo_pro';
       localStorage.setItem('attestos_customer_key', currentKey);
       document.getElementById('activeSiteKey').textContent = currentKey;
+      document.getElementById('tenantKeyInput').value = currentKey;
+      applyTenantMetrics(currentKey);
+      loadTenantPolicy();
       updateSnippetPreview();
       alert('Loaded Demo Pro Account! Full Enterprise privileges unlocked.');
+    }
+
+    function applyTenantMetrics(key) {
+      if (key === 'tenant_live_vip_enterprise') {
+        document.getElementById('quotaRatio').textContent = '48,920 / Unlimited Enterprise';
+        document.getElementById('totalVerified').textContent = '48,920';
+        document.getElementById('passkeyPasses').textContent = '38,410';
+        document.getElementById('botsNeutralized').textContent = '4,120';
+        document.getElementById('aiRevenue').textContent = '$31.95';
+        document.getElementById('quotaFill').style.width = '18%';
+        document.getElementById('protectedRoutes').value = '/api/auth/*, /checkout, /account/*';
+        document.getElementById('defensePosture').value = 'fortress';
+        document.getElementById('agentPriceUsd').value = '$0.005';
+      }
     }
 
     async function savePolicy() {
@@ -499,6 +531,7 @@
 
     // Initialize on page load
     window.addEventListener('DOMContentLoaded', () => {
+      applyTenantMetrics(currentKey);
       loadTenantPolicy();
       ['protectedRoutes', 'exemptRoutes'].forEach(id => {
         const el = document.getElementById(id);
