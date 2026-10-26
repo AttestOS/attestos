@@ -57,7 +57,7 @@ html_content = '''<!DOCTYPE html>
     .pill-amber { background: var(--amber-glow); color: #fbbf24; border: 1px solid #d97706; }
     .pill-red { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #dc2626; }
 
-    /* TightBucket-style Asymmetric Hero Split */
+    /* Asymmetric Hero Split (TightBucket Pattern) */
     .hero-split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; margin-bottom: 48px; }
     @media (max-width: 960px) { .hero-split { grid-template-columns: 1fr; } }
 
@@ -93,6 +93,13 @@ html_content = '''<!DOCTYPE html>
     .bands-bar { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; flex-wrap: wrap; gap: 12px; }
     .band-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; }
     .band-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* Promotional Visual Banner Cards */
+    .promo-banner-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; margin-bottom: 48px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.4); }
+    .promo-banner-img { width: 100%; max-height: 420px; object-fit: cover; display: block; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .promo-content { padding: 24px 28px; background: linear-gradient(180deg, rgba(15,22,41,0.85) 0%, #0f1629 100%); }
+    .promo-title { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .promo-text { color: var(--muted); font-size: 13.5px; line-height: 1.6; max-width: 950px; }
 
     /* Section Layout */
     .section-header { text-align: center; margin-bottom: 32px; }
@@ -149,7 +156,7 @@ html_content = '''<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
+    <!-- Header with Official Brand Logo -->
     <header>
       <a href="/" class="brand-area">
         <img src="/assets/logo.webp" alt="AttestOS Logo" class="brand-logo" onerror="this.src='/assets/logo.png'">
@@ -243,6 +250,34 @@ html_content = '''<!DOCTYPE html>
       <div class="band-item"><div class="band-dot" style="background:#f59e0b;"></div><span>50–74 Exposed Automation</span></div>
       <div class="band-item"><div class="band-dot" style="background:#ef4444;"></div><span>0–49 Leaking to Bots</span></div>
       <div style="font-size:12px;color:var(--muted);margin-left:auto;"><a href="/manual" style="color:var(--cyan);text-decoration:none;">How scoring works →</a></div>
+    </div>
+
+    <!-- Promotional Visual Asset 1: The Paradigm Shift -->
+    <div class="promo-banner-card">
+      <img src="/assets/promo.webp" alt="Paradigm Shift: AI Vision vs Client Environment Integrity" class="promo-banner-img" onerror="this.src='/assets/promo.png'">
+      <div class="promo-content">
+        <div class="promo-title">The Paradigm Shift: Why Computer Vision CAPTCHAs Are Dead in 2026</div>
+        <div class="promo-text">
+          Commercial solvers and AI vision networks crack distorted images, grids, and puzzles in 800 milliseconds for under $0.0008 per solve. 
+          Forcing human users through image challenges burns customer goodwill and leaks revenue. 
+          AttestOS enforces the Tri-Factor Waterfall: hardware attestation verifies humans silently in 0ms, 
+          while malicious scrapers are forced to burn billions of CPU hashes or settle programmatic micropayments.
+        </div>
+      </div>
+    </div>
+
+    <!-- Promotional Visual Asset 2: Technical Architecture Blueprint -->
+    <div class="promo-banner-card">
+      <img src="/assets/promo-architecture.webp" alt="AttestOS Tri-Factor Architecture Blueprint" class="promo-banner-img" onerror="this.src='/assets/promo-architecture.png'">
+      <div class="promo-content">
+        <div class="promo-title">Under-the-Hood Architecture: The Tri-Factor Waterfall (C → B → A)</div>
+        <div class="promo-text">
+          Every incoming HTTP request evaluates through three automated stages in sub-milliseconds: 
+          <strong>Pivot C</strong> negotiates content with AI crawlers via RFC robots.ai, 
+          <strong>Pivot B</strong> admits legitimate humans in 0ms via Apple/Google Secure Enclaves, and 
+          <strong>Pivot A</strong> unmasks headless automation while imposing escalating mathematical CPU taxes on scrapers.
+        </div>
+      </div>
     </div>
 
     <!-- Four Target Personas / Defense Modules (TightBucket Four Audits Pattern) -->
@@ -381,7 +416,7 @@ html_content = '''<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- 3 Unique Freebies Section -->
+    <!-- 3 Unique Freebies Section (Download and Use on Landing Page) -->
     <div id="freebies" class="section-header">
       <div class="pill pill-green" style="margin-bottom:12px;">Zero Cost • Open Use</div>
       <div class="section-title">3 Unique Freebies (One Per Pivot)</div>
@@ -473,7 +508,7 @@ html_content = '''<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- Whop Pro Store Section with Official Box Covers -->
+    <!-- Whop Pro Store Section with Official Box Covers for ALL Products -->
     <div id="store" class="section-header">
       <div class="pill pill-purple" style="margin-bottom:12px;">Monetization Store • Powered by Whop</div>
       <div class="section-title">AttestOS Pro Products &amp; Subscriptions</div>
@@ -483,7 +518,7 @@ html_content = '''<!DOCTYPE html>
     </div>
 
     <div class="grid-4">
-      <!-- Product A: IntegrityRuntime Pro -->
+      <!-- Product A: IntegrityRuntime Pro with 3D Cover -->
       <div class="card">
         <img src="/assets/cover-integrity.webp" alt="IntegrityRuntime Pro Cover" class="store-product-img" onerror="this.src='/assets/cover-integrity.png'">
         <div class="card-title">IntegrityRuntime Pro</div>
@@ -500,7 +535,7 @@ html_content = '''<!DOCTYPE html>
         </a>
       </div>
 
-      <!-- Product B: Hardware Gateway Pro -->
+      <!-- Product B: Hardware Gateway Pro with 3D Cover -->
       <div class="card">
         <img src="/assets/cover-hardware.webp" alt="Hardware Gateway Pro Cover" class="store-product-img" onerror="this.src='/assets/cover-hardware.png'">
         <div class="card-title">Hardware Gateway Pro</div>
@@ -517,7 +552,7 @@ html_content = '''<!DOCTYPE html>
         </a>
       </div>
 
-      <!-- Product C: AgentPass Pro -->
+      <!-- Product C: AgentPass Pro with 3D Cover -->
       <div class="card">
         <img src="/assets/cover-agentpass.webp" alt="AgentPass Pro Cover" class="store-product-img" onerror="this.src='/assets/cover-agentpass.png'">
         <div class="card-title">AgentPass Pro</div>
@@ -534,7 +569,7 @@ html_content = '''<!DOCTYPE html>
         </a>
       </div>
 
-      <!-- Enterprise Suite -->
+      <!-- Enterprise Suite with 3D Cover -->
       <div class="card" style="border-color:var(--purple);box-shadow:0 0 20px rgba(168,85,247,0.15);">
         <img src="/assets/cover-enterprise.webp" alt="Enterprise Tri-Factor Suite Cover" class="store-product-img" onerror="this.src='/assets/cover-enterprise.png'">
         <div class="card-title">Enterprise Tri-Factor</div>
@@ -552,7 +587,7 @@ html_content = '''<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- Live Products & User Guides Section -->
+    <!-- Live Products & User Guides Section with Live Screenshots -->
     <div id="manuals" class="section-header">
       <div class="pill pill-cyan" style="margin-bottom:12px;">Live Product Interfaces &amp; Manuals</div>
       <div class="section-title">Official User Guides &amp; Operator Manuals</div>
