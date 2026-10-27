@@ -36,6 +36,8 @@ if (!v.success) return res.status(400).send("Bot check failed");
 | `site-src/` → `site/` | Static pages. Run `python3 scripts/build-site.py` after editing `site-src/` (CI checks this). `site/v1/attestos.js` is the widget. |
 | `scripts/prospects.mjs` | Daily GitHub Action that finds sites showing a *visible* CAPTCHA and publishing a role contact address. |
 | `scripts/owner-password.mjs` | Generates `OWNER_PASSWORD_HASH` for the owner console. |
+| `press/` | The distribution mesh (Python, GitHub Actions `press.yml`): authors, checks and publishes posts across Buffer and direct rails, then answers replies. Off until the repo variable `PRESS_ENABLED=1`; each rail switches on when its secrets exist. Setup: `docs/MESH-SETUP.md`. Tests: `python3 -m pytest press/tests`. |
+| `brand/brand.json` | Plan names, prices and limits for the press (kept equal to `worker/src/plans.ts` by a test). |
 
 ## Develop
 

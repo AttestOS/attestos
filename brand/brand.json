@@ -1,0 +1,22 @@
+{
+  "name": "AttestOS",
+  "url": "https://attestos-edge.attestos.workers.dev",
+  "tagline": "Bot checks your visitors never see.",
+  "promise": "An invisible proof-of-work check plus one server-side verify call replaces image puzzles on sign-up, login and contact forms.",
+  "elevator": "AttestOS replaces visible CAPTCHAs with a small proof-of-work check that runs in the background and a reCAPTCHA-shaped siteverify call. Paid modules add a risk score, Private Access Tokens, passkeys and per-crawler AI policy.",
+  "scoreName": "scanner score",
+  "colors": { "ink": "#060b16", "card": "#0f1a2e", "text": "#e2e8f0", "muted": "#94a3b8", "brand": "#22d3ee", "accent": "#a78bfa" },
+  "modules": {
+    "ecom": { "audit": "checkout and login scan", "audience": "Online stores", "slug": "scanner/" },
+    "saas": { "audit": "signup page scan", "audience": "SaaS and app founders", "slug": "scanner/" },
+    "sales": { "audit": "AI-crawler rule check", "audience": "Publishers and content sites", "slug": "docs/#robots" },
+    "agency": { "audit": "client form scan", "audience": "Agencies and freelance developers", "slug": "scanner/" }
+  },
+  "catalog": [
+    { "key": "free", "name": "Free", "price": "$0", "bullets": ["10,000 verifications a month", "1 site", "invisible widget and siteverify", "passkeys for up to 50 users"] },
+    { "key": "integrity", "name": "IntegrityRuntime Pro", "price": "$49/mo", "bullets": ["100,000 verifications a month", "5 sites", "risk score and named signals", "adaptive difficulty", "surge alerts", "audit export"] },
+    { "key": "agent", "name": "AgentPass Pro", "price": "$99/mo", "bullets": ["250,000 agent checks a month", "100,000 verifications a month", "5 sites", "allow, charge (HTTP 402) or block per crawler category", "crawler IP verification", "metered agent keys"] },
+    { "key": "hardware", "name": "Hardware Gateway Pro", "price": "$149/mo", "bullets": ["100,000 verifications a month", "5 sites", "Private Access Tokens", "unlimited passkeys"] },
+    { "key": "enterprise", "name": "Enterprise", "price": "$299/mo", "bullets": ["300,000 verifications a month", "25 sites", "all modules"] }
+  ]
+}

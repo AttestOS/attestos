@@ -1,0 +1,153 @@
+{
+  "x": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "linkedin": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "pinterest": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "facebook": {
+    "per_day": 2,
+    "min_hours_between": 4
+  },
+  "instagram": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "threads": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "youtube": {
+    "per_day": 2,
+    "min_hours_between": 6
+  },
+  "tiktok": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "gbp": {
+    "per_day": 2,
+    "min_hours_between": 6
+  },
+  "bsky": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "nostrnote": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "devto": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "whop_private": {
+    "per_day": 1,
+    "min_hours_between": 8
+  },
+  "whop_public": {
+    "per_day": 1,
+    "min_hours_between": 8
+  },
+  "telegram": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "mastodon": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "discord": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "x_a": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "linkedin_a": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "facebook_a": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "instagram_a": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "threads_a": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "youtube_a": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "tiktok_a": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "gbp_a": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "bsky_a": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "x_b": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "linkedin_b": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "pinterest_b": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "facebook_b": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "instagram_b": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "threads_b": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "youtube_b": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "tiktok_b": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "gbp_b": {
+    "per_day": 3,
+    "min_hours_between": 4
+  },
+  "bsky_b": {
+    "per_day": 3,
+    "min_hours_between": 3
+  },
+  "promo_per_day": 1,
+  "promo_min_gap_days": 1,
+  "run_target": 4,
+  "longform_days": 7,
+  "reply_per_day": 4,
+  "topic_max_rails": 5,
+  "_notes": "3-Buffer-Account Architecture (Company + Seller A + Seller B), ported from the STPi mesh as is: Buffer Account A = X, LinkedIn, Pinterest; Buffer Account B = Facebook Page, Instagram, Threads; Buffer Account C = YouTube, TikTok, Google Business Profile (videos from AO_VIDEOS_REPO). A rail only plans when its credentials exist; channels are discovered from each Buffer token."
+}

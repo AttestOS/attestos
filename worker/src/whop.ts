@@ -2,6 +2,8 @@ import type { Env } from "./env";
 import { all, first, logError, run } from "./lib/db";
 import { json, readBodyText, redirect } from "./lib/http";
 import { safeJson } from "./lib/util";
+import { limited } from "./lib/security";
+import { bumpUsage } from "./lib/usage";
 import { verifyStandardWebhook } from "./webhooks/verify";
 import { claimUrl, refreshPlan } from "./accounts";
 import { enqueue, processOutbox } from "./mail/outbox";
@@ -16,10 +18,31 @@ export function checkoutUrl(env: Env, plan: PlanId): string | null {
   const v = String(env[`WHOP_CHECKOUT_${plan.toUpperCase()}`] || "").trim();
   return /^https:\/\/(www\.)?whop\.com\//.test(v) ? v : null;
 }
-export function goRoute(env: Env, plan: string): Response {
-  if (!PAID.includes(plan as PlanId)) return redirect("/pricing/");
-  const url = checkoutUrl(env, plan as PlanId);
-  return redirect(url ?? `/pricing/?checkout=soon#${plan}`);
+/** Content destinations for /go/<key> (tracked links handed out by the press mesh and outreach). Paid plan keys
+ *  (PAID) redirect to their Whop checkout instead. press/tests/test_press_money.py checks every press target exists. */
+export const GO_PAGES: Record<string, string> = {
+  home: "/", scanner: "/scanner/", robots: "/docs/#robots", docs: "/docs/", pricing: "/pricing/", signup: "/app/#signup",
+};
+const GO_SRC = /^[a-z]{1,3}-[a-z0-9-]{1,27}$/;
+
+/** /go/<key>?src=<rail>-<topic>: count the click per key and rail (bounded cardinality: one usage row per key, rail
+ *  code and month; flood-guarded so a script cannot burn D1 writes), then redirect with utm_source set. */
+export async function goRoute(req: Request, env: Env, key: string, ctx?: ExecutionContext): Promise<Response> {
+  const src = (new URL(req.url).searchParams.get("src") || "").toLowerCase();
+  const tracked = GO_SRC.test(src) && (key in GO_PAGES || PAID.includes(key as PlanId));
+  if (tracked && !(await limited(env.EDGE_RL, req, "go"))) {
+    const p = bumpUsage(env, `go:${key}:${src.split("-")[0]}`, "month").catch(() => 0);
+    if (ctx) ctx.waitUntil(p); else await p;
+  }
+  const page = GO_PAGES[key];
+  if (page) {
+    if (!tracked) return redirect(page);
+    const [path, hash] = page.split("#");
+    return redirect(`${path}?utm_source=${encodeURIComponent(src)}${hash ? `#${hash}` : ""}`);
+  }
+  if (!PAID.includes(key as PlanId)) return redirect("/pricing/");
+  const url = checkoutUrl(env, key as PlanId);
+  return redirect(url ?? `/pricing/?checkout=soon#${key}`);
 }
 
 /** WHOP_PLAN_MAP = {"plan_abc":"integrity","prod_xyz":"agent"} (plan or product ids from the Whop dashboard). */

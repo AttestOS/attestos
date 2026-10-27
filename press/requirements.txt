@@ -1,0 +1,4 @@
+# press runtime (GitHub Actions, Python 3.12): cards (Pillow), Nostr signing (coincurve) + relays (websockets)
+pillow==13.0.0
+coincurve==21.0.0
+websockets==17.3

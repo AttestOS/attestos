@@ -1,3 +1,4 @@
+import { IMG_KEEP_DAYS } from "./press/hooks";
 import type { Env } from "./env";
 import { getSetting, logError, run } from "./lib/db";
 import { budgetState } from "./lib/quota";
@@ -35,6 +36,7 @@ async function daily(env: Env) {
   await run(env, "DELETE FROM outbox WHERE status IN ('sent','failed') AND created_at < datetime('now','-180 days')");
   await run(env, "DELETE FROM events WHERE received_at < datetime('now','-180 days')");
   await run(env, "DELETE FROM quota_daily WHERE day < date('now','-60 days')");
+  await run(env, `DELETE FROM press_img WHERE created_at < datetime('now','-${IMG_KEEP_DAYS} days')`);
   await refreshCrawlerRanges(env);
   await refreshIssuerKeys(env);
 }

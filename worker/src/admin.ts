@@ -10,7 +10,8 @@ import { refreshPlan } from "./accounts";
 import { parsePlans } from "./plans";
 import { invalidateSites } from "./sites";
 import { outreachStatus } from "./outreach";
-import { safeJson } from "./lib/util";
+import { safeJson, thisMonth } from "./lib/util";
+import { pressOverview, setMeshOverride, setPressControl, setPressKey } from "./press/hooks";
 
 /** Owner console API (/admin/api/*). Password only (OWNER_PASSWORD_HASH), HMAC-signed cookie on Path=/admin. */
 export async function adminRoute(req: Request, env: Env, path: string): Promise<Response | null> {
@@ -73,6 +74,18 @@ export async function adminRoute(req: Request, env: Env, path: string): Promise<
         FROM prospects ${st ? "WHERE status = ?" : ""} ORDER BY created_at DESC LIMIT 300`, ...(st ? [st] : [])) });
     }
     case "GET outbox": return json({ outbox: await all(env, "SELECT id, to_email, subject, kind, status, attempts, lane, error, created_at, sent_at FROM outbox ORDER BY id DESC LIMIT 200") });
+    case "GET press": {
+      const clicks = await all<{ key: string; n: number }>(env, "SELECT key, n FROM usage WHERE key LIKE 'go:%' AND period = ? ORDER BY n DESC LIMIT 100", thisMonth());
+      return json({ ...(await pressOverview(env)), clicks });
+    }
+    case "POST press/controls": {
+      const b = await readObject(req, 2048);
+      return json({ ok: true, values: await setPressControl(env, str(b.key, 80), b.value) });
+    }
+    case "POST press/keys": {
+      const b = await readObject(req, 8192);
+      return json({ ok: true, ...(await setPressKey(env, str(b.name, 60), b.value)) });
+    }
     case "GET settings": return json({ outreach_enabled: (await getSetting(env, "outreach_enabled")) === "1" });
     case "POST settings": {
       const b = await readObject(req, 1024);
@@ -104,6 +117,11 @@ export async function adminRoute(req: Request, env: Env, path: string): Promise<
     if (!["new", "skip", "replied", "unsub"].includes(st)) throw new HttpError(400, "status must be new, skip, replied or unsub");
     await run(env, "UPDATE prospects SET status = ? WHERE domain = ?", st, mm[1]);
     return json({ ok: true });
+  }
+  mm = sub.match(/^press\/rails\/([a-z0-9_]{1,40})$/);
+  if (mm && m === "POST") {
+    const b = await readObject(req, 1024);
+    return json({ ok: true, overrides: await setMeshOverride(env, mm[1], { parked: b.parked, per_day: b.per_day }) });
   }
   mm = sub.match(/^lanes\/([a-z][a-z0-9]{1,15})\/resume$/);
   if (mm && m === "POST") {

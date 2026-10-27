@@ -8,6 +8,7 @@ import { accountRoute } from "./accounts";
 import { portalRoute } from "./portal";
 import { adminRoute } from "./admin";
 import { goRoute, whopWebhook } from "./whop";
+import { pressHook } from "./press/hooks";
 import { scannerRoute } from "./scanner";
 import { opsRoute, unsubscribe } from "./outreach";
 import { PLANS } from "./plans";
@@ -35,6 +36,8 @@ async function route(req: Request, env: Env, ctx: ExecutionContext): Promise<Res
   if (path === "/api/v1/demo/config" && m === "GET") return json({ sitekey: env.DEMO_SITEKEY || null }, 200, { "cache-control": "public, max-age=300" });
   if (path === "/api/health") return json({ ok: true, service: "attestos", time: new Date().toISOString() }, 200, { "cache-control": "no-store" });
 
+  // press mesh (bearer AO_PRESS_TOKEN; 404 when unset) - ahead of the flood guard: a press run posts a burst of cards
+  if (path.startsWith("/api/press/")) { const r = await pressHook(req, env, path); if (r) return r; }
   if (path.startsWith("/api/") && m !== "GET" && (await limited(env.EDGE_RL, req, "api"))) throw new HttpError(429, "Too many requests. Slow down a little.");
 
   const extra = await extraRoutes(req, env, ctx, path);
@@ -49,7 +52,7 @@ async function route(req: Request, env: Env, ctx: ExecutionContext): Promise<Res
   if (path.startsWith("/admin/api/")) { const r = await adminRoute(req, env, path); if (r) return r; }
   if (path === "/api/webhooks/whop" && m === "POST") return whopWebhook(req, env, ctx);
   const go = path.match(/^\/go\/([a-z]+)\/?$/);
-  if (go) return goRoute(env, go[1]);
+  if (go) return goRoute(req, env, go[1], ctx);
   const u = path.match(/^\/u\/([A-Za-z0-9_.-]{20,600})$/);
   if (u && (m === "GET" || m === "POST")) return unsubscribe(req, env, u[1]);
 

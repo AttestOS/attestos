@@ -1,0 +1,728 @@
+[
+ {
+  "id": "card-testing-pattern",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Card testing looks like tiny failed orders",
+  "angle": "Stolen card lists get checked on small stores first, one cheap order at a time.",
+  "beats": [
+   "The pattern: many low-value attempts, many declines, new accounts or guest checkouts",
+   "Why the decline fees and chargeback risk land on the store",
+   "Where a check before the payment call adds cost to every attempt"
+  ]
+ },
+ {
+  "id": "login-stuffing",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Leaked passwords get tried on your login page",
+  "angle": "Credential stuffing replays username and password pairs leaked elsewhere.",
+  "beats": [
+   "How to spot it: bursts of failed logins across many accounts from many addresses",
+   "Rate limits per account and per address, not only per address",
+   "Passkeys remove the reusable password entirely"
+  ]
+ },
+ {
+  "id": "checkout-puzzle-cost",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "A puzzle at checkout taxes the buyer who already decided",
+  "angle": "The person most likely to pay is the one asked to click every traffic light.",
+  "beats": [
+   "Who actually sees the puzzle: real buyers on phones",
+   "What bots do instead: solving services and replayed tokens",
+   "Moving the check out of sight and onto the server"
+  ]
+ },
+ {
+  "id": "verify-on-server",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "A widget that is never verified on the server is decoration",
+  "angle": "The token in the form only matters if your backend checks it.",
+  "beats": [
+   "The common mistake: front-end widget, no server call",
+   "What siteverify checks: secret, token, age, single use",
+   "Reject the request when the call fails, not only when it says no"
+  ]
+ },
+ {
+  "id": "token-single-use",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Every bot token should work exactly once",
+  "angle": "If a solved token can be replayed, one solve buys unlimited submissions.",
+  "beats": [
+   "What replay looks like in the logs",
+   "Single use and a short expiry are the two properties to check",
+   "How to test your own form with one token twice"
+  ]
+ },
+ {
+  "id": "fake-account-signals",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Fake store accounts leave the same fingerprints",
+  "angle": "Mass-created accounts share timing, address patterns and empty profiles.",
+  "beats": [
+   "Sign-up bursts at odd hours",
+   "Disposable email domains and plus-address runs",
+   "Checking the account before it reaches a discount code"
+  ]
+ },
+ {
+  "id": "headless-browsers",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Headless browsers announce themselves more than they think",
+  "angle": "Automation frameworks leave traces a page can read without bothering a human.",
+  "beats": [
+   "webdriver flags and headless user agents",
+   "Software graphics renderers and missing plugins",
+   "Signals are evidence for a score, never a verdict on their own"
+  ]
+ },
+ {
+  "id": "gift-card-abuse",
+  "kind": "value",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Gift card balance checks are a target",
+  "angle": "A balance-check form is an oracle for anyone holding a list of guessed card numbers.",
+  "beats": [
+   "Why balance pages get hammered",
+   "Per-session limits and a proof-of-work cost per check",
+   "Alerting on spikes instead of reading logs weekly"
+  ]
+ },
+ {
+  "id": "store-abuse-map",
+  "kind": "value",
+  "format": "longform",
+  "audience": "ecom",
+  "title": "Where bots touch an online store",
+  "angle": "A walk through every form on a store and the abuse that targets each one, with the cheapest defence for each.",
+  "beats": [
+   "Account creation: fake accounts and promo farming",
+   "Login: credential stuffing",
+   "Checkout and payment: card testing",
+   "Gift cards, coupons, contact and review forms: guessing and spam",
+   "Putting one invisible check and one server call in front of all of them"
+  ],
+  "tags": "ecommerce,security,webdev,shopify"
+ },
+ {
+  "id": "replace-captcha-checklist",
+  "kind": "value",
+  "format": "longform",
+  "audience": "ecom",
+  "title": "Replacing a visible CAPTCHA without opening a hole",
+  "angle": "A checklist for swapping an image puzzle for an invisible check while keeping the server side strict.",
+  "beats": [
+   "Inventory every form that sends a token",
+   "Keep the server call and its failure handling",
+   "Test single use and expiry",
+   "Watch failure rates for a week",
+   "Remove the old script last"
+  ],
+  "tags": "security,webdev,javascript,ecommerce"
+ },
+ {
+  "id": "promo-store-scan",
+  "kind": "promo",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Scan your store's login and checkout pages",
+  "angle": "Point store owners at the free scanner: which CAPTCHA each page shows and which forms are exposed.",
+  "beats": [
+   "Paste a URL, no signup",
+   "See what a shopper sees on the login and checkout pages",
+   "Link once, plainly"
+  ],
+  "asset": "{{ecom_url}}"
+ },
+ {
+  "id": "promo-store-free-plan",
+  "kind": "promo",
+  "format": "short",
+  "audience": "ecom",
+  "title": "An invisible check for small stores",
+  "angle": "The free plan: {{free_verifs}} verifications a month on 1 site, no puzzle for shoppers.",
+  "beats": [
+   "Proof of work runs in the background",
+   "One server call, the same shape as reCAPTCHA's",
+   "Free plan, upgrade only if you need signals"
+  ],
+  "asset": "{{signup_url}}"
+ },
+ {
+  "id": "promo-plans-store",
+  "kind": "promo",
+  "format": "short",
+  "audience": "ecom",
+  "title": "Plans for stores",
+  "angle": "Plain summary of the plans for a store owner.",
+  "beats": [
+   "Free {{free_price}}: {{free_verifs}} verifications",
+   "IntegrityRuntime Pro {{integrity_price}}: risk score and surge alerts",
+   "Checkout on Whop"
+  ],
+  "asset": "{{pricing_url}}"
+ },
+ {
+  "id": "trial-abuse",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Free-trial abuse is a signup-form problem",
+  "angle": "Repeat trials come through the same form honest users fill in.",
+  "beats": [
+   "What repeat trial signups look like",
+   "Why email verification alone does not stop it",
+   "Adding a cost per signup that humans never notice"
+  ]
+ },
+ {
+  "id": "signup-friction",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Every visible check on a signup form costs signups",
+  "angle": "A puzzle on the signup form is paid for by the people you most want.",
+  "beats": [
+   "The visitor who just decided to try you meets a test",
+   "Accessibility: puzzles fail screen reader users first",
+   "Invisible checks keep the cost on automation"
+  ]
+ },
+ {
+  "id": "api-key-farming",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Free API keys attract key farms",
+  "angle": "If signing up hands out a usable key, scripts will sign up a lot.",
+  "beats": [
+   "Spot it: many accounts, one usage pattern",
+   "Gate the key behind a verified action",
+   "Meter by account and by key"
+  ]
+ },
+ {
+  "id": "pow-explained",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Proof of work in one paragraph",
+  "angle": "The browser solves a small hashing puzzle before submitting; one solve is cheap, a million are not.",
+  "beats": [
+   "Difficulty in bits: each extra bit doubles the work",
+   "Why it is invisible to a human",
+   "What it does not do: it slows attackers, it does not identify them"
+  ]
+ },
+ {
+  "id": "risk-score-use",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Use a risk score to decide the next step, not to block",
+  "angle": "A score is most useful as a fork: let through, ask for more, or review.",
+  "beats": [
+   "Low score: proceed",
+   "Middle: ask for email confirmation or a passkey",
+   "High: hold for review instead of a silent block"
+  ]
+ },
+ {
+  "id": "passkeys-for-saas",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Passkeys remove the password attackers reuse",
+  "angle": "With a passkey there is no shared secret to leak or stuff.",
+  "beats": [
+   "What a passkey is in one sentence",
+   "Offer it at signup and after login",
+   "Keep a recovery path that is not weaker than the passkey"
+  ]
+ },
+ {
+  "id": "adaptive-difficulty",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Raise the cost only when traffic surges",
+  "angle": "Fixed difficulty is either annoying all the time or too weak during an attack.",
+  "beats": [
+   "Measure normal solves per minute",
+   "Add work when the rate jumps",
+   "Drop back automatically when it calms down"
+  ]
+ },
+ {
+  "id": "siteverify-errors",
+  "kind": "value",
+  "format": "short",
+  "audience": "saas",
+  "title": "Read the error codes your verify call returns",
+  "angle": "A verify call that fails quietly is the most common hole in a bot check.",
+  "beats": [
+   "missing-input-secret and invalid-input-response mean a broken integration",
+   "timeout-or-duplicate means a replayed or stale token",
+   "Log the codes and alert on a spike"
+  ]
+ },
+ {
+  "id": "signup-defence-stack",
+  "kind": "value",
+  "format": "longform",
+  "audience": "saas",
+  "title": "A layered signup defence for small SaaS teams",
+  "angle": "Cheap layers in order: an invisible check, a server verify, rate limits, email confirmation, then passkeys.",
+  "beats": [
+   "Layer 1: proof of work on the form",
+   "Layer 2: server-side verify with strict failure handling",
+   "Layer 3: limits per address and account",
+   "Layer 4: confirmation and passkeys",
+   "What to log so you can tell which layer stopped what"
+  ],
+  "tags": "saas,security,webdev,startup"
+ },
+ {
+  "id": "migrating-from-recaptcha",
+  "kind": "value",
+  "format": "longform",
+  "audience": "saas",
+  "title": "Moving off reCAPTCHA with a small diff",
+  "angle": "The siteverify call has the same shape, so the migration is mostly a script tag and a URL.",
+  "beats": [
+   "Swap the script and the site key",
+   "Point the server call at the new endpoint",
+   "Keep the response checks you already have",
+   "Run both for a day if you are nervous",
+   "Remove the old keys"
+  ],
+  "tags": "javascript,webdev,security,tutorial"
+ },
+ {
+  "id": "promo-saas-scan",
+  "kind": "promo",
+  "format": "short",
+  "audience": "saas",
+  "title": "Scan your signup page",
+  "angle": "Point founders at the free scanner: what a visitor sees on the signup page and which forms are exposed.",
+  "beats": [
+   "Paste the signup URL",
+   "Free, no signup",
+   "Link once"
+  ],
+  "asset": "{{saas_url}}"
+ },
+ {
+  "id": "promo-saas-integrity",
+  "kind": "promo",
+  "format": "short",
+  "audience": "saas",
+  "title": "A risk score in every verify response",
+  "angle": "IntegrityRuntime Pro adds named automation signals and a score to the verify call, plus surge alerts.",
+  "beats": [
+   "Signals you can read, not a black box",
+   "Adaptive difficulty during spikes",
+   "IntegrityRuntime Pro {{integrity_price}}"
+  ],
+  "asset": "{{pricing_url}}"
+ },
+ {
+  "id": "promo-saas-docs",
+  "kind": "promo",
+  "format": "short",
+  "audience": "saas",
+  "title": "The verify call is the same shape you already use",
+  "angle": "Point developers at the docs: the server call mirrors reCAPTCHA's siteverify.",
+  "beats": [
+   "A script tag and one URL change",
+   "Error codes documented",
+   "Free plan to try it"
+  ],
+  "asset": "{{docs_url}}"
+ },
+ {
+  "id": "promo-plans-saas",
+  "kind": "promo",
+  "format": "short",
+  "audience": "saas",
+  "title": "Plans for SaaS teams",
+  "angle": "Plain summary of the plans for a founder.",
+  "beats": [
+   "Free {{free_price}}: {{free_verifs}} verifications a month",
+   "IntegrityRuntime Pro {{integrity_price}}: {{paid_verifs}} verifications, {{paid_sites}} sites",
+   "Hardware Gateway Pro {{hardware_price}}: Private Access Tokens and unlimited passkeys"
+  ],
+  "asset": "{{pricing_url}}"
+ },
+ {
+  "id": "robots-ai-user-agents",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "AI crawlers have names you can write rules for",
+  "angle": "robots.txt can address training crawlers and answer-engine fetchers separately.",
+  "beats": [
+   "Training crawlers versus live fetchers acting for a user",
+   "Allow one, disallow the other, per section",
+   "Rules are a request: check who honours them"
+  ]
+ },
+ {
+  "id": "verify-crawler-ip",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "A user agent string is a claim, not an identity",
+  "angle": "Anyone can send a crawler's user agent; the published IP ranges are what confirm it.",
+  "beats": [
+   "Several crawler operators publish their address ranges",
+   "Match the address before granting crawler treatment",
+   "Crawlers without published ranges cannot be verified, say so"
+  ]
+ },
+ {
+  "id": "http-402-crawling",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "HTTP 402 lets you charge crawlers instead of blocking them",
+  "angle": "Payment Required has been reserved for decades; it fits paid crawling.",
+  "beats": [
+   "Return 402 with how to get a key",
+   "Meter requests per key",
+   "Keep search crawlers on their normal path"
+  ]
+ },
+ {
+  "id": "training-vs-search",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "Blocking training does not have to block search",
+  "angle": "Search visibility and model training are different decisions with different user agents.",
+  "beats": [
+   "List what each crawler is for",
+   "Decide per category, not per company",
+   "Review the list when new crawlers appear"
+  ]
+ },
+ {
+  "id": "robots-mistakes",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "Common robots.txt mistakes with AI rules",
+  "angle": "One wrong wildcard can hide the whole site from search.",
+  "beats": [
+   "Disallow: / under the wrong user agent",
+   "Rules placed after a catch-all group",
+   "Testing the file before deploying it"
+  ]
+ },
+ {
+  "id": "crawl-logs",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "Your server logs already say who is reading",
+  "angle": "Before writing rules, count which crawlers actually visit and what they fetch.",
+  "beats": [
+   "Group by user agent and path",
+   "Check claimed crawlers against their ranges",
+   "Look for fetchers that ignore robots.txt"
+  ]
+ },
+ {
+  "id": "agent-keys",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "Give well-behaved agents a key",
+  "angle": "A key separates agents you have an arrangement with from anonymous scraping.",
+  "beats": [
+   "Issue keys per partner",
+   "Rate and meter per key",
+   "Revoke without touching robots.txt"
+  ]
+ },
+ {
+  "id": "private-access-tokens",
+  "kind": "value",
+  "format": "short",
+  "audience": "sales",
+  "title": "Private Access Tokens prove a device without identifying it",
+  "angle": "An issuer signs a token after checking the device; your site verifies the signature.",
+  "beats": [
+   "What the site learns: a valid token, not who sent it",
+   "Where they work today and where they do not",
+   "A good first check before showing anything harder"
+  ]
+ },
+ {
+  "id": "ai-crawler-policy",
+  "kind": "value",
+  "format": "longform",
+  "audience": "sales",
+  "title": "Writing an AI crawler policy for a content site",
+  "angle": "A practical policy: which crawlers to allow, which to charge, which to block, and how to verify each.",
+  "beats": [
+   "Inventory crawlers from your logs",
+   "Categories: search, answer engines, training, unknown",
+   "Verification by published IP ranges",
+   "Paid access with HTTP 402 and keys",
+   "Reviewing the policy every quarter"
+  ],
+  "tags": "ai,webdev,seo,security"
+ },
+ {
+  "id": "robots-generator-walkthrough",
+  "kind": "value",
+  "format": "longform",
+  "audience": "sales",
+  "title": "From blanket rules to per-crawler rules",
+  "angle": "How to move a robots.txt from one catch-all group to deliberate per-crawler groups without hurting search.",
+  "beats": [
+   "Start from the current file",
+   "Split search crawlers from training crawlers",
+   "Add answer-engine fetchers deliberately",
+   "Test with a validator",
+   "Monitor what changes in the logs"
+  ],
+  "tags": "seo,webdev,ai,tutorial"
+ },
+ {
+  "id": "promo-robots-check",
+  "kind": "promo",
+  "format": "short",
+  "audience": "sales",
+  "title": "Check how your robots.txt treats AI crawlers",
+  "angle": "Point publishers at the free AI-crawler rule check and generator.",
+  "beats": [
+   "Paste a URL",
+   "See which AI crawlers your file allows",
+   "Generate per-crawler rules for free"
+  ],
+  "asset": "{{scanner_url}}"
+ },
+ {
+  "id": "promo-agentpass",
+  "kind": "promo",
+  "format": "short",
+  "audience": "sales",
+  "title": "Allow, charge or block each crawler category",
+  "angle": "AgentPass Pro: per-category decisions, crawler IP verification, HTTP 402 and metered agent keys.",
+  "beats": [
+   "{{agent_checks}} agent checks a month",
+   "Verified crawlers only get crawler treatment",
+   "AgentPass Pro {{agent_price}}"
+  ],
+  "asset": "{{sales_url}}"
+ },
+ {
+  "id": "promo-plans-publisher",
+  "kind": "promo",
+  "format": "short",
+  "audience": "sales",
+  "title": "Plans for publishers",
+  "angle": "Plain summary of the plans for a publisher.",
+  "beats": [
+   "Free {{free_price}}: robots.txt generator and the widget",
+   "AgentPass Pro {{agent_price}}: crawler decisions and paid keys",
+   "Enterprise {{enterprise_price}}: every module"
+  ],
+  "asset": "{{pricing_url}}"
+ },
+ {
+  "id": "contact-form-spam",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Contact form spam is a client complaint you can prevent",
+  "angle": "The client notices spam in the inbox long before they notice the form.",
+  "beats": [
+   "Where spam comes from: scripts posting directly to the endpoint",
+   "Why a front-end-only check does nothing",
+   "A server-side verify on every submission"
+  ]
+ },
+ {
+  "id": "honeypot-limits",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Honeypot fields catch lazy bots only",
+  "angle": "A hidden field stops scripts that fill everything; targeted scripts skip it.",
+  "beats": [
+   "What honeypots are good for",
+   "Why they fail against form-aware scripts",
+   "Pair them with a check that costs work"
+  ]
+ },
+ {
+  "id": "client-handover-keys",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Hand over bot-check keys like any other credential",
+  "angle": "Site keys and secrets belong to the client account, not a freelancer's.",
+  "beats": [
+   "Create keys under the client's account",
+   "Document where the secret lives",
+   "Rotate on handover"
+  ]
+ },
+ {
+  "id": "accessibility-captcha",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Image puzzles are an accessibility problem",
+  "angle": "Visual puzzles block screen reader users and people with low vision first.",
+  "beats": [
+   "Audio fallbacks are hard too",
+   "Invisible checks need no interaction",
+   "Worth raising with clients who care about accessibility; legal questions go to their adviser"
+  ]
+ },
+ {
+  "id": "form-endpoint-exposure",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Bots post to the endpoint, not the page",
+  "angle": "Hiding the form does nothing if the endpoint accepts any POST.",
+  "beats": [
+   "Find your form endpoints",
+   "Require a fresh token on each",
+   "Reject missing tokens with a clear error"
+  ]
+ },
+ {
+  "id": "monitor-failure-rates",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Watch verify failures after every launch",
+  "angle": "A spike in failed verifies is either an attack or a broken integration; both need a look.",
+  "beats": [
+   "Baseline the failure rate in week one",
+   "Alert on a jump",
+   "Check the error codes before assuming an attack"
+  ]
+ },
+ {
+  "id": "domain-allowlist",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Lock site keys to the client's domains",
+  "angle": "A site key that works on any domain can be borrowed.",
+  "beats": [
+   "Allowlist production and staging hosts",
+   "Separate keys per environment",
+   "Remove old domains after a migration"
+  ]
+ },
+ {
+  "id": "wordpress-forms",
+  "kind": "value",
+  "format": "short",
+  "audience": "agency",
+  "title": "Every WordPress form plugin needs the server check",
+  "angle": "Contact, comment, login and checkout forms often come from different plugins.",
+  "beats": [
+   "List each form and the plugin behind it",
+   "Confirm each one verifies the token on the server",
+   "Test with the token removed"
+  ]
+ },
+ {
+  "id": "agency-bot-defence-playbook",
+  "kind": "value",
+  "format": "longform",
+  "audience": "agency",
+  "title": "A bot-defence playbook for client sites",
+  "angle": "A repeatable setup an agency can apply to every site it builds or maintains.",
+  "beats": [
+   "Inventory forms at kickoff",
+   "One account per client, keys per environment",
+   "Server verify everywhere",
+   "Monitoring and alert routing",
+   "Handover notes the client can follow"
+  ],
+  "tags": "webdev,agency,security,wordpress"
+ },
+ {
+  "id": "spam-incident-response",
+  "kind": "value",
+  "format": "longform",
+  "audience": "agency",
+  "title": "When a client site gets flooded with spam",
+  "angle": "A calm order of operations for the day a form gets hammered.",
+  "beats": [
+   "Confirm it is automated",
+   "Raise difficulty or close the form briefly",
+   "Check the server verify is actually enforced",
+   "Clean up and tell the client what changed",
+   "Keep the alert that would have caught it earlier"
+  ],
+  "tags": "webdev,security,agency,devops"
+ },
+ {
+  "id": "promo-agency-scan",
+  "kind": "promo",
+  "format": "short",
+  "audience": "agency",
+  "title": "Scan a client's contact form before the first call",
+  "angle": "Point agencies at the free scanner: which CAPTCHA the page shows and which forms are exposed.",
+  "beats": [
+   "A concrete finding to open the conversation",
+   "Free, no signup",
+   "Link once"
+  ],
+  "asset": "{{agency_url}}"
+ },
+ {
+  "id": "promo-agency-enterprise",
+  "kind": "promo",
+  "format": "short",
+  "audience": "agency",
+  "title": "Every module across client sites",
+  "angle": "Enterprise: {{enterprise_sites}} sites, {{enterprise_verifs}} verifications a month, every module.",
+  "beats": [
+   "One account for the client portfolio",
+   "Signals, alerts, Private Access Tokens and AgentPass",
+   "Enterprise {{enterprise_price}}"
+  ],
+  "asset": "{{pricing_url}}"
+ },
+ {
+  "id": "promo-plans-agency",
+  "kind": "promo",
+  "format": "short",
+  "audience": "agency",
+  "title": "Plans for agencies",
+  "angle": "Plain summary of the plans for an agency owner.",
+  "beats": [
+   "Free {{free_price}} per site to start",
+   "IntegrityRuntime Pro {{integrity_price}}: {{paid_sites}} sites",
+   "Enterprise {{enterprise_price}}: {{enterprise_sites}} sites"
+  ],
+  "asset": "{{pricing_url}}"
+ }
+]

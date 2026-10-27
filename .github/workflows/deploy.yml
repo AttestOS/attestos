@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches: [main]
-    paths: ["worker/**", "site/**", "package-lock.json", ".github/workflows/deploy.yml"]
+    paths: ["worker/**", "site/**", "press/cadence.json", "press/control_catalog.json", "brand/**", "package-lock.json", ".github/workflows/deploy.yml"]
   workflow_dispatch:
 permissions:
   contents: read

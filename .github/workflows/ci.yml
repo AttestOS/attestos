@@ -24,3 +24,9 @@ jobs:
         run: python3 scripts/build-site.py --check
       - run: npm run typecheck
       - run: npm test
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip, cache-dependency-path: press/requirements.txt }
+      - name: Press (distribution mesh) tests
+        run: |
+          pip install -q -r press/requirements.txt pytest
+          python3 -m pytest -q press/tests

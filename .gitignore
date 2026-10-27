@@ -2,3 +2,9 @@ node_modules
 .wrangler
 .dev.vars
 *.log
+__pycache__/
+*.pyc
+.pytest_cache
+press/auto/
+press/videos-repo/
+.press-state/
