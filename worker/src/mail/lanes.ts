@@ -1,0 +1,57 @@
+import type { Env } from "../env";
+import { first, getSetting, setSetting } from "../lib/db";
+import { safeJson } from "../lib/util";
+
+/** Sending lanes = SMTP/IMAP mailboxes. A lane is ARMED only when its JSON entry AND both secrets exist:
+ *
+ *   MAILBOXES = '[{"id":"lv1","host":"mail.inbox.lv","fromName":"AttestOS","cold":8,"transactional":10,"hourly":4}]'
+ *   secrets:   MAILBOX_LV1_USER, MAILBOX_LV1_PASS
+ *
+ *  `cold` = first touches + follow-ups per UTC day (0 = this lane never sends cold mail),
+ *  `transactional` = verification/reset/notice emails per day, `hourly` = ceiling for everything (provider limit
+ *  minus headroom; inbox.lv allows 15/h but the box may be shared). */
+export interface Lane {
+  id: string; host: string; smtpPort: number; imapPort: number; user: string; pass: string; fromName: string;
+  cold: number; transactional: number; hourly: number; spamFolder: string;
+}
+export interface LaneState { status: "ok" | "paused"; reason?: string; since?: string; cooldownUntil?: string; imap?: Record<string, { v: number; u: number }> }
+
+const ID = /^[a-z][a-z0-9]{1,15}$/;
+export function lanes(env: Env): Lane[] {
+  const raw = safeJson<unknown>(env.MAILBOXES, []);
+  if (!Array.isArray(raw)) return [];
+  const out: Lane[] = [];
+  const num = (v: unknown, d: number, max: number) => { const n = Number(v); return v !== undefined && Number.isFinite(n) && n >= 0 ? Math.min(Math.floor(n), max) : d; };
+  for (const m of raw as any[]) {
+    const id = String(m?.id || "").toLowerCase();
+    if (!ID.test(id) || out.some((o) => o.id === id)) continue;
+    const user = String(env[`MAILBOX_${id.toUpperCase()}_USER`] || "").trim().toLowerCase();
+    const pass = String(env[`MAILBOX_${id.toUpperCase()}_PASS`] || "");
+    if (!user || !pass || !m.host) continue;
+    out.push({
+      id, host: String(m.host), smtpPort: num(m.smtpPort, 465, 65535), imapPort: num(m.imapPort, 993, 65535), user, pass,
+      fromName: String(m.fromName || env.BRAND || "AttestOS").slice(0, 60),
+      cold: num(m.cold, 0, 200), transactional: num(m.transactional, 10, 200), hourly: num(m.hourly, 4, 60),
+      spamFolder: String(m.spamFolder || "INBOX/spam"),
+    });
+  }
+  return out;
+}
+
+export async function laneState(env: Env, id: string): Promise<LaneState> {
+  return { status: "ok", ...safeJson<Partial<LaneState>>(await getSetting(env, `lane:${id}`), {}) } as LaneState;
+}
+export const saveLaneState = (env: Env, id: string, s: LaneState) => setSetting(env, `lane:${id}`, JSON.stringify(s));
+export const laneUsable = (s: LaneState, now = Date.now()) => s.status === "ok" && !(s.cooldownUntil && Date.parse(s.cooldownUntil) > now);
+
+export const COLD_KINDS = ["first", "follow"];
+
+/** Delivery attempts for a lane (sent, or refused by the server): today (cold / transactional) and the last rolling hour (everything). */
+export async function laneCounts(env: Env, id: string) {
+  const r = await first<{ cold: number; tx: number; hour: number }>(env,
+    `SELECT COALESCE(SUM(CASE WHEN kind IN ('first','follow') AND sent_at >= date('now') THEN 1 ELSE 0 END), 0) AS cold,
+            COALESCE(SUM(CASE WHEN kind NOT IN ('first','follow') AND sent_at >= date('now') THEN 1 ELSE 0 END), 0) AS tx,
+            COALESCE(SUM(CASE WHEN sent_at >= datetime('now','-1 hour') THEN 1 ELSE 0 END), 0) AS hour
+       FROM outbox WHERE lane = ? AND status IN ('sent','failed') AND sent_at >= datetime('now','-1 day')`, id);
+  return { cold: r?.cold ?? 0, tx: r?.tx ?? 0, hour: r?.hour ?? 0 };
+}

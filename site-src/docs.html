@@ -1,0 +1,197 @@
+<!-- title: Docs · AttestOS -->
+<!-- desc: Add the AttestOS widget, verify tokens on your server (Node, PHP, Python), configure policy, passkeys, Private Access Tokens and AgentPass. -->
+<!-- nav: docs -->
+<!-- scripts: /assets/js/common.js /assets/js/docs.js -->
+<section style="padding-top:40px"><div class="wrap docs">
+<nav class="toc small" aria-label="Contents">
+  <b>Getting started</b>
+  <a href="#quick">Quick start</a><a href="#portal">The portal</a><a href="#widget">Widget</a><a href="#verify">Server verify</a><a href="#errors">Error codes</a><a href="#failopen">Failing open</a>
+  <b style="display:block;margin-top:12px">Settings</b>
+  <a href="#policy">Policy</a><a href="#signals">Risk signals</a><a href="#limits">Limits &amp; quotas</a>
+  <b style="display:block;margin-top:12px">Modules</b>
+  <a href="#passkeys">Passkeys</a><a href="#pat">Private Access Tokens</a><a href="#agentpass">AgentPass</a><a href="#robots">robots.txt generator</a>
+  <b style="display:block;margin-top:12px">More</b>
+  <a href="#billing">Billing</a><a href="#security">Security model</a>
+</nav>
+<article>
+<h1>AttestOS documentation</h1>
+<p class="lead">Everything you need to protect a form in about ten minutes, and the details behind it.</p>
+
+<h2 id="quick">Quick start</h2>
+<ol>
+  <li><a href="/app/#signup">Create a free account</a> and add a site with the domains your form runs on (add <code>localhost</code> testing is allowed by default).</li>
+  <li>Copy the <b>site key</b> (public) and the <b>secret key</b> (shown once: store it in your server's environment as <code>ATTESTOS_SECRET</code>).</li>
+  <li>Add the script and a <code>&lt;div class="attestos"&gt;</code> inside your form.</li>
+  <li>On submit, your server posts the hidden field <code>attestos-response</code> and your secret to <code>/api/siteverify</code> and only proceeds when <code>success</code> is true.</li>
+</ol>
+
+<h2 id="portal">The portal</h2>
+<p>Your account at <a href="/app/">/app/</a> holds your sites, keys, policy, stats and plan. The Setup tab gives you copy-paste snippets with your site key filled in.</p>
+<img class="shot" src="/assets/img/docs/portal-setup.webp" alt="Screenshot of the AttestOS portal Setup tab showing the site key, secret key, domains and the HTML snippet" loading="lazy" width="1200" height="760">
+<p>The Policy tab controls difficulty, localhost testing, automation signals, adaptive difficulty, surge alerts, Private Access Tokens and the passkey RP ID. Stats and Audit log show what happened per day and per token.</p>
+<img class="shot" src="/assets/img/docs/portal-policy.webp" alt="Screenshot of the AttestOS portal Policy tab" loading="lazy" width="1200" height="760">
+
+<h2 id="widget">Widget</h2>
+<pre><code>&lt;script src="https://attestos-edge.attestos.workers.dev/v1/attestos.js" async defer&gt;&lt;/script&gt;
+
+&lt;form method="post" action="/signup"&gt;
+  &lt;input name="email" type="email" required&gt;
+  &lt;div class="attestos" data-sitekey="ao_site_…"&gt;&lt;/div&gt;
+  &lt;button type="submit"&gt;Sign up&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<p>On load the widget fetches a challenge, solves it in a Web Worker (falling back to short main-thread slices if your CSP forbids <code>blob:</code> workers), redeems the solution for a pass token and writes it into a hidden input named <code>attestos-response</code>. Tokens live 5 minutes; the widget refreshes them every 4 minutes and solves a fresh one after each submit. A small "Protected by AttestOS" badge shows the state.</p>
+<table>
+  <thead><tr><th>Attribute</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>data-sitekey</code></td><td>Required. Your site key.</td></tr>
+    <tr><td><code>data-badge="none"</code></td><td>Hide the badge (please mention AttestOS in your privacy policy instead).</td></tr>
+    <tr><td><code>data-field="name"</code></td><td>Use a different hidden-field name.</td></tr>
+    <tr><td><code>data-callback="fnName"</code></td><td>Global function called with the token each time one is ready.</td></tr>
+  </tbody>
+</table>
+<h3>JavaScript API</h3>
+<pre><code>// For single-page apps: render into an element and read the token yourself
+const w = AttestOS.render(document.getElementById("captcha"), { sitekey: "ao_site_…", onToken: (t) =&gt; {} });
+w.getResponse();   // current token or ""
+w.reset();         // discard and solve a fresh one (call after each submit)
+
+// Or one-shot, no UI:
+const token = await AttestOS.execute("ao_site_…");</code></pre>
+<p><b>Content-Security-Policy:</b> allow <code>script-src https://attestos-edge.attestos.workers.dev</code> and <code>connect-src https://attestos-edge.attestos.workers.dev</code>; add <code>worker-src blob:</code> for the faster worker solver.</p>
+
+<h2 id="verify">Server verify</h2>
+<p><code>POST /api/siteverify</code> accepts JSON or form-encoded <code>secret</code> and <code>response</code> (a <code>remoteip</code> field is accepted and ignored). Each token verifies <b>once</b>.</p>
+<pre><code>{
+  "success": true,
+  "challenge_ts": "2026-10-27T21:04:11.000Z",
+  "hostname": "shop.example",
+  "method": "pow",            // pow | pat | passkey
+  "risk": 0.12,               // IntegrityRuntime Pro, signals on
+  "signals": [],              // names of automation signals seen
+  "error-codes": []
+}</code></pre>
+<div class="tabs" id="doc-lang"><button data-l="node" class="on">Node</button><button data-l="php">PHP</button><button data-l="python">Python</button></div>
+<pre data-code="node"><code>// Express: app.use(express.urlencoded({ extended: false }))
+app.post("/signup", async (req, res) =&gt; {
+  const v = await fetch("https://attestos-edge.attestos.workers.dev/api/siteverify", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ secret: process.env.ATTESTOS_SECRET, response: req.body["attestos-response"] }),
+    signal: AbortSignal.timeout(5000),
+  }).then((r) =&gt; r.json()).catch(() =&gt; ({ success: false, "error-codes": ["network-error"] }));
+  const failOpen = (v["error-codes"] || []).some((c) =&gt; c === "quota-exceeded" || c === "network-error");
+  if (!v.success &amp;&amp; !failOpen) return res.status(400).send("Bot check failed, please retry");
+  // … create the account
+});</code></pre>
+<pre data-code="php" class="hidden"><code>&lt;?php
+$ch = curl_init("https://attestos-edge.attestos.workers.dev/api/siteverify");
+curl_setopt_array($ch, [
+  CURLOPT_POST =&gt; true, CURLOPT_RETURNTRANSFER =&gt; true, CURLOPT_TIMEOUT =&gt; 5,
+  CURLOPT_HTTPHEADER =&gt; ["content-type: application/json"],
+  CURLOPT_POSTFIELDS =&gt; json_encode(["secret" =&gt; getenv("ATTESTOS_SECRET"), "response" =&gt; $_POST["attestos-response"] ?? ""]),
+]);
+$raw = curl_exec($ch);
+$v = $raw ? json_decode($raw, true) : ["success" =&gt; false, "error-codes" =&gt; ["network-error"]];
+$failOpen = array_intersect($v["error-codes"] ?? [], ["quota-exceeded", "network-error"]);
+if (empty($v["success"]) &amp;&amp; !$failOpen) { http_response_code(400); exit("Bot check failed, please retry"); }</code></pre>
+<pre data-code="python" class="hidden"><code># Flask
+import os, requests
+from flask import request, abort
+
+def attestos_ok() -&gt; bool:
+    try:
+        v = requests.post("https://attestos-edge.attestos.workers.dev/api/siteverify",
+            json={"secret": os.environ["ATTESTOS_SECRET"], "response": request.form.get("attestos-response", "")},
+            timeout=5).json()
+    except requests.RequestException:
+        return True   # fail open on network errors
+    return v.get("success") or "quota-exceeded" in v.get("error-codes", [])
+
+@app.post("/signup")
+def signup():
+    if not attestos_ok():
+        abort(400, "Bot check failed, please retry")</code></pre>
+
+<h2 id="errors">Error codes</h2>
+<table><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>missing-input-secret</code> / <code>invalid-input-secret</code></td><td>No secret, or it doesn't match any site (rotated?).</td></tr>
+<tr><td><code>missing-input-response</code> / <code>invalid-input-response</code></td><td>The form didn't carry a token, or it is malformed or forged.</td></tr>
+<tr><td><code>timeout-or-duplicate</code></td><td>Older than 5 minutes, or already verified once.</td></tr>
+<tr><td><code>sitekey-mismatch</code></td><td>The token was issued for a different site than this secret.</td></tr>
+<tr><td><code>quota-exceeded</code></td><td>Your account is more than 10% over its monthly verifications.</td></tr>
+<tr><td><code>risk-too-high</code></td><td>Signals are in enforce mode and the solve looked automated.</td></tr>
+</tbody></table>
+
+<h2 id="failopen">Failing open</h2>
+<p>We'd rather you never lose a real sign-up because of us. The examples above treat <code>quota-exceeded</code> and network failures as "let through", so an outage or an over-quota month degrades to "no bot check" instead of "no sign-ups". If the form protects something sensitive (password reset, payments), fail closed instead.</p>
+
+<h2 id="policy">Policy</h2>
+<table><thead><tr><th>Setting</th><th>Default</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Difficulty</td><td>16 bits</td><td>12–24. Average work is 2<sup>bits</sup> hashes; a phone does roughly 0.5–2 million per second.</td></tr>
+<tr><td>Accept localhost</td><td>on</td><td>Lets you test on <code>http://localhost</code> without adding it as a domain. Turn off in production if you like.</td></tr>
+<tr><td>Adaptive difficulty</td><td>on</td><td>IntegrityRuntime Pro. Above the surge threshold per minute (per Cloudflare location) difficulty rises by up to 4 bits.</td></tr>
+<tr><td>Surge alert webhook</td><td>off</td><td>IntegrityRuntime Pro. Slack- or Discord-compatible URL, at most one alert per site per hour.</td></tr>
+<tr><td>Private Access Tokens</td><td>on</td><td>Hardware Gateway Pro. See below.</td></tr>
+</tbody></table>
+
+<h2 id="signals">Risk signals (IntegrityRuntime Pro)</h2>
+<p>With signals on, the browser facts the widget sends when it redeems a solution are scored: <code>navigator.webdriver</code> (<code>webdriver</code>), a headless or automation user agent (<code>headless_ua</code>), a DevTools-protocol hook (<code>cdp_runtime</code>), a software WebGL renderer such as SwiftShader or llvmpipe (<code>software_gpu</code>), a JavaScript user agent that differs from the request's (<code>ua_mismatch</code>), no languages (<code>no_languages</code>), a zero-size window (<code>zero_window</code>), desktop Chrome with no plugins (<code>no_plugins_desktop_chrome</code>) and a solve faster than JavaScript can run (<code>native_speed_solver</code>). Each named signal adds weight; the total (0–1) comes back as <code>risk</code> with the signal names. In <b>report</b> mode you decide what to do with it; in <b>enforce</b> mode a solve above your threshold is refused at redemption, so no token is issued and the form carries none (siteverify then answers <code>missing-input-response</code>).</p>
+<p>These are honest heuristics, not magic: a well-built bot can hide them. Use the score together with your own rate limits.</p>
+
+<h2 id="limits">Limits &amp; quotas</h2>
+<table><thead><tr><th>Plan</th><th>Verifications / month</th><th>Sites</th><th>Domains / site</th><th>Passkeys / site</th><th>Agent checks</th></tr></thead><tbody id="plans-table"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody></table>
+<p>Usage counts all sites in your account and resets on the 1st (UTC). You can go 10% over before <code>quota-exceeded</code>. Challenges are also rate-limited per IP at the edge to stop floods.</p>
+
+<h2 id="passkeys">Passkeys</h2>
+<p>AttestOS can be the WebAuthn back end for passwordless login on your site: we keep the public keys and counters; you keep your users. Free plans hold 50 passkeys per site.</p>
+<pre><code>// 1. Register. Your BACKEND (the user is logged in there) asks for options with your secret:
+//    POST /api/v1/passkeys/register/begin  { "secret": "ao_sec_…", "user_id": "u_123", "user_name": "ada@example.com" }
+//    and hands the JSON answer to the page, which creates the credential:
+await AttestOS.passkey.register(beginJsonFromYourBackend);
+
+// 2. Log in (no secret needed in the browser). Optional userId narrows the allowed credentials.
+const { token, user_id } = await AttestOS.passkey.login({ sitekey: "ao_site_…" });
+// Send token to your backend → /api/siteverify → { success: true, method: "passkey", user_id: "u_123", … }</code></pre>
+<p>Your backend can list and remove a user's passkeys with <code>POST /api/v1/passkeys/list</code> <code>{secret, user_id?}</code> and <code>POST /api/v1/passkeys/delete</code> <code>{secret, credential_id}</code>.</p>
+<p>The RP ID defaults to the site's first domain; set it in Policy if your login runs on a parent domain. ES256, RS256 and Ed25519 keys are supported; signature counters are checked to catch cloned authenticators.</p>
+
+<h2 id="pat">Private Access Tokens (Hardware Gateway Pro)</h2>
+<p>Private Access Tokens (Privacy Pass, RFC 9576–9578, token type 2) let a device prove "a real, unmodified device vouches for this request" without revealing who the user is. When enabled, the widget first calls <code>/api/v1/pat/probe</code>; we answer with a <code>WWW-Authenticate: PrivateToken</code> challenge, the browser fetches a token from its issuer, and we verify the RSA blind signature against the issuer's published key. If that works the visitor skips the proof-of-work entirely and siteverify reports <code>method: "pat"</code>.</p>
+<p><b>Honest caveats:</b> today this mostly means Safari on iOS/iPadOS 16+ and macOS Ventura+ with Automatic Verification turned on (the default). Apple only hands tokens to issuers it works with, so we verify tokens from the issuers listed in our configuration; every other visitor falls back to Ghost-PoW automatically, so nobody is locked out.</p>
+
+<h2 id="agentpass">AgentPass (AgentPass Pro)</h2>
+<p>Ask AgentPass, per request, what to do with an automated visitor. Call it from edge middleware (a Cloudflare Worker, Vercel middleware, Nginx with a sub-request…):</p>
+<pre><code>POST /api/v1/agent/check
+{ "secret": "ao_sec_…", "user_agent": "GPTBot/1.2", "ip": "20.171.207.1", "path": "/article/42", "agent_key": null }
+
+→ { "action": "charge", "status": 402, "category": "training", "agent": "GPTBot", "operator": "OpenAI",
+    "verified": true, "price_usd": 0.002, "checkout_url": "https://whop.com/checkout/…",
+    "headers": { "link": "&lt;https://whop.com/checkout/…&gt;; rel=\"payment\"", "x-agentpass-price-usd": "0.002" } }</code></pre>
+<ul>
+  <li><b>Categories:</b> search crawlers, model-training crawlers, user-triggered assistants, unknown bots. Pick allow, charge (HTTP 402 with your payment link) or block for each.</li>
+  <li><b>Verification:</b> Googlebot, Bingbot, Applebot, GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot and Perplexity-User are checked against the IP ranges their operators publish (refreshed daily). A request that claims to be one of them from another IP is blocked when verification is on. Operators that publish no ranges are classified by user agent only and reported with <code>verified: null</code>.</li>
+  <li><b>Agent keys:</b> when an AI company pays you, mint a key in the portal (optionally with a request quota). Requests carrying it in <code>agent_key</code> are allowed.</li>
+  <li>If the monthly check quota is exceeded the answer is <code>allow</code> with <code>quota_exceeded: true</code>: fail open, never break your site.</li>
+</ul>
+<p>We never touch the money: the 402 points at your own checkout.</p>
+
+<h2 id="robots">robots.txt AI rules generator</h2>
+<p>robots.txt is a polite request; well-behaved crawlers follow it. Pick what to allow and paste the result into your robots.txt (AgentPass enforces it for the ones that don't).</p>
+<div class="card">
+  <div class="grid2" id="robots-opts"></div>
+  <pre style="margin-top:14px"><code id="robots-out"></code></pre>
+  <button class="btn alt sm" id="robots-copy">Copy</button>
+</div>
+
+<h2 id="billing">Billing</h2>
+<p>Plans are monthly subscriptions sold on Whop. Buy with your AttestOS email and confirm that email in the portal; the plan attaches within seconds (Whop sends us a signed webhook). If you bought before creating an account, the purchase email contains a claim link that creates your account with the plan attached. Cancel in <a href="https://whop.com/@me/settings/memberships">Whop → Memberships</a>; you keep the plan until the period ends, then drop to free limits. Sites above the free limits keep working; you just can't add more.</p>
+
+<h2 id="security">Security model</h2>
+<ul>
+  <li>Challenges are HMAC-signed with a server secret, bound to the site key, the page's hostname, an expiry (5 minutes) and the difficulty the server chose. The client can't lower the difficulty.</li>
+  <li>Solutions are redeemed once (a solved challenge can't be reused), and the resulting pass token verifies once. Both are enforced in the database.</li>
+  <li>Secret keys are stored as SHA-256 hashes and shown once. Rotating a secret invalidates the old one immediately.</li>
+  <li>Report vulnerabilities to the address in <a href="/.well-known/security.txt">security.txt</a>.</li>
+</ul>
+</article>
+</div></section>

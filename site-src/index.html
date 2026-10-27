@@ -1,0 +1,92 @@
+<!-- title: AttestOS · Bot checks your visitors never see -->
+<!-- desc: Replace reCAPTCHA and hCaptcha puzzles with an invisible proof-of-work check and a server-side verify call. Free for 10,000 verifications a month. -->
+<!-- nav: home -->
+<!-- scripts: /v1/attestos.js /assets/js/home.js -->
+<section class="hero"><div class="wrap grid2">
+  <div>
+    <span class="pill">Free plan · no card</span>
+    <h1>Bot checks your visitors <span class="grad">never see</span>.</h1>
+    <p class="lead">AttestOS replaces image puzzles on sign-up, login and contact forms with a small proof-of-work check that runs in the background, plus a server-side verify call shaped like reCAPTCHA's. Real people just submit the form.</p>
+    <div class="row"><a class="btn" href="/app/#signup">Get a free site key</a><a class="btn alt" href="/scanner/">Scan your site</a></div>
+    <p class="small muted" style="margin-top:14px">10,000 verifications a month free · one script tag + one API call · works with any backend</p>
+  </div>
+  <div class="demo" id="demo">
+    <h3 style="margin-top:0">Try it: this form is protected</h3>
+    <form id="demo-form">
+      <label for="demo-email">Email</label>
+      <input id="demo-email" type="email" value="ada@example.com" autocomplete="off">
+      <div id="demo-widget" style="margin:10px 0"></div>
+      <button class="btn" type="submit" id="demo-submit">Create account</button>
+    </form>
+    <p class="small muted" id="demo-note" style="margin:10px 0 6px">Your browser is solving a small challenge now. Submitting sends the token to our "backend", which calls <code>/api/siteverify</code>:</p>
+    <pre id="demo-out"><code>{ "waiting": "submit the form" }</code></pre>
+  </div>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap">
+  <h2 class="center">How it works</h2>
+  <div class="grid3 steps" style="margin-top:24px">
+    <div class="card"><h3>The page solves</h3><p class="muted">Our widget fetches a signed challenge and finds a nonce whose SHA-256 has enough leading zero bits. That takes a browser a fraction of a second; doing it millions of times costs a bot farm real compute.</p></div>
+    <div class="card"><h3>The form carries a token</h3><p class="muted">The solution is exchanged for a pass token that lives 5 minutes and is bound to your site key and domain. It lands in a hidden field, <code>attestos-response</code>.</p></div>
+    <div class="card"><h3>Your server verifies once</h3><p class="muted">Your backend posts the token and your secret key to <code>/api/siteverify</code>. The first call succeeds; any replay fails with <code>timeout-or-duplicate</code>.</p></div>
+  </div>
+  <div class="grid2" style="margin-top:28px;align-items:start">
+<pre><code>&lt;script src="https://attestos-edge.attestos.workers.dev/v1/attestos.js" async defer&gt;&lt;/script&gt;
+&lt;form method="post" action="/signup"&gt;
+  …
+  &lt;div class="attestos" data-sitekey="ao_site_…"&gt;&lt;/div&gt;
+  &lt;button&gt;Sign up&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<pre><code>// your backend (Node 18+)
+const r = await fetch("https://attestos-edge.attestos.workers.dev/api/siteverify", {
+  method: "POST",
+  headers: { "content-type": "application/json" },
+  body: JSON.stringify({ secret: process.env.ATTESTOS_SECRET,
+                         response: req.body["attestos-response"] }),
+});
+const v = await r.json();   // { success: true, hostname, method, … }
+if (!v.success) return res.status(400).send("Bot check failed");</code></pre>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 class="center">One free core, four paid modules</h2>
+  <p class="center muted">Every plan includes the free core. Paid plans are monthly on Whop and can be combined.</p>
+  <div class="grid3" style="margin-top:26px">
+    <div class="card product"><img src="/assets/img/cover.webp" alt="AttestOS Edge cover art" loading="lazy" width="418" height="314"><span class="pill g">Free</span><h3>Ghost-PoW core</h3><p class="muted">Invisible proof-of-work widget, server-side verify with single-use tokens, domain lock, an AI-crawler rule check, and passkeys for up to 50 users.</p></div>
+    <div class="card product"><img src="/assets/img/cover-integrity.webp" alt="IntegrityRuntime Pro cover art" loading="lazy" width="600" height="327"><span class="pill">$49/mo</span><h3>IntegrityRuntime Pro</h3><p class="muted">Automation signals (webdriver flag, headless user agents, software GPU, native-speed solvers…) turned into a risk score in every verify response, adaptive difficulty during surges, Slack/Discord alerts, audit export.</p></div>
+    <div class="card product"><img src="/assets/img/cover-hardware.webp" alt="Hardware Gateway Pro cover art" loading="lazy" width="450" height="603"><span class="pill">$149/mo</span><h3>Hardware Gateway Pro</h3><p class="muted">Private Access Tokens (Privacy Pass, RFC 9576–9578): supporting Apple devices skip the solve entirely, everyone else falls back to Ghost-PoW. Plus unlimited passkeys.</p></div>
+    <div class="card product"><img src="/assets/img/cover-agentpass.webp" alt="AgentPass Pro cover art" loading="lazy" width="436" height="650"><span class="pill">$99/mo</span><h3>AgentPass Pro</h3><p class="muted">Decide per AI crawler: allow, block, or answer HTTP 402 with your own payment link. Crawler claims are checked against the operators' published IP ranges. Sell metered agent keys.</p></div>
+    <div class="card product"><img src="/assets/img/cover-enterprise.webp" alt="Enterprise cover art" loading="lazy" width="363" height="650"><span class="pill v">$299/mo</span><h3>Enterprise</h3><p class="muted">All modules, 300,000 verifications a month, 25 sites.</p></div>
+    <div class="card"><h3>Not sure yet?</h3><p class="muted">Run the free scanner on your sign-up page. It shows which CAPTCHA (if any) you run today, how your robots.txt treats AI crawlers and which security headers are missing.</p><a class="btn alt" href="/scanner/">Open the scanner</a></div>
+  </div>
+</div></section>
+
+<section><div class="wrap grid2" style="align-items:center">
+  <img src="/assets/img/promo.webp" alt="Illustration: a broken text CAPTCHA on the left, a shield on the right" loading="lazy" width="800" height="446" style="border-radius:14px">
+  <div>
+    <h2>What proof-of-work does, honestly</h2>
+    <ul class="ticks">
+      <li>Makes every automated submission cost CPU time, which kills cheap mass sign-ups, credential stuffing at scale and form spam floods.</li>
+      <li>Asks nothing of real visitors: no puzzles, no clicks, no third-party tracking cookies.</li>
+      <li>Single-use, short-lived, domain-bound tokens: a solved token can't be farmed and replayed.</li>
+    </ul>
+    <ul class="ticks cross">
+      <li>It is not identity. A patient attacker with real compute can still pay the price, so keep server-side rate limits, and add the risk score or passkeys where it matters.</li>
+      <li>No tool can promise zero bots. We report what we check, and the verify response tells you how a token was earned.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section><div class="wrap narrow">
+  <h2>Questions</h2>
+  <h3>Does it replace reCAPTCHA v2 / hCaptcha one to one?</h3>
+  <p class="muted">Yes for the integration shape: a script, a hidden field and a siteverify call with <code>success</code>, <code>challenge_ts</code>, <code>hostname</code> and <code>error-codes</code>. The difference is that visitors see nothing.</p>
+  <h3>What happens if AttestOS is down or my quota runs out?</h3>
+  <p class="muted">You decide. The docs show a fail-open pattern for <code>quota-exceeded</code> and network errors, so your sign-ups never stop because of us.</p>
+  <h3>Is visitor data sent anywhere?</h3>
+  <p class="muted">The challenge is served from Cloudflare's edge. On paid IntegrityRuntime plans the widget also sends a few browser facts (listed in the <a href="/privacy/">privacy policy</a>) to compute the risk score. No cookies, no cross-site tracking.</p>
+  <h3>How do I pay?</h3>
+  <p class="muted">Checkout runs on Whop. Buy with the same email as your AttestOS account and the plan attaches automatically once your email is confirmed.</p>
+  <p style="margin-top:28px"><a class="btn" href="/app/#signup">Start free</a></p>
+</div></section>

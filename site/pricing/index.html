@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pricing · AttestOS</title>
+<meta name="description" content="Free for 10,000 verifications a month. Paid modules from $49/month, billed on Whop, combinable.">
+<link rel="canonical" href="https://attestos-edge.attestos.workers.dev/pricing/">
+<meta property="og:title" content="Pricing · AttestOS">
+<meta property="og:description" content="Free for 10,000 verifications a month. Paid modules from $49/month, billed on Whop, combinable.">
+<meta property="og:image" content="https://attestos-edge.attestos.workers.dev/assets/img/promo.webp">
+<meta name="theme-color" content="#060b16">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/pricing.js" defer></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/img/logo.webp" alt="" width="40" height="22">AttestOS</a>
+<nav class="main" aria-label="Main"><a href="/">Product</a><a href="/pricing/" class=on>Pricing</a><a href="/scanner/">Free scanner</a><a href="/docs/">Docs</a><a href="/app/">Log in</a></nav>
+</div></header>
+<main>
+<section class="hero" style="padding-bottom:10px"><div class="wrap center">
+  <h1>Simple, monthly, combinable</h1>
+  <p class="lead">Start free. Add a module when you need it; owning two modules gives you both feature sets and the higher limits.</p>
+  <div id="soon" class="notice warn hidden" style="max-width:640px;margin:16px auto">Checkout for this plan isn't open yet. Start on the free plan and we'll attach the upgrade the day it opens.</div>
+</div></section>
+<section style="padding-top:20px"><div class="wrap">
+  <div class="grid3">
+    <div class="card" id="free"><span class="pill g">Free</span><div class="price">$0</div><p class="muted">Ghost-PoW core</p>
+      <ul class="ticks"><li>10,000 verifications / month</li><li>1 site, 3 domains</li><li>Invisible widget + siteverify</li><li>Single-use, domain-bound tokens</li><li>Passkeys for up to 50 users</li><li>AI-crawler rule check (scanner)</li></ul>
+      <a class="btn alt" href="/app/#signup">Get a free site key</a></div>
+    <div class="card" id="integrity"><span class="pill">IntegrityRuntime Pro</span><div class="price">$49<small>/mo</small></div><p class="muted">Know how risky each solve was</p>
+      <ul class="ticks"><li>100,000 verifications / month</li><li>5 sites, 10 domains each</li><li>Risk score + named signals in siteverify</li><li>Report or enforce mode</li><li>Adaptive difficulty during surges</li><li>Slack / Discord surge alerts</li><li>90-day audit export (CSV)</li></ul>
+      <a class="btn" href="/go/integrity">Buy on Whop</a></div>
+    <div class="card" id="hardware"><span class="pill">Hardware Gateway Pro</span><div class="price">$149<small>/mo</small></div><p class="muted">Let attested devices skip the work</p>
+      <ul class="ticks"><li>100,000 verifications / month</li><li>5 sites, 10 domains each</li><li>Private Access Tokens (RFC 9576–9578, type 2)</li><li>Safari / iOS 16+ with Automatic Verification; everyone else falls back to PoW</li><li>Unlimited passkeys</li><li>90-day audit export</li></ul>
+      <a class="btn" href="/go/hardware">Buy on Whop</a></div>
+    <div class="card" id="agent"><span class="pill">AgentPass Pro</span><div class="price">$99<small>/mo</small></div><p class="muted">Get paid by AI crawlers, or keep them out</p>
+      <ul class="ticks"><li>250,000 agent checks / month</li><li>100,000 verifications / month</li><li>Allow / 402 charge / block per crawler category</li><li>Crawler IP verification (published ranges)</li><li>Metered agent keys you sell</li><li>Your payment link: we never touch the money</li></ul>
+      <a class="btn" href="/go/agent">Buy on Whop</a></div>
+    <div class="card" id="enterprise"><span class="pill v">Enterprise</span><div class="price">$299<small>/mo</small></div><p class="muted">Everything, bigger limits</p>
+      <ul class="ticks"><li>300,000 verifications / month</li><li>1,000,000 agent checks / month</li><li>25 sites, 25 domains each</li><li>All modules above</li></ul>
+      <a class="btn" href="/go/enterprise">Buy on Whop</a></div>
+    <div class="card"><h3>How billing works</h3><p class="muted">Checkout, receipts and cancellation are handled by Whop. Use the same email as your AttestOS account and confirm it; the plan attaches within seconds of payment. Cancel any time in <a href="https://whop.com/@me/settings/memberships">Whop → Memberships</a>; you drop back to the free limits at the end of the period.</p>
+      <p class="muted">Over your monthly limit? Verifications keep working up to 10% over, then siteverify answers <code>quota-exceeded</code>, and the docs show how to fail open so sign-ups never stop.</p></div>
+  </div>
+</div></section>
+</main>
+<footer class="bottom"><div class="wrap">
+<div><b>AttestOS</b> · invisible bot verification<br><span class="small">Runs on Cloudflare Workers. Checkout by Whop.</span></div>
+<div><a href="/pricing/">Pricing</a> · <a href="/docs/">Docs</a> · <a href="/scanner/">Scanner</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/.well-known/security.txt">Security</a> · <a href="https://github.com/AttestOS/attestos">GitHub</a></div>
+</div></footer>
+</body>
+</html>

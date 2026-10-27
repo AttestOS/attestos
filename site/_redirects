@@ -1,0 +1,5 @@
+/console  /admin/  301
+/portal   /app/    301
+/manual   /docs/   301
+/signup   /app/#signup  302
+/healthz  /api/health  302

@@ -1,0 +1,37 @@
+<!-- title: Free CAPTCHA & bot-protection scanner · AttestOS -->
+<!-- desc: Paste a sign-up, login or contact page. See which CAPTCHA it runs, how robots.txt treats AI crawlers and which security headers are missing. Free. -->
+<!-- nav: scanner -->
+<!-- scripts: /assets/js/common.js /assets/js/scanner.js -->
+<section class="hero" style="padding-bottom:20px"><div class="wrap narrow center">
+  <span class="pill">Free · no sign-up</span>
+  <h1>How does your form treat bots, and people?</h1>
+  <p class="lead">We fetch the page, its robots.txt and security.txt, and report exactly what we find.</p>
+  <form id="scan-form" class="row" style="justify-content:center;margin-top:18px">
+    <input class="grow" id="scan-url" name="url" placeholder="yourshop.com/signup" required aria-label="Page address" style="max-width:460px">
+    <button class="btn" type="submit" id="scan-btn">Scan page</button>
+  </form>
+  <div id="scan-msg" class="notice hidden"></div>
+</div></section>
+<section id="report" class="hidden" style="padding-top:10px"><div class="wrap">
+  <div class="grid2" style="align-items:start">
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><div><div class="muted small">Score</div><div class="score" id="r-score">–</div></div><div class="small muted" id="r-meta"></div></div>
+      <h3 style="margin-top:14px">Findings</h3>
+      <div id="r-findings"></div>
+      <p class="small muted" id="r-share"></p>
+    </div>
+    <div>
+      <div class="card"><h3>Bot check on this page</h3><div id="r-vendors"></div></div>
+      <div class="card" style="margin-top:16px"><h3>AI crawlers (robots.txt)</h3><div class="tablewrap"><table><thead><tr><th>Crawler</th><th>Operator</th><th>Purpose</th><th>Access</th></tr></thead><tbody id="r-bots"></tbody></table></div><p class="small muted">robots.txt is a request crawlers may ignore. AgentPass checks crawlers against their published IP ranges and can block or charge them.</p></div>
+      <div class="card" style="margin-top:16px"><h3>Security headers</h3><div id="r-headers"></div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:20px">
+    <div class="grid2">
+      <div><h3>Fix the CAPTCHA part in ten minutes</h3><p class="muted">Swap the puzzle for the invisible AttestOS widget: one script tag, one hidden field, one verify call. Free for 10,000 verifications a month.</p><a class="btn" href="/app/#signup">Get a free site key</a> <a class="btn alt" href="/docs/">Read the docs</a></div>
+      <div><h3>Want a hand?</h3><p class="muted">Leave an email and a human (the founder) will reply with specific advice for this site. No newsletter.</p>
+        <form id="lead-form" class="row"><input class="grow" type="email" id="lead-email" placeholder="you@company.com" required aria-label="Email"><button class="btn alt" type="submit">Ask</button></form>
+        <div id="lead-msg" class="notice hidden"></div></div>
+    </div>
+  </div>
+</div></section>

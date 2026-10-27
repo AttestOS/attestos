@@ -1,0 +1,45 @@
+name: Deploy
+# Runs only on pushes to main in this repository (never for pull requests), after the tests pass.
+on:
+  push:
+    branches: [main]
+    paths: ["worker/**", "site/**", "package-lock.json", ".github/workflows/deploy.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.repository == 'AttestOS/attestos'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: python3 scripts/build-site.py --check
+      - run: npm run typecheck
+      - run: npm test
+      - name: Apply D1 migrations
+        working-directory: worker
+        run: npx wrangler d1 migrations apply attestos --remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Deploy Worker and site
+        working-directory: worker
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Smoke test
+        run: |
+          set -e
+          curl -fsS https://attestos-edge.attestos.workers.dev/api/health
+          curl -fsS -o /dev/null https://attestos-edge.attestos.workers.dev/
+          curl -fsS -o /dev/null https://attestos-edge.attestos.workers.dev/v1/attestos.js

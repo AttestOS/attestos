@@ -1,0 +1,41 @@
+name: Prospects
+# Once a day: check ~600 mid-size sites (Tranco ranks 20k-500k) for a VISIBLE challenge on their own
+# sign-up/login/contact pages plus a published role address, and hand the matches to the Worker.
+# Public repo: Actions minutes are free; the run takes ~3-5 minutes.
+on:
+  schedule:
+    - cron: "41 4 * * *"
+  workflow_dispatch:
+    inputs:
+      dry:
+        description: "Print only, don't post"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: prospects
+  cancel-in-progress: false
+jobs:
+  find:
+    if: github.repository == 'AttestOS/attestos'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Download the Tranco list
+        run: |
+          curl -fsSL --retry 3 -o tranco.zip https://tranco-list.eu/top-1m.csv.zip
+          unzip -p tranco.zip > tranco.csv
+          wc -l tranco.csv
+      - name: Find prospects
+        run: node scripts/prospects.mjs
+        env:
+          AO_URL: https://attestos-edge.attestos.workers.dev
+          AO_OPS_TOKEN: ${{ secrets.AO_OPS_TOKEN }}
+          BATCH: "600"
+          MAX_MINUTES: "12"
+          DRY: ${{ inputs.dry && '1' || '0' }}

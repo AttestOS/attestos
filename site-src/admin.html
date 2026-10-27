@@ -1,0 +1,37 @@
+<!-- title: AttestOS · Owner console -->
+<!-- desc: Owner console -->
+<!-- noindex -->
+<!-- scripts: /assets/js/common.js /assets/js/admin.js -->
+<section style="padding-top:36px"><div class="wrap">
+  <div id="notice" class="notice hidden"></div>
+  <form id="f-login" class="card hidden" style="max-width:400px;margin:0 auto">
+    <h2>Owner console</h2>
+    <label for="o-pw">Password</label><input id="o-pw" type="password" autocomplete="current-password" required>
+    <p style="margin-top:14px"><button class="btn" type="submit">Log in</button></p>
+  </form>
+  <div id="console" class="hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h1 style="font-size:1.8rem;margin:0">Owner console</h1><div class="row"><button class="btn alt sm" id="refresh">Refresh</button><button class="btn alt sm" id="logout">Log out</button></div></div>
+    <div class="grid4" id="kpis"></div>
+    <div class="tabs" id="tabs" style="margin-top:20px"><button data-t="health" class="on">Health</button><button data-t="accounts">Accounts</button><button data-t="outreach">Outreach</button><button data-t="leads">Leads</button><button data-t="outbox">Outbox</button></div>
+    <div data-p="health">
+      <div class="grid2">
+        <div class="card"><h3>Configuration</h3><div id="config"></div></div>
+        <div class="card"><h3>D1 budget today (self-imposed)</h3><div id="quota"></div><h3 style="margin-top:18px">Mail lanes</h3><div id="lanes"></div></div>
+      </div>
+      <div class="card" style="margin-top:16px"><h3>Recent errors</h3><div class="tablewrap"><table><thead><tr><th>At</th><th>Scope</th><th>Message</th></tr></thead><tbody id="errors"></tbody></table></div></div>
+    </div>
+    <div data-p="accounts" class="hidden"><div class="card">
+      <div class="row"><input id="acc-q" class="grow" placeholder="Search email"><button class="btn alt sm" id="acc-search">Search</button></div>
+      <div class="tablewrap"><table><thead><tr><th>Email</th><th>Plan</th><th>Comp</th><th>Verified</th><th>Status</th><th>Sites</th><th>Created</th><th></th></tr></thead><tbody id="accounts"></tbody></table></div>
+    </div></div>
+    <div data-p="outreach" class="hidden">
+      <div class="card"><h3>Real-scan outreach</h3><div id="out-status"></div>
+        <p class="small muted">One honest first email per prospect, based on a real scan of their public sign-up/login/contact page, with a one-click unsubscribe; one follow-up after 5 days if no reply; bounces and unsubscribes are suppressed forever. You work the replies from the inbox.</p>
+        <div class="row"><button class="btn sm" id="out-on">Switch on</button><button class="btn alt sm" id="out-off">Switch off</button></div></div>
+      <div class="card" style="margin-top:16px"><div class="row"><h3 class="grow">Prospects</h3><select id="pr-filter" style="max-width:180px"><option value="">all</option><option>new</option><option>sent</option><option>followed</option><option>replied</option><option>skip</option><option>unsub</option><option>bounced</option></select></div>
+        <div class="tablewrap"><table><thead><tr><th>Domain</th><th>Found</th><th>Contact</th><th>Status</th><th>Sent</th><th>Last error</th><th></th></tr></thead><tbody id="prospects"></tbody></table></div></div>
+    </div>
+    <div data-p="leads" class="hidden"><div class="card"><h3>Scanner leads (asked for help)</h3><div class="tablewrap"><table><thead><tr><th>Email</th><th>Domain</th><th>Report</th><th>Source</th><th>At</th></tr></thead><tbody id="leads"></tbody></table></div></div></div>
+    <div data-p="outbox" class="hidden"><div class="card"><div class="tablewrap"><table><thead><tr><th>#</th><th>To</th><th>Subject</th><th>Kind</th><th>Status</th><th>Lane</th><th>Error</th><th>Created</th></tr></thead><tbody id="outbox"></tbody></table></div></div></div>
+  </div>
+</div></section>

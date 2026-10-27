@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy · AttestOS</title>
+<meta name="description" content="What AttestOS collects from your visitors and from you, and why.">
+<link rel="canonical" href="https://attestos-edge.attestos.workers.dev/privacy/">
+<meta property="og:title" content="Privacy · AttestOS">
+<meta property="og:description" content="What AttestOS collects from your visitors and from you, and why.">
+<meta property="og:image" content="https://attestos-edge.attestos.workers.dev/assets/img/promo.webp">
+<meta name="theme-color" content="#060b16">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/site.css">
+
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/img/logo.webp" alt="" width="40" height="22">AttestOS</a>
+<nav class="main" aria-label="Main"><a href="/">Product</a><a href="/pricing/">Pricing</a><a href="/scanner/">Free scanner</a><a href="/docs/">Docs</a><a href="/app/">Log in</a></nav>
+</div></header>
+<main>
+<section style="padding-top:40px"><div class="wrap narrow">
+<h1>Privacy policy</h1>
+<p class="muted">Last updated 27 October 2026.</p>
+<h2>Your visitors (sites using the widget)</h2>
+<p>When a page with the AttestOS widget loads, the visitor's browser requests a challenge from our service on Cloudflare's network. We process:</p>
+<ul>
+  <li>The page hostname (to check it belongs to the site), the IP address (only for per-IP rate limiting at the edge; not stored) and the user agent.</li>
+  <li>When a solution is redeemed: a small set of browser facts used for the risk score (whether <code>navigator.webdriver</code> is set, number of languages and plugins, CPU core count, window size, the WebGL renderer name, a DevTools-protocol check, how long the solve took). These are evaluated and discarded; only the resulting risk number and signal names are kept with the token record.</li>
+  <li>A token record (random token id, time, method, hostname, risk) kept for 90 days so site owners can audit verifications.</li>
+</ul>
+<p>No cookies are set by the widget, nothing is used for advertising or cross-site tracking, and we don't sell data. Passkeys: we store the public key, a counter and the user id the site gave us; never biometrics or private keys. Private Access Tokens are anonymous by design; we verify a signature and store nothing that identifies the device.</p>
+<h2>You (account holders)</h2>
+<ul>
+  <li>Email address and a salted password hash (PBKDF2), your sites, settings and usage counts.</li>
+  <li>Purchases: Whop processes payment. We receive the email, plan and membership status for your purchase, never card details.</li>
+  <li>Transactional emails (confirmation, password reset, purchase) are sent from our mailbox.</li>
+</ul>
+<h2>The free scanner and outreach</h2>
+<p>The scanner fetches public pages (the page you enter, its robots.txt and security.txt) and stores the report for 90 days so it can be shared. If you leave your email to ask for help, we keep it to reply to you.</p>
+<p>We may email businesses once, with one follow-up, about a public sign-up or contact page we scanned, using an address the business publishes for contact. Every such email says how we found the address and carries a one-click unsubscribe; unsubscribes and bounces are suppressed permanently.</p>
+<h2>Processors</h2>
+<p>Cloudflare (hosting, database), Whop (checkout), GitHub (code and scheduled jobs).</p>
+<h2>Your rights</h2>
+<p>Ask for a copy or deletion of your data by emailing the address in our <a href="/.well-known/security.txt">security.txt</a> or replying to any email from us. Deleting a site in the portal removes its keys, passkeys and agent keys immediately; token records expire after 90 days.</p>
+</div></section>
+</main>
+<footer class="bottom"><div class="wrap">
+<div><b>AttestOS</b> · invisible bot verification<br><span class="small">Runs on Cloudflare Workers. Checkout by Whop.</span></div>
+<div><a href="/pricing/">Pricing</a> · <a href="/docs/">Docs</a> · <a href="/scanner/">Scanner</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/.well-known/security.txt">Security</a> · <a href="https://github.com/AttestOS/attestos">GitHub</a></div>
+</div></footer>
+</body>
+</html>

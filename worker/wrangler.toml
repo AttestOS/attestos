@@ -1,16 +1,76 @@
+# AttestOS: one Worker serves the static site (assets, free), the verification API, the customer portal API,
+# the owner console API, the Whop webhook and two cron jobs. Live on workers.dev (same URL as before).
 name = "attestos-edge"
-main = "worker.js"
-compatibility_date = "2024-09-23"
-account_id = "ad5b6ab933ddf4c5ea9a2c49cc3c2c30"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+workers_dev = true
+preview_urls = false
 
-# Quota Optimization & Performance Settings
-# Uses standard usage model with 0 KV overhead
-usage_model = "standard"
+[assets]
+directory = "../site"
+binding = "ASSETS"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
+run_worker_first = ["/api/*", "/admin/api/*", "/go/*", "/u/*"]
 
-[vars]
-BRAND = "AttestOS"
-ENVIRONMENT = "production"
-QUOTA_PROFILE = "2_10th_ultra_lean"
+# Free plan: 5 cron triggers per ACCOUNT. TightBucket uses 2; AttestOS uses 2.
+[triggers]
+crons = ["*/10 * * * *", "17 3 * * *"]
+
+# Workers Rate Limiting (in-memory, free, no D1 cost). namespace_id must be unique in the account
+# (TightBucket uses 1001/1002).
+[[ratelimits]]
+name = "EDGE_RL"
+namespace_id = "2001"
+  [ratelimits.simple]
+  limit = 60
+  period = 60
+
+[[ratelimits]]
+name = "LOGIN_RL"
+namespace_id = "2002"
+  [ratelimits.simple]
+  limit = 5
+  period = 60
+
+[[ratelimits]]
+name = "SCAN_RL"
+namespace_id = "2003"
+  [ratelimits.simple]
+  limit = 4
+  period = 60
+
+[[d1_databases]]
+binding = "DB"
+database_name = "attestos"
+database_id = "bc0604b0-7310-4703-b270-47a186133fd3"
+migrations_dir = "migrations"
 
 [observability]
 enabled = true
+
+[vars]
+SITE_URL = "https://attestos-edge.attestos.workers.dev"
+BRAND = "AttestOS"
+# OWNER_NAME signs outreach ("Sam, AttestOS"); POSTAL_ADDRESS is REQUIRED before cold outreach can send (CAN-SPAM).
+OWNER_NAME = ""
+POSTAL_ADDRESS = ""
+# Mail lanes (SMTP 465 + IMAP 993). Each needs secrets MAILBOX_<ID>_USER and MAILBOX_<ID>_PASS.
+# cold = first touches + follow-ups per day, transactional = verify/reset/notice per day, hourly = everything.
+# lv1 is the inbox.lv box shared with TightBucket and STPI, so AttestOS keeps to 2/hour.
+MAILBOXES = '[{"id":"lv1","host":"mail.inbox.lv","fromName":"AttestOS","cold":4,"transactional":10,"hourly":2,"spamFolder":"INBOX/spam"}]'
+# Whop: map plan/product ids → plans, and one checkout URL per paid plan (https://whop.com/checkout/plan_…).
+WHOP_PLAN_MAP = '{}'
+WHOP_CHECKOUT_INTEGRITY = ""
+WHOP_CHECKOUT_HARDWARE = ""
+WHOP_CHECKOUT_AGENT = ""
+WHOP_CHECKOUT_ENTERPRISE = ""
+# AttestOS's own share of the account's free D1 quota (20%).
+D1_WRITE_BUDGET = "20000"
+D1_READ_BUDGET = "1000000"
+PAT_ISSUERS = '["demo-pat.issuer.cloudflare.com"]'
+
+# Secrets (wrangler secret put NAME):
+# APP_SECRET (≥32 chars), OWNER_PASSWORD_HASH (node scripts/owner-password.mjs), WHOP_WEBHOOK_SECRET,
+# AO_OPS_TOKEN (prospects workflow), AO_PRESS_TOKEN (distribution mesh), NTFY_TOPIC (optional phone push),
+# MAILBOX_LV1_USER, MAILBOX_LV1_PASS

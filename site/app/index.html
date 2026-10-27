@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your AttestOS account</title>
+<meta name="description" content="Manage your AttestOS sites, keys, policy and plan.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Your AttestOS account">
+<meta property="og:description" content="Manage your AttestOS sites, keys, policy and plan.">
+<meta property="og:image" content="https://attestos-edge.attestos.workers.dev/assets/img/promo.webp">
+<meta name="theme-color" content="#060b16">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/common.js" defer></script><script src="/assets/js/app.js" defer></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/img/logo.webp" alt="" width="40" height="22">AttestOS</a>
+<nav class="main" aria-label="Main"><a href="/">Product</a><a href="/pricing/">Pricing</a><a href="/scanner/">Free scanner</a><a href="/docs/">Docs</a><a href="/app/" class=on>Log in</a></nav>
+</div></header>
+<main>
+<section style="padding-top:36px"><div class="wrap">
+  <div id="notice" class="notice hidden"></div>
+
+  <div id="auth" class="hidden" style="max-width:440px;margin:0 auto">
+    <div class="card">
+      <div class="tabs" role="tablist"><button data-auth="login" class="on">Log in</button><button data-auth="signup">Sign up free</button><button data-auth="forgot">Forgot password</button></div>
+      <form id="f-login" data-form="login">
+        <label for="l-email">Email</label><input id="l-email" type="email" autocomplete="email" required>
+        <label for="l-pw">Password</label><input id="l-pw" type="password" autocomplete="current-password" required>
+        <p style="margin-top:16px"><button class="btn" type="submit">Log in</button></p>
+      </form>
+      <form id="f-signup" data-form="signup" class="hidden">
+        <label for="s-email">Email</label><input id="s-email" type="email" autocomplete="email" required>
+        <label for="s-pw">Password (10+ characters)</label><input id="s-pw" type="password" autocomplete="new-password" minlength="10" required>
+        <p class="small muted" style="margin-top:10px">Free plan: 10,000 verifications a month, no card. By signing up you accept the <a href="/terms/">terms</a> and <a href="/privacy/">privacy policy</a>.</p>
+        <p><button class="btn" type="submit">Create account</button></p>
+      </form>
+      <form id="f-forgot" data-form="forgot" class="hidden">
+        <label for="fg-email">Email</label><input id="fg-email" type="email" autocomplete="email" required>
+        <p style="margin-top:16px"><button class="btn" type="submit">Email me a reset link</button></p>
+      </form>
+      <form id="f-reset" data-form="reset" class="hidden">
+        <h3 id="reset-title">Choose a new password</h3>
+        <label for="r-pw">New password (10+ characters)</label><input id="r-pw" type="password" autocomplete="new-password" minlength="10" required>
+        <p style="margin-top:16px"><button class="btn" type="submit">Save password</button></p>
+      </form>
+      <div id="auth-msg" class="notice hidden"></div>
+    </div>
+  </div>
+
+  <div id="dash" class="hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:12px">
+      <div><h1 style="font-size:1.8rem;margin:0">Your account</h1><div class="muted small" id="d-email"></div></div>
+      <div class="row"><span id="d-plans"></span><button class="btn alt sm" id="logout">Log out</button></div>
+    </div>
+    <div id="verify-box" class="notice warn hidden"></div>
+    <div class="grid3" style="margin:16px 0">
+      <div class="card"><div class="kpi" id="k-verifs">0</div><div>verifications this month</div><div class="bar" style="margin-top:8px"><i id="k-bar" style="width:0"></i></div></div>
+      <div class="card"><div class="kpi" id="k-sites">0</div><div>sites</div></div>
+      <div class="card"><div class="kpi" id="k-agent">–</div><div>AgentPass checks this month</div></div>
+    </div>
+    <div class="tabs" id="main-tabs"><button data-tab="sites" class="on">Sites</button><button data-tab="plans">Plans &amp; billing</button><button data-tab="account">Account</button></div>
+
+    <div data-pane="sites">
+      <div id="no-sites" class="card hidden"><h3>Add your first site</h3><p class="muted">Enter the domains where the widget will run. Subdomains: add <code>*.example.com</code>.</p></div>
+      <div id="site-list" class="row" style="margin-bottom:12px"></div>
+      <form id="f-site" class="card hidden" style="margin-bottom:16px">
+        <h3>New site</h3>
+        <div class="grid2"><div><label for="ns-name">Name</label><input id="ns-name" placeholder="My shop"></div><div><label for="ns-domains">Domains (comma separated)</label><input id="ns-domains" placeholder="shop.example, www.shop.example" required></div></div>
+        <p style="margin-top:14px"><button class="btn" type="submit">Create site</button></p>
+      </form>
+      <div id="site" class="hidden">
+        <div class="tabs" id="site-tabs"><button data-stab="setup" class="on">Setup</button><button data-stab="policy">Policy</button><button data-stab="stats">Stats</button><button data-stab="log">Audit log</button><button data-stab="agents">AgentPass</button><button data-stab="danger">Danger zone</button></div>
+        <div data-spane="setup">
+          <div id="secret-box" class="notice ok hidden"></div>
+          <div class="grid2">
+            <div class="card"><h3>Keys</h3>
+              <label>Site key (public, goes in your HTML)</label><div class="row"><code id="s-key" class="grow"></code><button class="btn alt sm" data-copy="#s-key">Copy</button></div>
+              <label>Secret key (server only)</label><div class="row"><code id="s-secret" class="grow"></code><button class="btn alt sm" id="rotate">Rotate secret</button></div>
+              <label>Domains</label><div class="row"><input id="s-domains" class="grow"><button class="btn alt sm" id="save-domains">Save</button></div>
+            </div>
+            <div class="card"><h3>1 · Add the widget</h3><pre class="copy"><code id="snip-html"></code></pre></div>
+          </div>
+          <div class="card" style="margin-top:16px"><h3>2 · Verify on your server</h3>
+            <div class="tabs" id="lang-tabs"><button data-lang="node" class="on">Node</button><button data-lang="php">PHP</button><button data-lang="python">Python</button><button data-lang="curl">curl</button></div>
+            <pre><code id="snip-server"></code></pre>
+            <p class="small muted">Fail open on <code>quota-exceeded</code> or a network error if you'd rather never block a sign-up because of us. Full reference in the <a href="/docs/">docs</a>.</p>
+          </div>
+        </div>
+        <div data-spane="policy" class="hidden"><form id="f-policy" class="card">
+          <div class="grid2">
+            <div><label for="p-diff">Difficulty (bits, 12–24)</label><input id="p-diff" type="number" min="12" max="24"><p class="small muted">16 ≈ 65k hashes, about 0.05–0.3 s on a phone. Each extra bit doubles the work.</p></div>
+            <div><label for="p-local">Accept http://localhost while developing</label><select id="p-local"><option value="true">Yes</option><option value="false">No</option></select></div>
+            <div><label for="p-signals">Automation signals <span class="pill">Integrity</span></label><select id="p-signals"><option value="off">Off</option><option value="report">Report (risk score in siteverify)</option><option value="enforce">Enforce (refuse risky solves)</option></select></div>
+            <div><label for="p-thr">Risk threshold for enforce / "risky" stats (0.1–1)</label><input id="p-thr" type="number" min="0.1" max="1" step="0.05"></div>
+            <div><label for="p-adapt">Adaptive difficulty <span class="pill">Integrity</span></label><select id="p-adapt"><option value="true">On</option><option value="false">Off</option></select></div>
+            <div><label for="p-surge">Surge threshold (challenges / minute / edge location)</label><input id="p-surge" type="number" min="10"></div>
+            <div><label for="p-hook">Surge alert webhook (Slack or Discord) <span class="pill">Integrity</span></label><input id="p-hook" placeholder="https://hooks.slack.com/…"></div>
+            <div><label for="p-pat">Private Access Tokens <span class="pill">Hardware</span></label><select id="p-pat"><option value="true">On</option><option value="false">Off</option></select></div>
+            <div><label for="p-rp">Passkey RP ID</label><input id="p-rp" placeholder="example.com"></div>
+          </div>
+          <p class="small muted" id="p-plan-note"></p>
+          <p><button class="btn" type="submit">Save policy</button></p>
+        </form></div>
+        <div data-spane="stats" class="hidden"><div class="card"><h3>Last 30 days</h3><div class="tablewrap"><table><thead><tr><th>Day</th><th>Verified</th><th>Failed</th><th>Risky</th><th>PAT</th><th>Passkey</th><th>Agents allow / charge / block</th></tr></thead><tbody id="stats-body"></tbody></table></div></div></div>
+        <div data-spane="log" class="hidden"><div class="card"><div class="row" style="justify-content:space-between"><h3>Last 100 verifications</h3><a class="btn alt sm" id="export" href="#">Export 90 days (CSV)</a></div><div class="tablewrap"><table><thead><tr><th>Time (UTC)</th><th>Method</th><th>Hostname</th><th>Risk</th><th>Token id</th></tr></thead><tbody id="log-body"></tbody></table></div></div></div>
+        <div data-spane="agents" class="hidden">
+          <form id="f-agents" class="card"><h3>Crawler policy</h3>
+            <div class="grid2">
+              <div><label for="a-search">Search &amp; answer crawlers</label><select id="a-search"></select></div>
+              <div><label for="a-training">Model-training crawlers</label><select id="a-training"></select></div>
+              <div><label for="a-assist">User-triggered assistants</label><select id="a-assist"></select></div>
+              <div><label for="a-unknown">Unknown bots / scripts</label><select id="a-unknown"></select></div>
+              <div><label for="a-price">Price per request (USD, shown in the 402)</label><input id="a-price" type="number" step="0.0001" min="0.0001"></div>
+              <div><label for="a-link">Your payment link (https)</label><input id="a-link" placeholder="https://whop.com/checkout/…"></div>
+              <div><label for="a-verify">Verify crawler IPs against published ranges</label><select id="a-verify"><option value="true">Yes</option><option value="false">No</option></select></div>
+            </div>
+            <p><button class="btn" type="submit">Save crawler policy</button></p>
+          </form>
+          <div class="card" style="margin-top:16px"><h3>Agent keys</h3><p class="muted small">Mint a key for an AI company that paid you; requests carrying it are allowed until its quota is used.</p>
+            <form id="f-key" class="row"><input id="k-label" class="grow" placeholder="Label, e.g. acme-ai" required><input id="k-quota" type="number" min="0" placeholder="Quota (0 = unlimited)" style="max-width:200px"><button class="btn alt" type="submit">Mint key</button></form>
+            <div id="key-box" class="notice ok hidden"></div>
+            <div class="tablewrap"><table><thead><tr><th>Label</th><th>Key</th><th>Used / quota</th><th>Status</th><th></th></tr></thead><tbody id="keys-body"></tbody></table></div>
+          </div>
+          <div class="card" style="margin-top:16px"><h3>Call it from your server</h3><pre><code id="snip-agent"></code></pre></div>
+        </div>
+        <div data-spane="danger" class="hidden"><div class="card"><h3>Delete this site</h3><p class="muted">Removes the site, its passkeys and agent keys. Verification stops immediately. Type the site key to confirm.</p><div class="row"><input id="del-confirm" class="grow" placeholder="ao_site_…"><button class="btn danger" id="del-site">Delete site</button></div></div></div>
+      </div>
+    </div>
+
+    <div data-pane="plans" class="hidden"><p class="muted">Buy on Whop with <b id="buy-email"></b> (your confirmed account email) and the plan attaches automatically. Plans combine.</p><div class="grid3" id="catalog"></div></div>
+
+    <div data-pane="account" class="hidden"><form id="f-pw" class="card" style="max-width:480px"><h3>Change password</h3><label for="pw-cur">Current password</label><input id="pw-cur" type="password" autocomplete="current-password" required><label for="pw-new">New password (10+ characters)</label><input id="pw-new" type="password" autocomplete="new-password" minlength="10" required><p style="margin-top:14px"><button class="btn" type="submit">Change password</button></p><p class="small muted">Changing it logs out every other device. Billing is managed on <a href="https://whop.com/@me/settings/memberships">Whop</a>.</p></form></div>
+  </div>
+</div></section>
+</main>
+<footer class="bottom"><div class="wrap">
+<div><b>AttestOS</b> · invisible bot verification<br><span class="small">Runs on Cloudflare Workers. Checkout by Whop.</span></div>
+<div><a href="/pricing/">Pricing</a> · <a href="/docs/">Docs</a> · <a href="/scanner/">Scanner</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/.well-known/security.txt">Security</a> · <a href="https://github.com/AttestOS/attestos">GitHub</a></div>
+</div></footer>
+</body>
+</html>

@@ -1,23 +1,17 @@
 {
   "name": "attestos",
-  "version": "1.0.0",
-  "description": "AttestOS - Unified Client Environment Integrity & Agentic Gateway Pipeline",
-  "main": "src/index.js",
-  "type": "commonjs",
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "node test.js",
-    "deploy:worker": "node worker/deploy.js"
-  },
-  "keywords": [
-    "captcha-alternative",
-    "bot-protection",
-    "proof-of-work",
-    "hardware-attestation",
-    "private-access-tokens",
-    "ai-agent-gateway",
-    "whop-checkout"
+  "private": true,
+  "version": "2.0.0",
+  "description": "AttestOS: invisible bot verification (Ghost-PoW), passkeys, Private Access Tokens and AI-agent policy. One Cloudflare Worker on the free tier, Whop checkout.",
+  "type": "module",
+  "workspaces": [
+    "worker"
   ],
-  "author": "AttestOS",
+  "scripts": {
+    "typecheck": "npm --workspace worker run typecheck",
+    "test": "npm --workspace worker run test",
+    "check": "npm run typecheck && npm test",
+    "deploy": "npm --workspace worker run db:migrate:remote && npm --workspace worker run deploy"
+  },
   "license": "Apache-2.0"
 }

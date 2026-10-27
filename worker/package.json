@@ -1,0 +1,20 @@
+{
+  "name": "attestos-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev -c wrangler.toml --local",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:migrate:local": "wrangler d1 migrations apply attestos --local",
+    "db:migrate:remote": "wrangler d1 migrations apply attestos --remote"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20260702.1",
+    "sql.js": "1.15.2",
+    "typescript": "5.9.3",
+    "vitest": "2.1.9",
+    "wrangler": "4.86.0"
+  }
+}
