@@ -1,5 +1,5 @@
 import type { Env } from "./env";
-import { logError, run } from "./lib/db";
+import { getSetting, logError, run } from "./lib/db";
 import { budgetState } from "./lib/quota";
 import { processOutbox } from "./mail/outbox";
 import { outreachTick, pollReplies } from "./outreach";
@@ -16,6 +16,9 @@ export async function runCron(cron: string, env: Env) {
     if (!(await budgetState(env)).over) await outreachTick(env);
     await processOutbox(env, { max: 12, deadlineMs: 20_000 });
     if (slot % 3 === 0) await pollReplies(env);
+    // Bootstrap after a fresh deploy: the daily job normally refreshes these (one settings read each, no writes).
+    if (!(await getSetting(env, "crawler_ranges"))) await refreshCrawlerRanges(env);
+    if (!(await getSetting(env, "pat_keys"))) await refreshIssuerKeys(env);
   } catch (e) { await logError(env, `cron:${cron}`, e); }
 }
 

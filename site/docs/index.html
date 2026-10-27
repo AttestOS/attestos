@@ -207,7 +207,7 @@ const { token, user_id } = await AttestOS.passkey.login({ sitekey: "ao_site_…"
 <h2 id="security">Security model</h2>
 <ul>
   <li>Challenges are HMAC-signed with a server secret, bound to the site key, the page's hostname, an expiry (5 minutes) and the difficulty the server chose. The client can't lower the difficulty.</li>
-  <li>Solutions are redeemed once (a solved challenge can't be reused), and the resulting pass token verifies once. Both are enforced in the database.</li>
+  <li>A pass token verifies once, and every token minted from the same solved challenge shares one id, so exactly one of them can ever verify: a solve can't be farmed into several passes. This is enforced in the database.</li>
   <li>Secret keys are stored as SHA-256 hashes and shown once. Rotating a secret invalidates the old one immediately.</li>
   <li>Report vulnerabilities to the address in <a href="/.well-known/security.txt">security.txt</a>.</li>
 </ul>

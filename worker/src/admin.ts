@@ -10,6 +10,7 @@ import { refreshPlan } from "./accounts";
 import { parsePlans } from "./plans";
 import { invalidateSites } from "./sites";
 import { outreachStatus } from "./outreach";
+import { safeJson } from "./lib/util";
 
 /** Owner console API (/admin/api/*). Password only (OWNER_PASSWORD_HASH), HMAC-signed cookie on Path=/admin. */
 export async function adminRoute(req: Request, env: Env, path: string): Promise<Response | null> {
@@ -54,7 +55,7 @@ export async function adminRoute(req: Request, env: Env, path: string): Promise<
         outreach: await outreachStatus(env),
         errors: await all(env, "SELECT at, scope, message FROM errors ORDER BY id DESC LIMIT 20"),
         config: {
-          app_secret: !!env.APP_SECRET && env.APP_SECRET.length >= 32, whop_webhook: !!env.WHOP_WEBHOOK_SECRET, whop_plans: !!env.WHOP_PLAN_MAP,
+          app_secret: !!env.APP_SECRET && env.APP_SECRET.length >= 32, whop_webhook: !!env.WHOP_WEBHOOK_SECRET, whop_plans: Object.keys(safeJson<Record<string, unknown>>(env.WHOP_PLAN_MAP, {})).length > 0,
           postal_address: !!env.POSTAL_ADDRESS, ops_token: !!env.AO_OPS_TOKEN, press_token: !!env.AO_PRESS_TOKEN, ntfy: !!env.NTFY_TOPIC,
           checkout: ["INTEGRITY", "HARDWARE", "AGENT", "ENTERPRISE"].filter((p) => !!env[`WHOP_CHECKOUT_${p}`]),
         },

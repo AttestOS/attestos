@@ -36,6 +36,7 @@ section{padding:64px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid2>*,.grid3>*,.grid4>*{min-width:0}
 @media(max-width:900px){.grid2,.grid3,.grid4{grid-template-columns:1fr}nav.main{gap:12px}header.top .wrap{height:auto;padding:10px 20px;flex-wrap:wrap}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .card h3{margin-top:0}
