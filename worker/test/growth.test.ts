@@ -119,6 +119,7 @@ describe("honest outreach", () => {
     const url = new URL(await unsubscribeUrl(env, "Hello@Shop.example"));
     const g = await call(env, url.pathname);
     expect(await g.text()).toContain("hello@shop.example");
+    expect(g.headers.get("x-robots-tag")).toBe("noindex");
     expect(q("SELECT COUNT(*) AS n FROM suppress")[0].n).toBe(0);
     await call(env, url.pathname, { method: "POST", body: "List-Unsubscribe=One-Click", headers: { "content-type": "application/x-www-form-urlencoded" } });
     expect(q("SELECT reason FROM suppress")[0].reason).toBe("unsubscribe-link");

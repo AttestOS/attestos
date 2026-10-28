@@ -24,3 +24,21 @@ describe("brand.json mirrors plans.ts", () => {
     expect(brand.catalog.map((c) => c.key).sort()).toEqual(Object.keys(PLANS).sort());
   });
 });
+
+// A noindex page must stay crawlable: robots.txt Disallow hides the noindex from crawlers, and a blocked URL can still
+// be indexed bare from inbound links ("Indexed, though blocked by robots.txt").
+describe("noindex pages are crawlable and say noindex twice", () => {
+  const site = join(__dirname, "..", "..", "site");
+  const robots = readFileSync(join(site, "robots.txt"), "utf8");
+  const headers = readFileSync(join(site, "_headers"), "utf8");
+  const disallowed = [...robots.matchAll(/^Disallow:\s*(\S+)/gm)].map((m) => m[1]);
+  it.each([["app/index.html", "/app/"], ["admin/index.html", "/admin/"], ["404.html", null]])("%s", (file, prefix) => {
+    expect(readFileSync(join(site, file), "utf8")).toContain('<meta name="robots" content="noindex">');
+    if (!prefix) return;
+    expect(disallowed.filter((d) => prefix.startsWith(d) && d !== "/")).toEqual([]);
+    expect(headers).toMatch(new RegExp(`^${prefix.replace(/\//g, "\\/")}\\*\\n(?:  .*\\n)*?  X-Robots-Tag: noindex`, "m"));
+  });
+  it("unsubscribe pages are not disallowed (they carry noindex)", () => {
+    expect(disallowed.some((d) => "/u/x".startsWith(d) && d !== "/")).toBe(false);
+  });
+});

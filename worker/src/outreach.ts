@@ -200,7 +200,7 @@ export async function pollReplies(env: Env) {
 }
 
 // ---------- unsubscribe (/u/:token) ----------
-const page = (title: string, body: string, status = 200) => html(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${title} · AttestOS</title><link rel="stylesheet" href="/assets/css/site.css"></head><body><main class="wrap narrow"><div class="card">${body}</div></main></body></html>`, status);
+const page = (title: string, body: string, status = 200) => html(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${title} · AttestOS</title><link rel="stylesheet" href="/assets/css/site.css"></head><body><main class="wrap narrow"><div class="card">${body}</div></main></body></html>`, status, { "x-robots-tag": "noindex", "cache-control": "no-store" });
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 export async function unsubscribe(req: Request, env: Env, token: string): Promise<Response> {
