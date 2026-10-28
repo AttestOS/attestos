@@ -17,7 +17,7 @@
 <body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/assets/img/logo.webp" alt="" width="40" height="22">AttestOS</a>
-<nav class="main" aria-label="Main"><a href="/">Product</a><a href="/pricing/">Pricing</a><a href="/scanner/">Free scanner</a><a href="/docs/" class=on>Docs</a><a href="/app/">Log in</a></nav>
+<nav class="main" aria-label="Main"><a href="/" data-nav="home">Product</a><a href="/pricing/" data-nav="pricing">Pricing</a><a href="/scanner/" data-nav="scanner">Free scanner</a><a href="/docs/" data-nav="docs" class=on>Docs</a><a href="/app/" data-nav="app">Log in</a></nav>
 </div></header>
 <main>
 <section style="padding-top:40px"><div class="wrap docs">
@@ -62,14 +62,14 @@
   <thead><tr><th>Attribute</th><th>Meaning</th></tr></thead>
   <tbody>
     <tr><td><code>data-sitekey</code></td><td>Required. Your site key.</td></tr>
-    <tr><td><code>data-badge="none"</code></td><td>Hide the badge (please mention AttestOS in your privacy policy instead).</td></tr>
-    <tr><td><code>data-field="name"</code></td><td>Use a different hidden-field name.</td></tr>
+    <tr><td><code>data-badge="hidden"</code></td><td>Hide the badge (please mention AttestOS in your privacy policy instead).</td></tr>
+    <tr><td><code>data-response-field="name"</code></td><td>Use a different hidden-field name (default <code>attestos-response</code>).</td></tr>
     <tr><td><code>data-callback="fnName"</code></td><td>Global function called with the token each time one is ready.</td></tr>
   </tbody>
 </table>
 <h3>JavaScript API</h3>
 <pre><code>// For single-page apps: render into an element and read the token yourself
-const w = AttestOS.render(document.getElementById("captcha"), { sitekey: "ao_site_…", onToken: (t) =&gt; {} });
+const w = AttestOS.render(document.getElementById("captcha"), { sitekey: "ao_site_…", callback: (t) =&gt; {} });
 w.getResponse();   // current token or ""
 w.reset();         // discard and solve a fresh one (call after each submit)
 
@@ -133,11 +133,11 @@ def signup():
 <h2 id="errors">Error codes</h2>
 <table><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody>
 <tr><td><code>missing-input-secret</code> / <code>invalid-input-secret</code></td><td>No secret, or it doesn't match any site (rotated?).</td></tr>
-<tr><td><code>missing-input-response</code> / <code>invalid-input-response</code></td><td>The form didn't carry a token, or it is malformed or forged.</td></tr>
+<tr><td><code>missing-input-response</code> / <code>invalid-input-response</code></td><td>The form didn't carry a token, or it is malformed, forged, or was issued for a different site than this secret.</td></tr>
 <tr><td><code>timeout-or-duplicate</code></td><td>Older than 5 minutes, or already verified once.</td></tr>
-<tr><td><code>sitekey-mismatch</code></td><td>The token was issued for a different site than this secret.</td></tr>
+<tr><td><code>site-disabled</code></td><td>The site is paused or deleted in your dashboard.</td></tr>
 <tr><td><code>quota-exceeded</code></td><td>Your account is more than 10% over its monthly verifications.</td></tr>
-<tr><td><code>risk-too-high</code></td><td>Signals are in enforce mode and the solve looked automated.</td></tr>
+<tr><td><code>internal-error</code></td><td>A temporary problem on our side (HTTP 500). Retry once, then fail open as below.</td></tr>
 </tbody></table>
 
 <h2 id="failopen">Failing open</h2>
@@ -147,7 +147,7 @@ def signup():
 <table><thead><tr><th>Setting</th><th>Default</th><th>Notes</th></tr></thead><tbody>
 <tr><td>Difficulty</td><td>16 bits</td><td>12–24. Average work is 2<sup>bits</sup> hashes; a phone does roughly 0.5–2 million per second.</td></tr>
 <tr><td>Accept localhost</td><td>on</td><td>Lets you test on <code>http://localhost</code> without adding it as a domain. Turn off in production if you like.</td></tr>
-<tr><td>Adaptive difficulty</td><td>on</td><td>IntegrityRuntime Pro. Above the surge threshold per minute (per Cloudflare location) difficulty rises by up to 4 bits.</td></tr>
+<tr><td>Adaptive difficulty</td><td>on</td><td>IntegrityRuntime Pro. Above the surge threshold per minute (per Cloudflare location) difficulty rises by 1 bit, and by 2 bits above twice the threshold.</td></tr>
 <tr><td>Surge alert webhook</td><td>off</td><td>IntegrityRuntime Pro. Slack- or Discord-compatible URL, at most one alert per site per hour.</td></tr>
 <tr><td>Private Access Tokens</td><td>on</td><td>Hardware Gateway Pro. See below.</td></tr>
 </tbody></table>

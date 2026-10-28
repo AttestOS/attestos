@@ -14,6 +14,7 @@
   // ---------- auth ----------
   function showAuth(which) {
     $("#dash").classList.add("hidden"); $("#auth").classList.remove("hidden");
+    AO.signedIn(false);
     $$("[data-auth]").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-auth") === which); });
     $$("[data-form]").forEach(function (f) { f.classList.toggle("hidden", f.getAttribute("data-form") !== which); });
     $("#auth-msg").classList.add("hidden");
@@ -48,6 +49,7 @@
   }
   function renderDash() {
     $("#auth").classList.add("hidden"); $("#dash").classList.remove("hidden");
+    AO.signedIn(true);
     $("#d-email").textContent = me.email;
     $("#buy-email").textContent = me.email;
     $("#d-plans").innerHTML = me.plans.map(function (p) { var d = me.catalog.filter(function (c) { return c.id === p; })[0]; return '<span class="pill ' + (p === "free" ? "g" : "") + '">' + esc(d ? d.name : p) + "</span> "; }).join("") + (me.comp ? '<span class="pill v">complimentary</span> ' : "");
@@ -237,7 +239,12 @@
       var buy = p.id === "free" ? "" : owned ? '<span class="pill g">active</span> <a class="small" href="https://whop.com/@me/settings/memberships">Manage on Whop</a>' : '<a class="btn" href="' + esc(p.checkout || "/go/" + p.id) + '" target="_blank" rel="noopener">Buy on Whop</a>';
       return '<div class="card"><h3>' + esc(p.name) + '</h3><div class="price">$' + p.price + (p.price ? "<small>/mo</small>" : "") + '</div><p class="muted small">' + esc(p.blurb) + '</p><ul class="ticks small"><li>' + AO.fmt(p.verifications) + " verifications / month</li><li>" + p.sites + " site(s), " + p.domainsPerSite + " domains each</li>" + (p.agentChecks ? "<li>" + AO.fmt(p.agentChecks) + " agent checks / month</li>" : "") + "</ul>" + buy + "</div>";
     }).join("");
-    if (!me.verified) $("#catalog").insertAdjacentHTML("beforebegin", "");
+    // unconfirmed accounts: a Whop purchase only attaches to a CONFIRMED email, so say so
+    // before they pay (this line used to insert an empty string)
+    var warn = $("#catalog-warn");
+    if (!warn) { warn = document.createElement("p"); warn.id = "catalog-warn"; warn.className = "notice warn"; $("#catalog").parentNode.insertBefore(warn, $("#catalog")); }
+    warn.textContent = "Confirm your email first (banner at the top): a Whop purchase attaches to this account only once its email is confirmed.";
+    warn.classList.toggle("hidden", !!me.verified);
   }
   $("#f-pw").addEventListener("submit", function (e) {
     e.preventDefault();

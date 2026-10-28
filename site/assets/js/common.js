@@ -22,5 +22,13 @@ window.AO = (function () {
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { if (btn) { var t = btn.textContent; btn.textContent = "Copied"; setTimeout(function () { btn.textContent = t; }, 1200); } }).catch(function () { window.prompt("Copy:", text); });
   }
   function hashParams() { var o = {}; location.hash.replace(/^#/, "").split("&").forEach(function (kv) { var p = kv.split("="); if (p[0]) o[decodeURIComponent(p[0])] = p.length > 1 ? decodeURIComponent(p.slice(1).join("=")) : ""; }); return o; }
-  return { api: api, esc: esc, $: $, $$: $$, flash: flash, fmt: fmt, copy: copy, hashParams: hashParams };
+  // Header "Log in" link reads "My account" once signed in (2026-10-28). A local hint, set by
+  // the portal on a successful session and cleared on logout / 401: no extra request per page.
+  function signedIn(on) {
+    try { if (on === true) localStorage.setItem("ao_in", "1"); else if (on === false) localStorage.removeItem("ao_in"); } catch (e) { /* storage blocked */ }
+    var yes = false; try { yes = localStorage.getItem("ao_in") === "1"; } catch (e) { /* storage blocked */ }
+    $$('a[data-nav="app"]').forEach(function (a) { a.textContent = yes ? "My account" : "Log in"; });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { signedIn(); }); else signedIn();
+  return { api: api, esc: esc, $: $, $$: $$, flash: flash, fmt: fmt, copy: copy, hashParams: hashParams, signedIn: signedIn };
 })();
