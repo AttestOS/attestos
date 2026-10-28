@@ -81,7 +81,7 @@ def apply_runtime_controls(settings=None, strict=False):
     return values
 
 
-def publish_usage(metric_id, value, scope, window, *, complete=True, groups=(), keys=()):
+def publish_usage(metric_id, value, scope, window, *, complete=True, groups=(), keys=(), armed=None):
     if not os.environ.get("AO_PRESS_TOKEN", "").strip():
         return False
     effective = {}
@@ -92,8 +92,11 @@ def publish_usage(metric_id, value, scope, window, *, complete=True, groups=(), 
             except (ValueError, TypeError):
                 pass
     try:
-        _request("/api/press/quota-usage", {"id": metric_id, "at": datetime.now(UTC).isoformat(), "value": value,
-                                     "scope": scope[:300], "window": window, "complete": complete, "effective": effective})
+        body = {"id": metric_id, "at": datetime.now(UTC).isoformat(), "value": value,
+                "scope": scope[:300], "window": window, "complete": complete, "effective": effective}
+        if armed is not None:  # rails whose credentials this run found (names only): the Mesh tab's "waiting for account"
+            body["armed"] = list(armed)
+        _request("/api/press/quota-usage", body)
         return True
     except RuntimeError:
         print("::warning::quota observation not acknowledged; owner panel will retain the last timestamp")

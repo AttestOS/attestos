@@ -321,6 +321,15 @@ BUFFER_KEY = {"x": "twitter"}           # autopilot rail name -> Buffer service 
 _CAD_OVERRIDE: dict = {}       # owner-console rail overrides (mint /api/press/mesh-config), merged below
 
 
+def armed_rails() -> list | None:
+    """Rails whose own credentials exist in this run (names only, never values). Reported to the Worker so the
+    owner console can say 'on (waiting for account)' instead of 'active' for a rail that has nothing to post with."""
+    try:
+        return sorted(r for r, v in load_cadence().items() if isinstance(v, dict) and "per_day" in v and _rail_armed(r))
+    except Exception:  # a status hint must never fail the run
+        return None
+
+
 def load_cadence() -> dict:
     f = HERE / "cadence.json"
     base = {"x": {"per_day": 2}, "linkedin": {"per_day": 1}, "pinterest": {"per_day": 2},
@@ -2447,7 +2456,8 @@ if __name__ == "__main__":
             code = cmd_cycle(live="--live" in a, draft_longform="--draft-longform" in a) if a[0] == "cycle" else cmd_autoreply(live="--live" in a)
         finally:
             publish_usage("press", _AUTHOR_CALLS, "Press author network attempts in this process; not tokens or provider account total",
-                          (os.environ.get("GITHUB_RUN_ID", "local") + "-" + str(os.getpid()))[:80], groups=("ai",), keys=("AO_PRESS_LLM_CALLS_PER_RUN",))
+                          (os.environ.get("GITHUB_RUN_ID", "local") + "-" + str(os.getpid()))[:80], groups=("ai",), keys=("AO_PRESS_LLM_CALLS_PER_RUN",),
+                          armed=armed_rails())
         sys.exit(code)
     if a[0] == "status":
         sys.exit(cmd_status())

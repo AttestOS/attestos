@@ -63,6 +63,13 @@ describe("controls + usage", () => {
     expect(JSON.parse(r.body).ok).toBe(true);
     expect((await pressOverview(env)).lastRun.value).toBe(14);
   });
+
+  it("keeps only rail-shaped names from the run's armed list (console 'waiting for account')", async () => {
+    await hit("/api/press/quota-usage", { method: "POST", type: "application/json", body: JSON.stringify({ id: "press", value: 1, armed: ["bsky", "x_a", "<b>", 7, "a".repeat(41)] }) });
+    expect((await pressOverview(env)).lastRun.armed).toEqual(["bsky", "x_a"]);
+    await hit("/api/press/quota-usage", { method: "POST", type: "application/json", body: JSON.stringify({ id: "press", value: 1 }) });
+    expect((await pressOverview(env)).lastRun.armed).toBeUndefined();
+  });
 });
 
 describe("card hosting", () => {

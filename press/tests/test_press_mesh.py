@@ -342,3 +342,32 @@ def test_send_x_falls_back_to_buffer_quote_tweet(monkeypatch):
     }
 
 
+
+
+# ---- owner console: "on (waiting for account)" needs the run to say which rails are armed ----
+
+def test_armed_rails_reports_only_credentialed_rails(monkeypatch):
+    for k in list(os.environ):
+        if k.startswith(("AO_", "BUFFER", "WHOP_", "PRESS_")) and k != "AO_PRESS_TOKEN":
+            monkeypatch.delenv(k, raising=False)
+    monkeypatch.setattr(auto, "_CAD_OVERRIDE", {}, raising=False)
+    assert "telegram" not in auto.armed_rails()
+    monkeypatch.setenv("AO_TG_BOT_TOKEN", "123:abc")
+    monkeypatch.setenv("AO_TG_CHANNEL", "@chan")
+    got = auto.armed_rails()
+    assert "telegram" in got and got == sorted(got)
+    assert all(isinstance(r, str) and "=" not in r for r in got)  # names only, never values
+
+
+def test_publish_usage_sends_armed_list(monkeypatch):
+    import importlib.util as ilu
+    cspec = ilu.spec_from_file_location("ao_controls_t", ROOT / "press" / "controls.py")
+    controls = ilu.module_from_spec(cspec)
+    cspec.loader.exec_module(controls)
+    sent = []
+    monkeypatch.setenv("AO_PRESS_TOKEN", "t")
+    monkeypatch.setattr(controls, "_request", lambda path, body=None: sent.append((path, body)) or {})
+    assert controls.publish_usage("press", 3, "scope", "w", armed=["bsky", "telegram"]) is True
+    assert sent[-1][0] == "/api/press/quota-usage" and sent[-1][1]["armed"] == ["bsky", "telegram"]
+    controls.publish_usage("press", 3, "scope", "w")
+    assert "armed" not in sent[-1][1]

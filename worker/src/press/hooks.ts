@@ -91,7 +91,9 @@ export async function pressHook(req: Request, env: Env, path: string): Promise<R
     case "POST /api/press/quota-usage": {
       const b = await readObject(req, 16_000);
       const rec = { id: String(b.id || "").slice(0, 80), at: String(b.at || new Date().toISOString()).slice(0, 40),
-        value: Number(b.value) || 0, window: String(b.window || "").slice(0, 80), effective: b.effective && typeof b.effective === "object" ? b.effective : {} };
+        value: Number(b.value) || 0, window: String(b.window || "").slice(0, 80), effective: b.effective && typeof b.effective === "object" ? b.effective : {},
+        // rails the run found credentials for (names only); absent from older runs -> the console says "status after next run"
+        armed: Array.isArray(b.armed) ? b.armed.filter((x: unknown) => typeof x === "string" && /^[a-z0-9_]{1,40}$/.test(x)).slice(0, 100) : undefined };
       await setSetting(env, "press_last_usage", JSON.stringify(rec));
       return json({ ok: true });
     }

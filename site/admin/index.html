@@ -54,7 +54,7 @@
     <div data-p="mesh" class="hidden">
       <div class="card"><h3>Distribution mesh</h3><div id="mesh-status"></div>
         <p class="small muted">The press runs on GitHub Actions (<code>press.yml</code>, 4 runs a day) only when the repository variable <code>PRESS_ENABLED</code> is <code>1</code>. Each rail switches on by itself once its account secret exists; until then it is skipped. Setup checklist: <code>docs/MESH-SETUP.md</code>.</p></div>
-      <div class="card" style="margin-top:16px"><h3>Rails</h3><p class="small muted">Park a rail to stop it without deleting its secret; posts per day override the default in <code>press/cadence.json</code> (empty = default).</p>
+      <div class="card" style="margin-top:16px"><h3>Rails</h3><p class="small muted">Park a rail to stop it without deleting its secret; posts per day override the default in <code>press/cadence.json</code> (empty = default). <b>active</b> = the last press run found this rail's account; <b>on (waiting for account)</b> = switched on, but no credentials yet, so nothing posts until you add them.</p>
         <div class="tablewrap"><table><thead><tr><th>Rail</th><th>Default/day</th><th>Override/day</th><th>State</th><th></th></tr></thead><tbody id="mesh-rails"></tbody></table></div></div>
       <div class="grid2" style="margin-top:16px">
         <div class="card"><h3>Controls</h3><div id="mesh-controls"></div></div>

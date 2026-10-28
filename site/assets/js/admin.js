@@ -92,10 +92,17 @@
     api("/admin/api/press").then(function (p) {
       var last = p.lastRun && p.lastRun.at ? "Last run " + esc(String(p.lastRun.at).replace("T", " ").slice(0, 16)) + " UTC, " + esc(p.lastRun.value) + " author calls." : "No press run has reported yet.";
       $("#mesh-status").innerHTML = "<p>" + (p.configured ? '<span class="pill g">AO_PRESS_TOKEN set</span>' : '<span class="pill r">AO_PRESS_TOKEN missing on the Worker</span>') + " " + last + "</p>";
+      // armed = rails whose credentials the last press run found; older runs did not report it
+      var armed = p.lastRun && Array.isArray(p.lastRun.armed) ? p.lastRun.armed : null;
+      function railState(o, rail) {
+        if (o.parked) return '<span class="pill a">parked</span>';
+        if (armed === null) return '<span class="pill a" title="The next press run reports which accounts exist">on (status after next run)</span>';
+        return armed.indexOf(rail) >= 0 ? '<span class="pill g">active</span>' : '<span class="pill a" title="No credentials for this rail at the last run. Add its secret: docs/MESH-SETUP.md">on (waiting for account)</span>';
+      }
       $("#mesh-rails").innerHTML = p.rails.map(function (r) {
         var o = p.overrides[r.rail] || {};
         return "<tr>" + cell(railName(r.rail)) + cell(r.per_day) + '<td><input type="number" min="0" max="10" style="max-width:90px" data-pd="' + esc(r.rail) + '" value="' + (o.per_day == null ? "" : esc(o.per_day)) + '"></td>' +
-          "<td>" + (o.parked ? '<span class="pill a">parked</span>' : '<span class="pill g">active</span>') + '</td><td><button class="btn alt sm" data-park="' + esc(r.rail) + '" data-to="' + (o.parked ? "0" : "1") + '">' + (o.parked ? "Resume" : "Park") + "</button></td></tr>";
+          "<td>" + railState(o, r.rail) + '</td><td><button class="btn alt sm" data-park="' + esc(r.rail) + '" data-to="' + (o.parked ? "0" : "1") + '">' + (o.parked ? "Resume" : "Park") + "</button></td></tr>";
       }).join("") || '<tr><td colspan="5" class="muted">No rails in cadence.json.</td></tr>';
       $$("[data-park]").forEach(function (b) { b.addEventListener("click", function () { api("/admin/api/press/rails/" + b.getAttribute("data-park"), { body: { parked: b.getAttribute("data-to") === "1" } }).then(loadMesh).catch(onErr); }); });
       $$("[data-pd]").forEach(function (i) { i.addEventListener("change", function () { var v = i.value.trim(); api("/admin/api/press/rails/" + i.getAttribute("data-pd"), { body: { per_day: v === "" ? null : Number(v) } }).then(function () { note("ok", "Saved."); loadMesh(); }).catch(onErr); }); });
