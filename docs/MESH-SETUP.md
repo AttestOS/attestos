@@ -100,8 +100,9 @@ The press never uses Cloudflare Workers AI, so the Worker's free AI quota stays 
   to 3 minutes. To post less, remove a `cron` line in `press.yml`; the planner spreads each day's quota over the
   slots that remain.
 - **Secrets stay private:** only `press.yml` reads press secrets, and only on schedule or manual dispatch (never on
-  pull requests from forks). It exports nothing outside the press namespaces (`AO_OPS_TOKEN` and the Cloudflare keys
-  never reach it).
+  pull requests from forks). It reads secrets **by name**, from an explicit list in its "export press secrets"
+  step; every name in this guide is already on that list. `AO_OPS_TOKEN` and the Cloudflare keys are not on it. A
+  secret with a name that is not listed is ignored. To add one, add an `S_<NAME>: ${{ secrets.<NAME> }}` line.
 - **Bluesky logs in fresh each slot.** STPi/TightBucket cached Bluesky sessions in `actions/cache`. That was dropped
   here because caches on a public repo are not a safe place for login tokens.
 - **The ledger is public.** It lives on the `press-state` branch (`state.json`, `run.log`, outbox drafts). It holds
