@@ -10,7 +10,7 @@
 
   $("#f-login").addEventListener("submit", function (e) {
     e.preventDefault();
-    api("/admin/api/login", { body: { password: $("#o-pw").value } }).then(function () { $("#o-pw").value = ""; $("#f-login").classList.add("hidden"); load(); }).catch(function (err) { note("err", err.message); });
+    api("/admin/api/login", { body: { password: $("#o-pw").value } }).then(function () { $("#o-pw").value = ""; $("#f-login").classList.add("hidden"); load(); openTabFromHash(); }).catch(function (err) { note("err", err.message); });
   });
   $("#logout").addEventListener("click", function () { api("/admin/api/logout", { body: {} }).then(showLogin); });
   $("#refresh").addEventListener("click", function () { load(); });
