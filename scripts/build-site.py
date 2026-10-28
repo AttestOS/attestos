@@ -22,7 +22,9 @@ def page(name: str, text: str) -> str:
     desc = meta.get("desc", "Invisible bot verification for sign-up, login and contact forms.")
     path = "/" if name == "index" else ("/404.html" if name == "404" else f"/{name}/")
     nav = "".join(f'<a href="{href}" data-nav="{key}"{" class=on" if meta.get("nav") == key else ""}>{label}</a>' for key, href, label in NAV)
-    scripts = "".join(f'<script src="{s}" defer></script>' for s in meta.get("scripts", "").split())
+    # common.js on every page: besides the shared helpers it labels the header's account link ("My account" while signed in)
+    srcs = ["/assets/js/common.js"] + [s for s in meta.get("scripts", "").split() if s != "/assets/js/common.js"]
+    scripts = "".join(f'<script src="{s}" defer></script>' for s in srcs)
     return f"""<!doctype html>
 <html lang="en">
 <head>
