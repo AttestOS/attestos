@@ -21,7 +21,7 @@ import worker from "../src/index";
 
 afterEach(() => { vi.unstubAllGlobals(); sent.length = 0; failNext = null; });
 
-const LANE = { MAILBOXES: '[{"id":"lv1","host":"mail.example","cold":3,"transactional":5,"hourly":10}]', MAILBOX_LV1_USER: "me@mail.example", MAILBOX_LV1_PASS: "pw" };
+const LANE = { MAILBOXES: '[{"id":"gm1","provider":"gmail","cold":3,"transactional":5,"hourly":10}]', MAILBOX_GM1_USER: "me@gmail.com", MAILBOX_GM1_PASS: "abcd efgh ijkl mnop" };
 
 describe("scanner", () => {
   it("parses robots.txt groups the way crawlers do", () => {
@@ -85,7 +85,7 @@ describe("honest outreach", () => {
     await processOutbox(env);
     expect(sent).toHaveLength(1);
     const mime = sent[0].mime;
-    expect(mime).toMatch(/List-Unsubscribe: <mailto:me@mail\.example\?subject=unsubscribe>, <https:\/\/attestos-edge/);
+    expect(mime).toMatch(/List-Unsubscribe: <mailto:me@gmail\.com\?subject=unsubscribe>, <https:\/\/attestos-edge/);
     expect(mime).toContain("List-Unsubscribe-Post: List-Unsubscribe=One-Click");
     const body = Buffer.from(mime.split("\r\n\r\n")[1].replace(/\r\n/g, ""), "base64").toString();
     expect(body).toContain("reCAPTCHA v2");

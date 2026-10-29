@@ -1,4 +1,3 @@
-Contact: mailto:muhammad45@inbox.lv
 Contact: https://github.com/AttestOS/attestos/security/advisories/new
 Expires: 2027-10-27T00:00:00.000Z
 Preferred-Languages: en

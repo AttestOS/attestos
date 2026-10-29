@@ -4,16 +4,25 @@ import { safeJson } from "../lib/util";
 
 /** Sending lanes = SMTP/IMAP mailboxes. A lane is ARMED only when its JSON entry AND both secrets exist:
  *
- *   MAILBOXES = '[{"id":"lv1","host":"mail.inbox.lv","fromName":"AttestOS","cold":8,"transactional":10,"hourly":4}]'
- *   secrets:   MAILBOX_LV1_USER, MAILBOX_LV1_PASS
+ *   MAILBOXES = '[{"id":"gm1","provider":"gmail","fromName":"AttestOS","cold":20,"transactional":40,"hourly":12}]'
+ *   secrets:   MAILBOX_GM1_USER (the Gmail address), MAILBOX_GM1_PASS (a 16-character Google app password)
+ *
+ *  Gmail route (docs/GMAIL.md): personal Gmail over SMTP 465 / IMAP 993 with an app password. No Google Cloud
+ *  project, no OAuth, no billing: 2-Step Verification on, then myaccount.google.com/apppasswords.
+ *  Google allows ~500 recipients per rolling 24 h, so a gmail lane's `hourly` is clamped to 18 (18 x 24 = 432):
+ *  no rolling day can pass the limit, whatever the daily numbers say.
  *
  *  `cold` = first touches + follow-ups per UTC day (0 = this lane never sends cold mail),
- *  `transactional` = verification/reset/notice emails per day, `hourly` = ceiling for everything (provider limit
- *  minus headroom; inbox.lv allows 15/h but the box may be shared). */
+ *  `transactional` = verification/reset/notice emails per day, `hourly` = ceiling for everything. */
 export interface Lane {
-  id: string; host: string; smtpPort: number; imapPort: number; user: string; pass: string; fromName: string;
+  id: string; provider: string; host: string; imapHost: string; smtpPort: number; imapPort: number; user: string; pass: string; fromName: string;
   cold: number; transactional: number; hourly: number; spamFolder: string;
 }
+
+/** Provider presets. A lane names a provider (default gmail) instead of hosts; explicit fields still win. */
+export const PROVIDERS: Record<string, { host: string; imapHost: string; spamFolder: string; hourlyMax: number }> = {
+  gmail: { host: "smtp.gmail.com", imapHost: "imap.gmail.com", spamFolder: "[Gmail]/Spam", hourlyMax: 18 },
+};
 export interface LaneState { status: "ok" | "paused"; reason?: string; since?: string; cooldownUntil?: string; imap?: Record<string, { v: number; u: number }> }
 
 const ID = /^[a-z][a-z0-9]{1,15}$/;
@@ -26,13 +35,18 @@ export function lanes(env: Env): Lane[] {
     const id = String(m?.id || "").toLowerCase();
     if (!ID.test(id) || out.some((o) => o.id === id)) continue;
     const user = String(env[`MAILBOX_${id.toUpperCase()}_USER`] || "").trim().toLowerCase();
-    const pass = String(env[`MAILBOX_${id.toUpperCase()}_PASS`] || "");
-    if (!user || !pass || !m.host) continue;
+    // Google shows app passwords as four groups of four; the spaces are display only.
+    const pass = String(env[`MAILBOX_${id.toUpperCase()}_PASS`] || "").replace(/\s+/g, "");
+    const provider = String(m.provider || (m.host ? "custom" : "gmail")).toLowerCase();
+    const preset = PROVIDERS[provider];
+    const host = String(m.host || preset?.host || "");
+    if (!user || !pass || !host) continue;
+    const hourly = Math.min(num(m.hourly, 4, 60), preset?.hourlyMax ?? 60);
     out.push({
-      id, host: String(m.host), smtpPort: num(m.smtpPort, 465, 65535), imapPort: num(m.imapPort, 993, 65535), user, pass,
+      id, provider, host, imapHost: String(m.imapHost || preset?.imapHost || host), smtpPort: num(m.smtpPort, 465, 65535), imapPort: num(m.imapPort, 993, 65535), user, pass,
       fromName: String(m.fromName || env.BRAND || "AttestOS").slice(0, 60),
-      cold: num(m.cold, 0, 200), transactional: num(m.transactional, 10, 200), hourly: num(m.hourly, 4, 60),
-      spamFolder: String(m.spamFolder || "INBOX/spam"),
+      cold: num(m.cold, 0, 200), transactional: num(m.transactional, 10, 200), hourly,
+      spamFolder: String(m.spamFolder || preset?.spamFolder || "INBOX/spam"),
     });
   }
   return out;

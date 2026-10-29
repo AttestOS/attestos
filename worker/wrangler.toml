@@ -55,10 +55,12 @@ BRAND = "AttestOS"
 # OWNER_NAME signs outreach ("Sam, AttestOS"); POSTAL_ADDRESS is REQUIRED before cold outreach can send (CAN-SPAM).
 OWNER_NAME = ""
 POSTAL_ADDRESS = ""
-# Mail lanes (SMTP 465 + IMAP 993). Each needs secrets MAILBOX_<ID>_USER and MAILBOX_<ID>_PASS.
-# cold = first touches + follow-ups per day, transactional = verify/reset/notice per day, hourly = everything.
-# lv1 is the inbox.lv box shared with TightBucket and STPI, so AttestOS keeps to 2/hour.
-MAILBOXES = '[{"id":"lv1","host":"mail.inbox.lv","fromName":"AttestOS","cold":4,"transactional":10,"hourly":2,"spamFolder":"INBOX/spam"}]'
+# Mail lanes: personal Gmail over SMTP 465 + IMAP 993 with an app password (docs/GMAIL.md; no Google Cloud account).
+# Secrets MAILBOX_GM1_USER (Gmail address) and MAILBOX_GM1_PASS (16-character app password).
+# cold = first touches + follow-ups per day, transactional = verify/reset/notice per day, hourly = everything
+# (a gmail lane is clamped to 18/hour so no rolling 24 h can reach Google's ~500). Kept low while the test
+# Gmail is shared with other businesses; raise once AttestOS has its own box.
+MAILBOXES = '[{"id":"gm1","provider":"gmail","fromName":"AttestOS","cold":10,"transactional":30,"hourly":6}]'
 # Whop: map plan/product ids → plans, and one checkout URL per paid plan (https://whop.com/checkout/plan_…).
 WHOP_PLAN_MAP = '{}'
 WHOP_CHECKOUT_INTEGRITY = ""
@@ -73,4 +75,4 @@ PAT_ISSUERS = '["demo-pat.issuer.cloudflare.com"]'
 # Secrets (wrangler secret put NAME):
 # APP_SECRET (≥32 chars), OWNER_PASSWORD_HASH (node scripts/owner-password.mjs), WHOP_WEBHOOK_SECRET,
 # AO_OPS_TOKEN (prospects workflow), AO_PRESS_TOKEN (distribution mesh), NTFY_TOPIC (optional phone push),
-# MAILBOX_LV1_USER, MAILBOX_LV1_PASS
+# MAILBOX_GM1_USER, MAILBOX_GM1_PASS

@@ -164,7 +164,7 @@ export async function pollReplies(env: Env) {
     if (st.status !== "ok") continue;
     let s: ImapSession | null = null;
     try {
-      s = await ImapSession.open({ host: l.host, port: l.imapPort, user: l.user, pass: l.pass, timeoutMs: 12000 });
+      s = await ImapSession.open({ host: l.imapHost, port: l.imapPort, user: l.user, pass: l.pass, timeoutMs: 12000 });
       const box = await s.examine("INBOX");
       const mark = st.imap?.INBOX;
       const from = mark && mark.v === box.uidValidity ? mark.u + 1 : Math.max(1, box.uidNext - 50);
