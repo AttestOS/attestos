@@ -81,14 +81,16 @@ export function firstTouch(env: Env, p: { domain: string; page_url: string; vend
     subject: `${p.domain}: the ${v} on your ${p.page_kind && p.page_kind !== "home" && p.page_kind !== "other" ? `${p.page_kind} ` : ""}page`,
     body: `Hi ${p.domain} team,
 
-I ran a public scan of ${p.page_url} and saw it uses ${v}, a visible challenge every real visitor has to clear before they can ${action}.
+I came across ${p.page_url} in a public scan. It asks every real visitor to clear ${v} before they can ${action}.
 
-I build AttestOS, an invisible alternative: a small proof-of-work check runs in the visitor's browser in the background and your server verifies the token (the same shape as a reCAPTCHA siteverify call), so nobody picks traffic lights. The free plan covers 10,000 verifications a month, no card.
+Each of those puzzles costs you some of the people who were ready to ${action}: the ones on a phone, in a hurry, or on a weak connection. Many bots get through anyway with paid solving services.
 
-Your scan (headers, AI-crawler rules, forms): ${scan}
-How it works: ${env.SITE_URL}/docs/
+I build AttestOS. It does the same job without the puzzle: a small proof-of-work check runs quietly in the visitor's browser and your server verifies the token with a call shaped like reCAPTCHA's siteverify. Your visitors just submit the form.
 
-Not relevant? Reply "no" and I won't write again.
+Your free scan (headers, AI-crawler rules, forms): ${scan}
+The free plan covers 10,000 verifications a month, no card: ${env.SITE_URL}/app/#signup
+
+Not useful? Reply "no" and I won't write again.
 
 ${who}
 ${env.POSTAL_ADDRESS}
@@ -101,9 +103,10 @@ export function followUp(env: Env, p: { domain: string; page_url: string }, subj
     subject: subject.startsWith("Re: ") ? subject : `Re: ${subject}`,
     body: `Hi again,
 
-A short nudge in case my note about ${p.domain} got buried. The live scan is here: ${env.SITE_URL}/scanner/?url=${encodeURIComponent(p.page_url)}
+One more thing that might help with ${p.domain}: the swap is two steps, one script tag on the page and one verify call on your server, and the docs walk through both: ${env.SITE_URL}/docs/
+Your scan is still here: ${env.SITE_URL}/scanner/?url=${encodeURIComponent(p.page_url)}
 
-This is my last email unless you reply.
+This is my last email unless you reply. Either way, thank you for reading.
 
 ${who}
 ${env.POSTAL_ADDRESS}

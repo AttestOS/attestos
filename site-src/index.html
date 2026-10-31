@@ -5,8 +5,8 @@
 <section class="hero"><div class="wrap grid2">
   <div>
     <span class="pill">Free plan · no card</span>
-    <h1>Bot checks your visitors <span class="grad">never see</span>.</h1>
-    <p class="lead">AttestOS replaces image puzzles on sign-up, login and contact forms with a small proof-of-work check that runs in the background, plus a server-side verify call shaped like reCAPTCHA's. Real people just submit the form.</p>
+    <h1>Let real people in, <span class="grad">without making them prove it</span>.</h1>
+    <p class="lead">Every puzzle on your sign-up form loses some of the people who were ready to say yes. AttestOS replaces image puzzles on sign-up, login and contact forms with a small proof-of-work check that runs in the background, plus a server-side verify call shaped like reCAPTCHA's. Real people just submit the form.</p>
     <div class="row"><a class="btn" href="/app/#signup">Get a free site key</a><a class="btn alt" href="/scanner/">Scan your site</a></div>
     <p class="small muted" style="margin-top:14px">10,000 verifications a month free · one script tag + one API call · works with any backend</p>
   </div>
@@ -20,6 +20,15 @@
     </form>
     <p class="small muted" id="demo-note" style="margin:10px 0 6px">Your browser is solving a small challenge now. Submitting sends the token to our "backend", which calls <code>/api/siteverify</code>:</p>
     <pre id="demo-out"><code>{ "waiting": "submit the form" }</code></pre>
+  </div>
+</div></section>
+
+<section style="padding-top:28px"><div class="wrap">
+  <h2 class="center">Sound familiar?</h2>
+  <div class="grid3" style="margin-top:22px">
+    <div class="card"><h3>Product and growth teams</h3><p class="before">Someone on a phone, on a slow connection, gets the traffic-light puzzle wrong twice and closes the tab. You paid to bring them there.</p><p class="after"><b>With AttestOS:</b> the check runs quietly while they type. They press the button and they are in.</p><a class="btn" href="/app/#signup">Get a free site key</a></div>
+    <div class="card"><h3>Whoever owns the login page</h3><p class="before">A Monday morning of fake accounts and password-stuffing attempts, and a CAPTCHA that annoys customers more than it slows the attackers.</p><p class="after"><b>With AttestOS:</b> every automated attempt costs the attacker compute, tokens are single-use and domain-bound, and Pro shows you how risky each solve was.</p><a class="btn alt" href="/scanner/">Scan your login page</a></div>
+    <div class="card"><h3>Publishers and documentation sites</h3><p class="before">AI crawlers read everything you wrote, every day, and you were never asked.</p><p class="after"><b>With AgentPass:</b> you decide per crawler: allow it, block it, or answer with your own payment link. Your work, your terms.</p><a class="btn alt" href="/pricing/#agent">See AgentPass</a></div>
   </div>
 </div></section>
 
@@ -53,11 +62,11 @@ if (!v.success) return res.status(400).send("Bot check failed");</code></pre>
   <h2 class="center">One free core, four paid modules</h2>
   <p class="center muted">Every plan includes the free core. Paid plans are monthly on Whop and can be combined.</p>
   <div class="grid3" style="margin-top:26px">
-    <div class="card product"><img src="/assets/img/cover.webp" alt="AttestOS Edge cover art" loading="lazy" width="418" height="314"><span class="pill g">Free</span><h3>Ghost-PoW core</h3><p class="muted">Invisible proof-of-work widget, server-side verify with single-use tokens, domain lock, an AI-crawler rule check, and passkeys for up to 50 users.</p></div>
-    <div class="card product"><img src="/assets/img/cover-integrity.webp" alt="IntegrityRuntime Pro cover art" loading="lazy" width="600" height="327"><span class="pill">$49/mo</span><h3>IntegrityRuntime Pro</h3><p class="muted">Automation signals (webdriver flag, headless user agents, software GPU, native-speed solvers…) turned into a risk score in every verify response, adaptive difficulty during surges, Slack/Discord alerts, audit export.</p></div>
-    <div class="card product"><img src="/assets/img/cover-hardware.webp" alt="Hardware Gateway Pro cover art" loading="lazy" width="450" height="603"><span class="pill">$149/mo</span><h3>Hardware Gateway Pro</h3><p class="muted">Private Access Tokens (Privacy Pass, RFC 9576–9578): supporting Apple devices skip the solve entirely, everyone else falls back to Ghost-PoW. Plus unlimited passkeys.</p></div>
-    <div class="card product"><img src="/assets/img/cover-agentpass.webp" alt="AgentPass Pro cover art" loading="lazy" width="436" height="650"><span class="pill">$99/mo</span><h3>AgentPass Pro</h3><p class="muted">Decide per AI crawler: allow, block, or answer HTTP 402 with your own payment link. Crawler claims are checked against the operators' published IP ranges. Sell metered agent keys.</p></div>
-    <div class="card product"><img src="/assets/img/cover-enterprise.webp" alt="Enterprise cover art" loading="lazy" width="363" height="650"><span class="pill v">$299/mo</span><h3>Enterprise</h3><p class="muted">All modules, 300,000 verifications a month, 25 sites.</p></div>
+    <div class="card product"><img src="/assets/img/cover.webp" alt="AttestOS Edge cover art" loading="lazy" width="418" height="314"><span class="pill g">Free</span><h3>Ghost-PoW core</h3><p class="feel">Bots stopped, and real people never see a puzzle.</p><p class="muted">Invisible proof-of-work widget, server-side verify with single-use tokens, domain lock, an AI-crawler rule check, and passkeys for up to 50 users.</p></div>
+    <div class="card product"><img src="/assets/img/cover-integrity.webp" alt="IntegrityRuntime Pro cover art" loading="lazy" width="600" height="327"><span class="pill">$49/mo</span><h3>IntegrityRuntime Pro</h3><p class="feel">Know how risky every solve was, and tighten only when it matters.</p><p class="muted">Automation signals (webdriver flag, headless user agents, software GPU, native-speed solvers…) turned into a risk score in every verify response, adaptive difficulty during surges, Slack/Discord alerts, audit export.</p></div>
+    <div class="card product"><img src="/assets/img/cover-hardware.webp" alt="Hardware Gateway Pro cover art" loading="lazy" width="450" height="603"><span class="pill">$149/mo</span><h3>Hardware Gateway Pro</h3><p class="feel">Trusted devices walk straight in. Everyone else still gets through.</p><p class="muted">Private Access Tokens (Privacy Pass, RFC 9576–9578): supporting Apple devices skip the solve entirely, everyone else falls back to Ghost-PoW. Plus unlimited passkeys.</p></div>
+    <div class="card product"><img src="/assets/img/cover-agentpass.webp" alt="AgentPass Pro cover art" loading="lazy" width="436" height="650"><span class="pill">$99/mo</span><h3>AgentPass Pro</h3><p class="feel">AI crawlers either pay you or stay out.</p><p class="muted">Decide per AI crawler: allow, block, or answer HTTP 402 with your own payment link. Crawler claims are checked against the operators' published IP ranges. Sell metered agent keys.</p></div>
+    <div class="card product"><img src="/assets/img/cover-enterprise.webp" alt="Enterprise cover art" loading="lazy" width="363" height="650"><span class="pill v">$299/mo</span><h3>Enterprise</h3><p class="feel">Everything, at a size where you stop thinking about limits.</p><p class="muted">All modules, 300,000 verifications a month, 25 sites.</p></div>
     <div class="card"><h3>Not sure yet?</h3><p class="muted">Run the free scanner on your sign-up page. It shows which CAPTCHA (if any) you run today, how your robots.txt treats AI crawlers and which security headers are missing.</p><a class="btn alt" href="/scanner/">Open the scanner</a></div>
   </div>
 </div></section>

@@ -84,3 +84,5 @@ footer.bottom a{color:var(--muted)}
 .copy{position:relative}.copy button{position:absolute;top:8px;right:8px}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid #334155;border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+.feel{font-style:italic;color:var(--muted);margin:4px 0 8px}.before{color:#b91c1c}.after{color:#15803d}
