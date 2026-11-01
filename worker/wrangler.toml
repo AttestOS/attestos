@@ -62,11 +62,11 @@ POSTAL_ADDRESS = ""
 # Gmail is shared with other businesses; raise once AttestOS has its own box.
 MAILBOXES = '[{"id":"gm1","provider":"gmail","fromName":"AttestOS","cold":10,"transactional":30,"hourly":6}]'
 # Whop: map plan/product ids → plans, and one checkout URL per paid plan (https://whop.com/checkout/plan_…).
-WHOP_PLAN_MAP = '{}'
-WHOP_CHECKOUT_INTEGRITY = ""
-WHOP_CHECKOUT_HARDWARE = ""
-WHOP_CHECKOUT_AGENT = ""
-WHOP_CHECKOUT_ENTERPRISE = ""
+WHOP_PLAN_MAP = '{"plan_PkURo5bTOqjNk":"integrity","plan_K1al5PKpXXcuN":"hardware","plan_RKiOkAV8VJuc8":"agent","plan_Z3ZykM37fIu6E":"enterprise"}'
+WHOP_CHECKOUT_INTEGRITY = "https://whop.com/checkout/plan_PkURo5bTOqjNk"
+WHOP_CHECKOUT_HARDWARE = "https://whop.com/checkout/plan_K1al5PKpXXcuN"
+WHOP_CHECKOUT_AGENT = "https://whop.com/checkout/plan_RKiOkAV8VJuc8"
+WHOP_CHECKOUT_ENTERPRISE = "https://whop.com/checkout/plan_Z3ZykM37fIu6E"
 # AttestOS's own share of the account's free D1 quota (20%).
 D1_WRITE_BUDGET = "20000"
 D1_READ_BUDGET = "1000000"
