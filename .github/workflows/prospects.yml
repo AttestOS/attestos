@@ -1,10 +1,10 @@
 name: Prospects
-# Once a day: check ~600 mid-size sites (Tranco ranks 20k-500k) for a VISIBLE challenge on their own
+# Weekdays (2026-11-01 Actions budget; was daily): check ~600 mid-size sites (Tranco ranks 20k-500k) for a VISIBLE challenge on their own
 # sign-up/login/contact pages plus a published role address, and hand the matches to the Worker.
 # Public repo: Actions minutes are free; the run takes ~3-5 minutes.
 on:
   schedule:
-    - cron: "41 4 * * *"
+    - cron: "41 4 * * 1-5"   # 2026-11-01 budget: weekdays, ~2-4 billed min a run
   workflow_dispatch:
     inputs:
       dry:
@@ -20,7 +20,7 @@ jobs:
   find:
     if: github.repository == 'AttestOS/attestos'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

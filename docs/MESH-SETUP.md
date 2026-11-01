@@ -1,7 +1,7 @@
 # Distribution mesh: account and secret checklist
 
 The press (`press/auto.py`, run by `.github/workflows/press.yml`) is the STPi/TightBucket distribution mesh adapted to
-AttestOS: four slots a day, value posts plus at most one promo per rail per day, a weekly long-form essay, replies, a
+AttestOS: one midday slot a day (cut from four on 2026-11-01 to keep GitHub Actions under 10-15 minutes a day), value posts plus at most one promo per rail per day, a weekly long-form essay, replies, a
 card image on every post, and every link tracked through `/go/<key>?src=<rail>-<topic>` (clicks per destination and
 rail show up in the owner console's **Mesh** tab).
 

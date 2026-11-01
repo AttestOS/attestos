@@ -4,6 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
+    paths-ignore: ["**.md", "docs/**"]   # 2026-11-01 Actions budget: a docs-only push runs nothing
 permissions:
   contents: read
 concurrency:

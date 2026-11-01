@@ -1,7 +1,7 @@
 name: press
-# The distribution mesh (press/auto.py, the STPi/TightBucket press adapted to AttestOS): four slots a day author,
-# validate and publish value + promo posts across Buffer accounts A/B/C (company + optional seller sets _A/_B) and
-# the direct rails (Bluesky, dev.to, Nostr, Whop forums, Telegram, Mastodon, Discord), then answer replies.
+# The distribution mesh (press/auto.py, the STPi/TightBucket press adapted to AttestOS): one slot a day (2026-11-01) authors,
+# validates and publishes value + promo posts across Buffer accounts A/B/C (company + optional seller sets _A/_B) and
+# the direct rails (Bluesky, dev.to, Nostr, Whop forums, Telegram, Mastodon, Discord), then answers replies.
 #
 # Off until the owner turns it on: set the repo variable PRESS_ENABLED=1 once the first rail keys exist
 # (docs/MESH-SETUP.md). A skipped scheduled job never gets a runner.
@@ -11,15 +11,15 @@ name: press
 # PUBLIC REPOSITORY RULES (this file is the only place press secrets are read):
 # - triggers are schedule + workflow_dispatch only (never pull_request: forks must not see secrets);
 # - no actions/cache of login sessions (caches are readable by anyone who can run a workflow here) - Bluesky
-#   simply logs in fresh each slot (4 a day, far inside its session limits);
+#   simply logs in fresh each slot (1 a day, far inside its session limits);
 # - the press-state ledger branch is public: it holds post texts, ids and timestamps, never keys.
 # Public repositories get free Actions minutes, so there is no minutes guard here.
 on:
   schedule:
-    - cron: "15 6 * * *"     # 08:15 / 12:15 / 16:15 / 20:15 Harare: four reader-hour slots, weekends included
+    # 2026-11-01 Actions budget (owner: no business above 10-15 GitHub minutes a day, operability over
+    # speed): one midday slot (12:15 Harare), weekends included. A live cycle is ~5 billed minutes;
+    # the planner still posts at most one piece per rail per run (run_target stays 4).
     - cron: "15 10 * * *"
-    - cron: "15 14 * * *"
-    - cron: "15 18 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -37,7 +37,7 @@ jobs:
   cycle:
     if: github.event_name == 'workflow_dispatch' || vars.PRESS_ENABLED == '1'
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 9    # 2026-11-01 budget: a cycle is ~4-5 min
     env:
       AO_BSKY_SESSIONS_FILE: /tmp/press-sessions/bsky.json   # runner-local (outside the repo), discarded with the VM
       AO_SITE_URL: ${{ vars.AO_SITE_URL || 'https://attestos-edge.attestos.workers.dev' }}
