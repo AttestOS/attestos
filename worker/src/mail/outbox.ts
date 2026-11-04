@@ -6,7 +6,7 @@ import { buildMime } from "./mime";
 import { SmtpError, SmtpSession } from "./smtp";
 import { COLD_KINDS, laneCounts, laneState, laneUsable, lanes, saveLaneState, type Lane, type LaneState } from "./lanes";
 
-export type Kind = "first" | "follow" | "verify" | "reset" | "notice";
+export type Kind = "first" | "follow" | "nudge" | "link" | "verify" | "reset" | "notice";
 
 export async function isSuppressed(env: Env, email: string) {
   return !!(await first(env, "SELECT 1 AS x FROM suppress WHERE email = ?", email.toLowerCase()));
@@ -54,14 +54,19 @@ export async function processOutbox(env: Env, o: { onlyId?: number; max?: number
     for (const row of rows) {
       if (Date.now() > deadline) break;
       const cold = COLD_KINDS.includes(row.kind);
-      const lc = [...ctx.values()].find((x) => !x.dead && x.c.hour < x.lane.hourly && (cold ? x.c.cold < x.lane.cold : x.c.tx < x.lane.transactional));
+      // v2: T2/T3 and link replies go from the box that sent the first touch, threaded under it
+      const parent = row.ref && (row.kind === "follow" || row.kind === "nudge" || row.kind === "link")
+        ? await first<{ lane: string | null; message_id: string | null }>(env, "SELECT lane, message_id FROM outbox WHERE ref = ? AND kind = 'first' AND status = 'sent' ORDER BY id DESC LIMIT 1", row.ref) : null;
+      const fits = (x: { lane: Lane; c: { cold: number; tx: number; hour: number }; dead?: boolean }) => !x.dead && x.c.hour < x.lane.hourly && (cold ? x.c.cold < x.lane.cold : x.c.tx < x.lane.transactional);
+      const pinned = parent?.lane ? ctx.get(parent.lane) : undefined;
+      const lc = parent?.lane && lanes(env).some((l) => l.id === parent.lane) ? (pinned && fits(pinned) ? pinned : undefined) : [...ctx.values()].find(fits);
       if (!lc) continue;
       const claim = await run(env, "UPDATE outbox SET status = 'sending', attempts = attempts + 1, lane = ? WHERE id = ? AND status = 'queued'", lc.lane.id, row.id);
       if (!Number(claim.meta?.changes ?? 0)) continue;
       if (cold && (await isSuppressed(env, row.to_email))) { await run(env, "UPDATE outbox SET status = 'failed', error = 'suppressed' WHERE id = ?", row.id); continue; }
       const messageId = `<${crypto.randomUUID()}@${lc.lane.user.split("@")[1] || "attestos.local"}>`;
       const unsub = cold ? await unsubscribeUrl(env, row.to_email) : undefined;
-      const mime = buildMime({ from: lc.lane.user, fromName: lc.lane.fromName, to: row.to_email, subject: row.subject, text: row.body, messageId, listUnsubscribe: unsub, listUnsubscribeMailto: cold ? lc.lane.user : undefined });
+      const mime = buildMime({ from: lc.lane.user, fromName: lc.lane.fromName, to: row.to_email, subject: row.subject, text: row.body, messageId, listUnsubscribe: unsub, listUnsubscribeMailto: cold ? lc.lane.user : undefined, inReplyTo: parent?.message_id || undefined });
       try {
         lc.s ??= await SmtpSession.open({ host: lc.lane.host, port: lc.lane.smtpPort, user: lc.lane.user, pass: lc.lane.pass });
         await lc.s.send(lc.lane.user, row.to_email, mime);

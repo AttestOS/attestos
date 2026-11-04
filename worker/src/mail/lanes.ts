@@ -58,13 +58,13 @@ export async function laneState(env: Env, id: string): Promise<LaneState> {
 export const saveLaneState = (env: Env, id: string, s: LaneState) => setSetting(env, `lane:${id}`, JSON.stringify(s));
 export const laneUsable = (s: LaneState, now = Date.now()) => s.status === "ok" && !(s.cooldownUntil && Date.parse(s.cooldownUntil) > now);
 
-export const COLD_KINDS = ["first", "follow"];
+export const COLD_KINDS = ["first", "follow", "nudge"];
 
 /** Delivery attempts for a lane (sent, or refused by the server): today (cold / transactional) and the last rolling hour (everything). */
 export async function laneCounts(env: Env, id: string) {
   const r = await first<{ cold: number; tx: number; hour: number }>(env,
-    `SELECT COALESCE(SUM(CASE WHEN kind IN ('first','follow') AND sent_at >= date('now') THEN 1 ELSE 0 END), 0) AS cold,
-            COALESCE(SUM(CASE WHEN kind NOT IN ('first','follow') AND sent_at >= date('now') THEN 1 ELSE 0 END), 0) AS tx,
+    `SELECT COALESCE(SUM(CASE WHEN kind IN ('first','follow','nudge') AND sent_at >= date('now') THEN 1 ELSE 0 END), 0) AS cold,
+            COALESCE(SUM(CASE WHEN kind NOT IN ('first','follow','nudge') AND sent_at >= date('now') THEN 1 ELSE 0 END), 0) AS tx,
             COALESCE(SUM(CASE WHEN sent_at >= datetime('now','-1 hour') THEN 1 ELSE 0 END), 0) AS hour
        FROM outbox WHERE lane = ? AND status IN ('sent','failed') AND sent_at >= datetime('now','-1 day')`, id);
   return { cold: r?.cold ?? 0, tx: r?.tx ?? 0, hour: r?.hour ?? 0 };

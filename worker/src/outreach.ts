@@ -5,18 +5,21 @@ import { HttpError, html, json, readBodyText, readObject, str } from "./lib/http
 import { isEmail, normHost } from "./lib/util";
 import { notifyOwner } from "./lib/notify";
 import { budgetState } from "./lib/quota";
-import { enqueue, suppress, unsubscribeUrl } from "./mail/outbox";
+import { enqueue, suppress } from "./mail/outbox";
 import { laneCounts, laneState, laneUsable, lanes, saveLaneState } from "./mail/lanes";
 import { ImapSession } from "./mail/imap";
 import { VENDORS } from "./scanner";
 
 /** Honest outreach. A GitHub Action (scripts/prospects.mjs) really scans public sites and posts the ones that show
- *  a visible CAPTCHA AND publish a business contact address on their own site. The Worker then sends ONE first
- *  touch and at most ONE follow-up (4 days later, only if no reply), through armed mail lanes, within their caps.
- *  Every email names what we saw and where, offers the free plan, links the live scan, and has a postal address,
- *  "reply no" and a one-click unsubscribe. Replies stop the sequence and are pushed to the owner, who answers. */
+ *  a visible CAPTCHA AND publish a business contact address on their own site. Owner 2026-11-04 (outreach v2):
+ *    T1    plain text, NO links: what we saw and where, ending "reply and I'll send the links".
+ *    link  a non-"no" reply gets the links straight away, in the same thread, same box; the owner is told.
+ *    T2    day 7 with no reply: the links (scan, docs, free plan), threaded.
+ *    T3    day 14 with no reply: one last short nudge with the scan link. Then never again.
+ *  Daily cap per business ramps 10 → 25 → 50 (T1+T2+T3); the brake pauses new T1s on bounces > 5% or "no" > 3%.
+ *  Every email carries the postal address and "reply no"; the List-Unsubscribe header stays on cold mail. */
 
-const FOLLOW_AFTER_DAYS = 4;
+const FOLLOW_AFTER_DAYS = 7; // T2 on day 7, T3 seven days later (day 14)
 const HIGH_FRICTION = new Set(VENDORS.filter((v) => v.friction === "high").map((v) => v.id));
 const SKIP_TLD = /\.(gov|mil|edu)(\.[a-z]{2})?$|\.gov\.[a-z]{2}$|\.ac\.[a-z]{2}$/;
 
@@ -72,50 +75,96 @@ export async function opsRoute(req: Request, env: Env, path: string): Promise<Re
 const vendorName = (id: string) => VENDORS.find((v) => v.id === id)?.name ?? id;
 const ACTION: Record<string, string> = { signup: "sign up", login: "log in", contact: "contact you" };
 
-export function firstTouch(env: Env, p: { domain: string; page_url: string; vendor: string; page_kind: string | null }, unsub: string) {
+const who = (env: Env) => (env.OWNER_NAME ? `${env.OWNER_NAME}, AttestOS` : "AttestOS");
+const footer = (env: Env) => `Not useful? Reply "no" and I won't write again.\n\n${who(env)}\n${env.POSTAL_ADDRESS}`;
+const scanUrl = (env: Env, pageUrl: string) => `${env.SITE_URL}/scanner/?url=${encodeURIComponent(pageUrl)}`;
+const reSubj = (subject: string) => (subject.startsWith("Re: ") ? subject : `Re: ${subject}`);
+const where = (p: { domain: string; page_kind: string | null }) =>
+  p.page_kind && p.page_kind !== "home" && p.page_kind !== "other" ? `the ${p.page_kind} page on ${p.domain}` : `the ${p.domain} homepage`;
+
+/** T1: plain text, no links, no attachments. */
+export function firstTouch(env: Env, p: { domain: string; page_url: string; vendor: string; page_kind: string | null }) {
   const v = vendorName(p.vendor);
   const action = ACTION[p.page_kind || ""] ?? "get through";
-  const scan = `${env.SITE_URL}/scanner/?url=${encodeURIComponent(p.page_url)}`;
-  const who = env.OWNER_NAME ? `${env.OWNER_NAME}, AttestOS` : "AttestOS";
   return {
     subject: `${p.domain}: the ${v} on your ${p.page_kind && p.page_kind !== "home" && p.page_kind !== "other" ? `${p.page_kind} ` : ""}page`,
     body: `Hi ${p.domain} team,
 
-I came across ${p.page_url} in a public scan. It asks every real visitor to clear ${v} before they can ${action}.
+I came across ${where(p)} in a public scan. It asks every real visitor to clear ${v} before they can ${action}.
 
 Each of those puzzles costs you some of the people who were ready to ${action}: the ones on a phone, in a hurry, or on a weak connection. Many bots get through anyway with paid solving services.
 
 I build AttestOS. It does the same job without the puzzle: a small proof-of-work check runs quietly in the visitor's browser and your server verifies the token with a call shaped like reCAPTCHA's siteverify. Your visitors just submit the form.
 
-Your free scan (headers, AI-crawler rules, forms): ${scan}
-The free plan covers 10,000 verifications a month, no card: ${env.SITE_URL}/app/#signup
+I ran a free scan of the page (headers, AI-crawler rules, forms). If you'd like it, and the free plan details, just reply and I'll send the links.
 
-Not useful? Reply "no" and I won't write again.
-
-${who}
-${env.POSTAL_ADDRESS}
-Unsubscribe: ${unsub}`,
+${footer(env)}`,
   };
 }
-export function followUp(env: Env, p: { domain: string; page_url: string }, subject: string, unsub: string) {
-  const who = env.OWNER_NAME ? `${env.OWNER_NAME}, AttestOS` : "AttestOS";
+/** Answer to a real reply: the links, once, in the same thread. */
+export function linkReply(env: Env, p: { domain: string; page_url: string }, subject: string) {
   return {
-    subject: subject.startsWith("Re: ") ? subject : `Re: ${subject}`,
+    subject: reSubj(subject),
+    body: `Thanks for getting back to me. Here they are:
+
+Your scan of ${p.domain}: ${scanUrl(env, p.page_url)}
+How the swap works (one script tag, one verify call): ${env.SITE_URL}/docs/
+The free plan, 10,000 verifications a month, no card: ${env.SITE_URL}/app/#signup
+
+Happy to answer anything about it here.
+
+${who(env)}`,
+  };
+}
+/** T2, day 7 with no reply: the links, threaded. */
+export function followUp(env: Env, p: { domain: string; page_url: string }, subject: string) {
+  return {
+    subject: reSubj(subject),
     body: `Hi again,
 
-One more thing that might help with ${p.domain}: the swap is two steps, one script tag on the page and one verify call on your server, and the docs walk through both: ${env.SITE_URL}/docs/
-Your scan is still here: ${env.SITE_URL}/scanner/?url=${encodeURIComponent(p.page_url)}
+In case it's useful, here is the free scan of ${p.domain} I mentioned: ${scanUrl(env, p.page_url)}
 
-This is my last email unless you reply. Either way, thank you for reading.
+The swap is two steps, one script tag on the page and one verify call on your server, and the docs walk through both: ${env.SITE_URL}/docs/
+The free plan covers 10,000 verifications a month, no card: ${env.SITE_URL}/app/#signup
 
-${who}
-${env.POSTAL_ADDRESS}
-Unsubscribe: ${unsub}`,
+${footer(env)}`,
+  };
+}
+/** T3, day 14 with no reply: one last short nudge, then never again. */
+export function nudge(env: Env, p: { domain: string; page_url: string }, subject: string) {
+  return {
+    subject: reSubj(subject),
+    body: `Last note from me, and thank you for reading. Your ${p.domain} scan stays here if the puzzle ever becomes a priority: ${scanUrl(env, p.page_url)}
+
+I won't email again.
+
+${who(env)}
+${env.POSTAL_ADDRESS}`,
   };
 }
 
-/** Cron: queue first touches / follow-ups up to the lanes' remaining cold capacity for today. */
-export async function outreachTick(env: Env) {
+/** Daily outreach per business (owner 2026-11-04): 10 a day in week 1, 25 in week 2, 50 from week 3 (T1+T2+T3). */
+export function outreachRamp(now = new Date(), start = "2026-11-05"): number {
+  const days = Math.floor((now.getTime() - Date.parse(`${start}T00:00:00Z`)) / 86_400_000);
+  return days < 0 ? 0 : days < 7 ? 10 : days < 14 ? 25 : 50;
+}
+/** The brake: new first touches pause when the last 7 days show bounces > 5% or "no" replies > 3% (20+ sends). */
+export function brakeReason(sent: number, bounced: number, stops: number): string {
+  if (sent < 20) return "";
+  if (bounced / sent > 0.05) return `brake: ${bounced} bounces in ${sent} sends this week (over 5%)`;
+  if (stops / sent > 0.03) return `brake: ${stops} "no" replies in ${sent} sends this week (over 3%)`;
+  return "";
+}
+async function weekHealth(env: Env) {
+  const r = await first<{ sent: number }>(env, "SELECT COUNT(*) AS sent FROM outbox WHERE kind IN ('first','follow','nudge') AND status = 'sent' AND sent_at > datetime('now','-7 days')");
+  const p = await first<{ bounced: number; stops: number }>(env, `SELECT COALESCE(SUM(CASE WHEN status = 'bounced' THEN 1 ELSE 0 END), 0) AS bounced,
+    COALESCE(SUM(CASE WHEN status = 'unsub' AND replied_at > datetime('now','-7 days') THEN 1 ELSE 0 END), 0) AS stops
+    FROM prospects WHERE first_sent_at > datetime('now','-21 days')`);
+  return brakeReason(r?.sent ?? 0, p?.bounced ?? 0, p?.stops ?? 0);
+}
+
+/** Cron: queue T2/T3 (owed first) and then T1s, within the lanes' cold room AND the day's ramp. */
+export async function outreachTick(env: Env, now = new Date()) {
   const st = await outreachStatus(env);
   if (!st.ready || (await budgetState(env)).tight) return { queued: 0, reason: st.blockers.join("; ") || "D1 budget tight" };
   let room = 0;
@@ -124,30 +173,36 @@ export async function outreachTick(env: Env) {
     const c = await laneCounts(env, l.id);
     room += Math.max(0, Math.min(l.cold - c.cold, l.hourly - c.hour));
   }
-  const pending = (await first<{ n: number }>(env, "SELECT COUNT(*) AS n FROM outbox WHERE status IN ('queued','sending') AND kind IN ('first','follow')"))?.n ?? 0;
-  room -= pending;
+  const pending = (await first<{ n: number }>(env, "SELECT COUNT(*) AS n FROM outbox WHERE status IN ('queued','sending') AND kind IN ('first','follow','nudge')"))?.n ?? 0;
+  const today = (await first<{ n: number }>(env, "SELECT COUNT(*) AS n FROM outbox WHERE kind IN ('first','follow','nudge') AND created_at >= ? AND COALESCE(error,'') NOT IN ('suppressed','replied')", now.toISOString().slice(0, 10)))?.n ?? 0;
+  room = Math.min(room - pending, outreachRamp(now, env.OUTREACH_START || undefined) - today);
   if (room <= 0) return { queued: 0 };
   let queued = 0;
-  const follows = await all<{ domain: string; page_url: string; contact_email: string }>(env,
-    `SELECT domain, page_url, contact_email FROM prospects WHERE status = 'sent' AND first_sent_at < datetime('now', ?) ORDER BY first_sent_at LIMIT ?`, `-${FOLLOW_AFTER_DAYS} days`, room);
-  for (const p of follows) {
-    const prev = await first<{ subject: string }>(env, "SELECT subject FROM outbox WHERE ref = ? AND kind = 'first' AND status = 'sent' ORDER BY id DESC LIMIT 1", p.domain);
-    const m = followUp(env, p, prev?.subject || `${p.domain}`, await unsubscribeUrl(env, p.contact_email));
-    const id = await enqueue(env, { to: p.contact_email, subject: m.subject, body: m.body, kind: "follow", ref: p.domain });
-    await run(env, "UPDATE prospects SET status = ?, follow_sent_at = datetime('now') WHERE domain = ?", id ? "followed" : "unsub", p.domain);
+  const firstSubject = async (domain: string) => (await first<{ subject: string }>(env, "SELECT subject FROM outbox WHERE ref = ? AND kind = 'first' AND status = 'sent' ORDER BY id DESC LIMIT 1", domain))?.subject || domain;
+  const due = await all<{ domain: string; page_url: string; contact_email: string; status: string }>(env,
+    `SELECT domain, page_url, contact_email, status FROM prospects
+      WHERE (status = 'sent' AND first_sent_at < datetime('now', ?)) OR (status = 'followed' AND follow_sent_at < datetime('now', ?))
+      ORDER BY first_sent_at LIMIT ?`, `-${FOLLOW_AFTER_DAYS} days`, `-${FOLLOW_AFTER_DAYS} days`, room);
+  for (const p of due) {
+    const t2 = p.status === "sent";
+    const m = (t2 ? followUp : nudge)(env, p, await firstSubject(p.domain));
+    const id = await enqueue(env, { to: p.contact_email, subject: m.subject, body: m.body, kind: t2 ? "follow" : "nudge", ref: p.domain });
+    if (t2) await run(env, "UPDATE prospects SET status = ?, follow_sent_at = datetime('now') WHERE domain = ?", id ? "followed" : "unsub", p.domain);
+    else await run(env, "UPDATE prospects SET status = ? WHERE domain = ?", id ? "nudged" : "unsub", p.domain);
     if (id) queued++;
   }
-  if (queued < room) {
+  const brake = queued < room ? await weekHealth(env) : "";
+  if (queued < room && !brake) {
     const fresh = await all<{ domain: string; page_url: string; vendor: string; page_kind: string | null; contact_email: string }>(env,
       "SELECT domain, page_url, vendor, page_kind, contact_email FROM prospects WHERE status = 'new' ORDER BY created_at LIMIT ?", room - queued);
     for (const p of fresh) {
-      const m = firstTouch(env, p, await unsubscribeUrl(env, p.contact_email));
+      const m = firstTouch(env, p);
       const id = await enqueue(env, { to: p.contact_email, subject: m.subject, body: m.body, kind: "first", ref: p.domain });
       await run(env, "UPDATE prospects SET status = ?, first_sent_at = datetime('now') WHERE domain = ?", id ? "sent" : "unsub", p.domain);
       if (id) queued++;
     }
   }
-  return { queued };
+  return { queued, ...(brake ? { brake } : {}) };
 }
 
 // ---------- replies & bounces (IMAP, read-only) ----------
@@ -186,13 +241,23 @@ export async function pollReplies(env: Env) {
           continue;
         }
         if (!sender) continue;
-        const p = await first<{ domain: string; status: string }>(env, "SELECT domain, status FROM prospects WHERE contact_email = ? AND status IN ('sent','followed')", sender);
+        const p = await first<{ domain: string; status: string; page_url: string }>(env, "SELECT domain, status, page_url FROM prospects WHERE contact_email = ? AND status IN ('sent','followed','nudged')", sender);
         if (!p) continue;
         const optout = /^\s*(no|stop|unsubscribe|remove)\b/i.test(text) || /unsubscribe|remove me|not interested/i.test(parseAddr(msg.header, "Subject") || "");
         await run(env, "UPDATE prospects SET status = ?, replied_at = datetime('now') WHERE domain = ?", optout ? "unsub" : "replied", p.domain);
         await run(env, "UPDATE outbox SET status = 'failed', error = 'replied' WHERE ref = ? AND status = 'queued'", p.domain);
         if (optout) await suppress(env, sender, "replied-no");
-        else { replies++; await notifyOwner(env, { title: `Reply from ${p.domain}`, message: `${sender} replied. Answer from ${l.user}.`, priority: 5 }); }
+        else {
+          replies++;
+          // v2: the first touch had no links, so a real reply gets them now (once; T2 already carried them)
+          let linked = false;
+          if (p.status === "sent") {
+            const subj = (await first<{ subject: string }>(env, "SELECT subject FROM outbox WHERE ref = ? AND kind = 'first' AND status = 'sent' ORDER BY id DESC LIMIT 1", p.domain))?.subject || p.domain;
+            const m = linkReply(env, p, subj);
+            linked = !!(await enqueue(env, { to: sender, subject: m.subject, body: m.body, kind: "link", ref: p.domain }));
+          }
+          await notifyOwner(env, { title: `Reply from ${p.domain}`, message: `${sender} replied.${linked ? " The links went back automatically, in-thread." : ""} Answer from ${l.user}.`, priority: 5 });
+        }
       }
       const top = uids.length ? Math.max(...uids) : mark && mark.v === box.uidValidity ? mark.u : box.uidNext - 1;
       await saveLaneState(env, l.id, { ...st, imap: { ...(st.imap || {}), INBOX: { v: box.uidValidity, u: top } } });

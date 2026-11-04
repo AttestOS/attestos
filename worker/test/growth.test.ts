@@ -13,7 +13,7 @@ vi.mock("../src/mail/smtp", async (orig) => {
 
 import { call, makeEnv, post } from "./helpers/env";
 import { botAccess, detectVendors, findEmails, parseRobots, pageKind, scan, targetUrl } from "../src/scanner";
-import { firstTouch, outreachTick, parseAddr } from "../src/outreach";
+import { brakeReason, firstTouch, followUp, linkReply, nudge, outreachRamp, outreachTick, parseAddr } from "../src/outreach";
 import { enqueue, processOutbox, unsubscribeUrl } from "../src/mail/outbox";
 import { SmtpError } from "../src/mail/smtp";
 import { setSetting } from "../src/lib/db";
@@ -21,7 +21,7 @@ import worker from "../src/index";
 
 afterEach(() => { vi.unstubAllGlobals(); sent.length = 0; failNext = null; });
 
-const LANE = { MAILBOXES: '[{"id":"gm1","provider":"gmail","cold":3,"transactional":5,"hourly":10}]', MAILBOX_GM1_USER: "me@gmail.com", MAILBOX_GM1_PASS: "abcd efgh ijkl mnop" };
+const LANE = { MAILBOXES: '[{"id":"gm1","provider":"gmail","cold":3,"transactional":5,"hourly":10}]', MAILBOX_GM1_USER: "me@gmail.com", MAILBOX_GM1_PASS: "abcd efgh ijkl mnop", OUTREACH_START: "2020-01-01" };
 
 describe("scanner", () => {
   it("parses robots.txt groups the way crawlers do", () => {
@@ -75,7 +75,7 @@ describe("honest outreach", () => {
     expect(q("SELECT status FROM prospects")[0].status).toBe("new");
   });
 
-  it("never sends until switched on with a postal address; then first touch + one follow-up", async () => {
+  it("v2: never sends until switched on; link-free T1, T2 day 7 with links, T3 day 14, then never again", async () => {
     const { env, q } = await makeEnv({ AO_OPS_TOKEN: "t".repeat(32), ...LANE });
     await ops(env, { prospects: [P] });
     expect((await outreachTick(env)).queued).toBe(0);
@@ -86,24 +86,65 @@ describe("honest outreach", () => {
     expect(sent).toHaveLength(1);
     const mime = sent[0].mime;
     expect(mime).toMatch(/List-Unsubscribe: <mailto:me@gmail\.com\?subject=unsubscribe>, <https:\/\/attestos-edge/);
-    expect(mime).toContain("List-Unsubscribe-Post: List-Unsubscribe=One-Click");
-    const body = Buffer.from(mime.split("\r\n\r\n")[1].replace(/\r\n/g, ""), "base64").toString();
+    const dec = (m: string) => Buffer.from(m.split("\r\n\r\n")[1].replace(/\r\n/g, ""), "base64").toString();
+    const body = dec(mime);
     expect(body).toContain("reCAPTCHA v2");
-    expect(body).toContain("https://shop.example/signup");
+    expect(body).toContain("the signup page on shop.example");
+    expect(body).not.toMatch(/https?:\/\/|\/u\/|www\./);
+    expect(body).toContain("reply and I'll send the links");
     expect(body).toContain('Reply "no"');
     expect(body).toContain("1 Main St, Harare");
-    expect(body).toContain("/u/");
-    expect((await outreachTick(env)).queued).toBe(0); // no follow-up before 4 days
+    expect(mime).not.toMatch(/Content-Disposition: attachment/i);
+    const firstId = mime.match(/Message-ID: (<[^>]+>)/)![1];
+    expect((await outreachTick(env)).queued).toBe(0); // nothing before day 7
     q("UPDATE prospects SET first_sent_at = datetime('now','-5 days')");
+    expect((await outreachTick(env)).queued).toBe(0);
+    q("UPDATE prospects SET first_sent_at = datetime('now','-8 days')");
     expect((await outreachTick(env)).queued).toBe(1);
     await processOutbox(env);
     expect(sent[1].mime).toMatch(/Subject: Re: /);
-    q("UPDATE prospects SET first_sent_at = datetime('now','-9 days')");
-    expect((await outreachTick(env)).queued).toBe(0); // only one follow-up ever
+    expect(sent[1].mime).toContain(`In-Reply-To: ${firstId}`);
+    expect(dec(sent[1].mime)).toContain("/scanner/?url=");
+    expect(dec(sent[1].mime)).toContain("/docs/");
+    expect((await outreachTick(env)).queued).toBe(0); // T3 waits another 7 days
+    q("UPDATE prospects SET follow_sent_at = datetime('now','-8 days')");
+    expect((await outreachTick(env)).queued).toBe(1);
+    await processOutbox(env);
+    expect(dec(sent[2].mime)).toContain("I won't email again");
+    expect(q("SELECT status FROM prospects")[0].status).toBe("nudged");
+    q("UPDATE prospects SET first_sent_at = datetime('now','-30 days'), follow_sent_at = datetime('now','-30 days')");
+    expect((await outreachTick(env)).queued).toBe(0); // three emails, ever
+  });
+
+  it("v2: ramp 10/25/50 from 5 Nov 2026; brake on bounces and 'no' replies", () => {
+    expect(outreachRamp(new Date("2026-11-04T23:00:00Z"))).toBe(0);
+    expect(outreachRamp(new Date("2026-11-05T00:00:00Z"))).toBe(10);
+    expect(outreachRamp(new Date("2026-11-12T00:00:00Z"))).toBe(25);
+    expect(outreachRamp(new Date("2026-11-19T00:00:00Z"))).toBe(50);
+    expect(brakeReason(19, 10, 10)).toBe("");
+    expect(brakeReason(40, 2, 1)).toBe("");
+    expect(brakeReason(40, 3, 0)).toMatch(/bounces/);
+    expect(brakeReason(40, 0, 2)).toMatch(/"no"/);
+  });
+
+  it("v2: the ramp caps the day even when lanes have room", async () => {
+    const { env } = await makeEnv({ AO_OPS_TOKEN: "t".repeat(32), ...LANE, MAILBOXES: '[{"id":"gm1","provider":"gmail","cold":100,"transactional":5,"hourly":60}]', OUTREACH_START: new Date(Date.now() - 86_400_000).toISOString().slice(0, 10), POSTAL_ADDRESS: "1 Main St" }); // week 1: 10/day
+    await setSetting(env, "outreach_enabled", "1");
+    await ops(env, { prospects: Array.from({ length: 14 }, (_, i) => ({ ...P, domain: `r${i}.example`, page_url: `https://r${i}.example/`, contact_email: `hi@r${i}.example`, contact_source: `https://r${i}.example/c` })) });
+    expect((await outreachTick(env)).queued).toBe(10);
+    expect((await outreachTick(env)).queued).toBe(0);
+  });
+
+  it("v2: templates: T1 has no link, T2/T3/link reply do", () => {
+    const env = { SITE_URL: "https://x", POSTAL_ADDRESS: "Addr", OWNER_NAME: "Sam" };
+    const p = { domain: "a.example", page_url: "https://a.example/login", vendor: "hcaptcha", page_kind: "login" };
+    expect(firstTouch(env, p).body).not.toMatch(/https?:/);
+    for (const f of [followUp, nudge, linkReply]) expect(f(env, p, "s").body).toContain("https://x/scanner/?url=");
+    expect(linkReply(env, p, "s").subject).toBe("Re: s");
   });
 
   it("respects the lane's daily cold cap and suppresses bounced recipients", async () => {
-    const { env, q } = await makeEnv({ AO_OPS_TOKEN: "t".repeat(32), ...LANE, POSTAL_ADDRESS: "1 Main St" });
+    const { env, q } = await makeEnv({ AO_OPS_TOKEN: "t".repeat(32), ...LANE, POSTAL_ADDRESS: "1 Main St" }); // ramp from 2020: 50/day
     await setSetting(env, "outreach_enabled", "1");
     await ops(env, { prospects: [1, 2, 3, 4, 5].map((i) => ({ ...P, domain: `s${i}.example`, page_url: `https://s${i}.example/`, contact_email: `hi@s${i}.example`, contact_source: `https://s${i}.example/c` })) });
     expect((await outreachTick(env)).queued).toBe(3);
@@ -128,7 +169,7 @@ describe("honest outreach", () => {
   });
 
   it("template never claims more than we saw", () => {
-    const m = firstTouch({ SITE_URL: "https://x", POSTAL_ADDRESS: "Addr", OWNER_NAME: "Sam" }, { domain: "a.example", page_url: "https://a.example/login", vendor: "hcaptcha", page_kind: "login" }, "https://x/u/t");
+    const m = firstTouch({ SITE_URL: "https://x", POSTAL_ADDRESS: "Addr", OWNER_NAME: "Sam" }, { domain: "a.example", page_url: "https://a.example/login", vendor: "hcaptcha", page_kind: "login" });
     expect(m.subject).toBe("a.example: the hCaptcha on your login page");
     expect(m.body).toContain("before they can log in");
     expect(m.body).not.toMatch(/\d+%|guarantee/i);

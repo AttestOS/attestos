@@ -53,14 +53,16 @@ enabled = true
 SITE_URL = "https://attestos-edge.attestos.workers.dev"
 BRAND = "AttestOS"
 # OWNER_NAME signs outreach ("Sam, AttestOS"); POSTAL_ADDRESS is REQUIRED before cold outreach can send (CAN-SPAM).
-OWNER_NAME = ""
-POSTAL_ADDRESS = ""
+OWNER_NAME = "Courage"
+POSTAL_ADDRESS = "Jacaranda Labs, P.O. Box 900, Bulawayo, Zimbabwe"
 # Mail lanes: personal Gmail over SMTP 465 + IMAP 993 with an app password (docs/GMAIL.md; no Google Cloud account).
 # Secrets MAILBOX_GM1_USER (Gmail address) and MAILBOX_GM1_PASS (16-character app password).
 # cold = first touches + follow-ups per day, transactional = verify/reset/notice per day, hourly = everything
 # (a gmail lane is clamped to 18/hour so no rolling 24 h can reach Google's ~500). Kept low while the test
 # Gmail is shared with other businesses; raise once AttestOS has its own box.
-MAILBOXES = '[{"id":"gm1","provider":"gmail","fromName":"AttestOS","cold":10,"transactional":30,"hourly":6}]'
+# owner 2026-11-04: two personal Gmail boxes (gm1 tafadzwamchikanya, gm2 simalidudu). The business-wide ramp in
+# outreach.ts (10/25/50 a day, T1+T2+T3) is the binding cap; per-box cold caps only stop one box carrying it all.
+MAILBOXES = '[{"id":"gm1","provider":"gmail","fromName":"AttestOS","cold":30,"transactional":30,"hourly":6},{"id":"gm2","provider":"gmail","fromName":"AttestOS","cold":30,"transactional":20,"hourly":6}]'
 # Whop: map plan/product ids → plans, and one checkout URL per paid plan (https://whop.com/checkout/plan_…).
 WHOP_PLAN_MAP = '{"plan_PkURo5bTOqjNk":"integrity","plan_K1al5PKpXXcuN":"hardware","plan_RKiOkAV8VJuc8":"agent","plan_Z3ZykM37fIu6E":"enterprise"}'
 WHOP_CHECKOUT_INTEGRITY = "https://whop.com/checkout/plan_PkURo5bTOqjNk"

@@ -13,6 +13,7 @@ export interface Env {
   OWNER_NAME?: string;
   OWNER_EMAIL?: string;
   POSTAL_ADDRESS?: string;               // required (CAN-SPAM) before cold outreach can send
+  OUTREACH_START?: string;               // outreach v2 ramp start (YYYY-MM-DD); default 2026-11-05
   MAILBOXES?: string;                    // JSON lanes, secrets MAILBOX_<ID>_USER / _PASS
   OUTREACH_DAILY_CAP?: string;
   WHOP_PLAN_MAP?: string;                // {"plan_xxx":"integrity", ...}
