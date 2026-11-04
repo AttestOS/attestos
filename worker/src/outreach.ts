@@ -8,6 +8,7 @@ import { budgetState } from "./lib/quota";
 import { enqueue, suppress } from "./mail/outbox";
 import { laneCounts, laneState, laneUsable, lanes, saveLaneState } from "./mail/lanes";
 import { ImapSession } from "./mail/imap";
+import { classifyInbound, decodeBody, failedRecipient } from "./mail/inbound";
 import { VENDORS } from "./scanner";
 
 /** Honest outreach. A GitHub Action (scripts/prospects.mjs) really scans public sites and posts the ones that show
@@ -206,6 +207,10 @@ export async function outreachTick(env: Env, now = new Date()) {
 }
 
 // ---------- replies & bounces (IMAP, read-only) ----------
+export function headerValue(header: string, field: string): string {
+  const m = header.match(new RegExp(`^${field}:\\s*(.*(?:\\r?\\n[ \\t].+)*)`, "im"));
+  return m ? m[1].replace(/\r?\n[ \t]+/g, " ").trim() : "";
+}
 export function parseAddr(header: string, field: string): string | null {
   const m = header.match(new RegExp(`^${field}:\\s*(.+(?:\\r?\\n[ \\t].+)*)`, "im"));
   if (!m) return null;
@@ -230,20 +235,38 @@ export async function pollReplies(env: Env) {
       const msgs = await s.fetch(uids, 1500);
       for (const msg of msgs) {
         const sender = parseAddr(msg.header, "From");
-        const text = new TextDecoder().decode(msg.text).slice(0, 1500);
-        const failed = parseAddr(msg.header, "X-Failed-Recipients");
-        if (failed || /mailer-daemon|postmaster/i.test(sender || "")) {
-          const target = failed || text.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i)?.[0]?.toLowerCase();
+        const text = decodeBody(new TextDecoder().decode(msg.text)).slice(0, 4000);
+        const hv = (f: string) => headerValue(msg.header, f);
+        const headers = { "auto-submitted": hv("Auto-Submitted"), "x-autoreply": hv("X-Autoreply"), "x-autorespond": hv("X-Autorespond"),
+          precedence: hv("Precedence"), "content-type": hv("Content-Type"), "x-failed-recipients": hv("X-Failed-Recipients") };
+        // Owner 2026-11-04: delivery problems (wrong, full, unavailable, unmonitored inbox) are never a "no".
+        const cls = classifyInbound({ from: sender || "", subject: hv("Subject"), text, headers });
+        if (cls.kind === "bounce" || ((cls.kind === "soft" || cls.kind === "gone") && /mailer-daemon|postmaster|microsoftexchange/i.test(sender || "")) || headers["x-failed-recipients"]) {
+          const cands = text.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi) || [];
+          const target = (parseAddr(msg.header, "X-Failed-Recipients") || failedRecipient({ text, headers }, cands.map((c) => c.toLowerCase())) || "").toLowerCase();
           if (target) {
             const p = await first<{ domain: string }>(env, "SELECT domain FROM prospects WHERE contact_email = ?", target);
-            if (p) { await run(env, "UPDATE prospects SET status = 'bounced' WHERE domain = ?", p.domain); await suppress(env, target, "bounced"); }
+            if (p) {
+              const hard = cls.kind === "bounce";
+              // hard: counts toward the bounce brake; soft/gone: the sequence ends quietly and counts as nothing
+              await run(env, "UPDATE prospects SET status = ? WHERE domain = ?", hard ? "bounced" : "undeliverable", p.domain);
+              await run(env, "UPDATE outbox SET status = 'failed', error = ? WHERE ref = ? AND status = 'queued'", hard ? "bounced" : "undeliverable", p.domain);
+              await suppress(env, target, hard ? "bounced" : "undeliverable");
+            }
           }
           continue;
         }
         if (!sender) continue;
         const p = await first<{ domain: string; status: string; page_url: string }>(env, "SELECT domain, status, page_url FROM prospects WHERE contact_email = ? AND status IN ('sent','followed','nudged')", sender);
         if (!p) continue;
-        const optout = /^\s*(no|stop|unsubscribe|remove)\b/i.test(text) || /unsubscribe|remove me|not interested/i.test(parseAddr(msg.header, "Subject") || "");
+        if (cls.kind === "auto") continue;                               // out-of-office: the sequence carries on
+        if (cls.kind === "soft" || cls.kind === "gone") {               // full / unmonitored / left: end quietly, not a "no"
+          await run(env, "UPDATE prospects SET status = 'undeliverable', replied_at = datetime('now') WHERE domain = ?", p.domain);
+          await run(env, "UPDATE outbox SET status = 'failed', error = 'undeliverable' WHERE ref = ? AND status = 'queued'", p.domain);
+          await suppress(env, sender, "undeliverable");
+          continue;
+        }
+        const optout = cls.kind === "stop";
         await run(env, "UPDATE prospects SET status = ?, replied_at = datetime('now') WHERE domain = ?", optout ? "unsub" : "replied", p.domain);
         await run(env, "UPDATE outbox SET status = 'failed', error = 'replied' WHERE ref = ? AND status = 'queued'", p.domain);
         if (optout) await suppress(env, sender, "replied-no");

@@ -80,7 +80,11 @@ export async function processOutbox(env: Env, o: { onlyId?: number; max?: number
         // A refused attempt still counts against the provider's limits: stamp it so the lane caps include it.
         await run(env, `UPDATE outbox SET status = ?, error = ?${permanent ? ", sent_at = datetime('now')" : ""} WHERE id = ?`, giveUp ? "failed" : "queued", err.message.slice(0, 300), row.id);
         if (giveUp) failed++;
-        if (err.failure === "recipient") await suppress(env, row.to_email, "bounced");
+        if (err.failure === "recipient") {
+          // a full / temporarily refusing mailbox is not a bounce (owner 2026-11-04)
+          const soft = /\b(5\.2\.2|4\.\d\.\d+)\b|mailbox (is )?full|over (the )?quota|quota exceeded|insufficient (storage|space)|out of storage|temporar/i.test(String(err.message || ""));
+          await suppress(env, row.to_email, soft ? "undeliverable" : "bounced");
+        }
         if (err.failure === "auth" || err.failure === "policy") {
           lc.dead = true;
           const until = new Date(Date.now() + (err.failure === "auth" ? 365 * 86400_000 : 6 * 3600_000)).toISOString();
