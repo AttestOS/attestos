@@ -17,7 +17,7 @@ const SOFT = /(mailbox (is |was )?full|inbox (is |was )?full|over (its |the |the
 const GONE = /(no longer (with|at|employed|working|part of)|(has|have) left (the |our )?(company|organi[sz]ation|firm|business|team)|(this |the |my )?(e-?mail|mail|address|mailbox|inbox|account)( address)? (is |has been |was )?(no longer|not) (in use|monitored|active|valid|available|checked|being (monitored|checked|used))|(account|mailbox|address|inbox|e-?mail) (is |has been |was )?(deactivated|disabled|closed|discontinued|retired|suspended)|\bnot (being )?monitored\b|\bunmonitored\b|no longer (monitored|in use|active|checked|in operation))/i;
 const AUTO = /\b(out of (the )?office|automatic reply|auto-?reply|autoreply|auto-?response|away from (the |my )?(office|desk)|on (annual |parental |maternity |paternity |sick )?leave|currently (away|travel+ing|out)|limited access to (e-?mail|my e-?mail)|i am away|i'?m away|back in the office on|will (respond|reply|get back to you) (to your (e-?mail|message) )?(as soon as|when|on my return)|thank you for (your (e-?mail|message)|contacting)[^.]{0,60}(we|our team) will|this is an automated)\b/i;
 const AUTO_SUBJECT = /^(auto(matic)?[ -]?(reply|response)|out of (the )?office|ooo\b|away:|abwesenheit|r[ée]ponse automatique|respuesta autom)/i;
-const STOP_PHRASE = /\b(unsubscribe|remove me|take me off|opt(ed)? ?out|not interested|no,? thanks|no thank you|stop (emailing|writing|contacting|sending|messaging)|do not (email|contact|write|message)|don'?t (email|contact|write|message)|leave (me|us) alone|please stop|stop it)\b/i;
+const STOP_PHRASE = /\b(unsubscribe|remove me|take me off|opt(ed)? ?out|not interested|no,? thanks|no thank you|stop (emailing|writing|contacting|sending|messaging)|do not (email|contact|write|message)|don'?t (email|contact|write|message)|leave (me|us) alone|please stop|stop it|remove (us|me|our (address|e-?mail|details))( from)?)\b/i;
 
 const qp = (s: string): string => s.replace(/=\r?\n/g, "").replace(/=([0-9A-F]{2})/gi, (_: string, h: string) => String.fromCharCode(parseInt(h, 16)));
 const b64 = (s: string): string => { const t = s.replace(/[^A-Za-z0-9+/]/g, ""); try { return new TextDecoder().decode(Uint8Array.from(atob(t.slice(0, t.length - (t.length % 4))), (c) => c.charCodeAt(0))); } catch { return ""; } };
@@ -60,13 +60,25 @@ export function ownWords(text: string): string {
   return out.join("\n").trim();
 }
 
+/** A stop phrase, unless negated: "don't stop emailing us" / "never stop sending" are compliments. */
+function stopPhrase(w: string): boolean {
+  const re = new RegExp(STOP_PHRASE.source, "gi");
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(w))) {
+    const before = w.slice(Math.max(0, m.index - 16), m.index);
+    if (/^stop/i.test(m[0]) && /(don'?t|do not|never|n't)\s+$/i.test(before)) continue;
+    return true;
+  }
+  return false;
+}
+
 /** A human opt-out. "No" alone counts only as a short answer ("No thanks", "no."), never "No longer monitored". */
 export function isStop(words: string): boolean {
   const w = String(words || "").trim();
   if (!w) return false;
   if (/^\W*(stop|unsubscribe|remove( me)?)\b/i.test(w)) return true;
   if (/^\W*(no|nope|nah)\b/i.test(w) && w.length <= 60 && !GONE.test(w) && !SOFT.test(w)) return true;
-  return STOP_PHRASE.test(w.slice(0, 600));
+  return stopPhrase(w.slice(0, 600));
 }
 
 type Hdrs = Headers | Record<string, string> | null | undefined;
@@ -100,6 +112,8 @@ export function classifyInbound({ from = "", subject = "", text = "", headers = 
   if (GONE.test(head)) return { kind: "gone", why: "inbox closed or person left" };
   if ((autoHdr || AUTO_SUBJECT.test(s) || AUTO.test(head)) && SOFT.test(head)) return { kind: "soft", why: "mailbox full / unavailable" };
   if (autoHdr || AUTO_SUBJECT.test(s)) return { kind: "auto", why: "automatic reply" };
+  const bareSubject = s.replace(/^((re|fwd?|aw|sv)\s*:\s*)+/i, "").trim();
+  if (/^\W*(stop|unsubscribe|remove me|opt ?out)\W*$/i.test(bareSubject)) return { kind: "stop", why: "asked not to be contacted" };
   if (isStop(words)) return { kind: "stop", why: "asked not to be contacted" };
   if (AUTO.test(head)) return { kind: "auto", why: "automatic reply" };
   if (/^(mailbox (is )?full|inbox (is )?full)/i.test(words)) return { kind: "soft", why: "mailbox full" };
