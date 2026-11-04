@@ -93,7 +93,7 @@ export function firstTouch(env: Env, p: { domain: string; page_url: string; vend
 
 I came across ${where(p)} in a public scan. It asks every real visitor to clear ${v} before they can ${action}.
 
-Each of those puzzles costs you some of the people who were ready to ${action}: the ones on a phone, in a hurry, or on a weak connection. Many bots get through anyway with paid solving services.
+Picture the person who finally decided to ${action}, on a phone, on a bus, squinting at blurry crosswalks, getting it wrong twice and giving up. They never tell you; they just leave. Meanwhile many bots get through anyway with paid solving services, so the people paying for the protection are mostly your real visitors.
 
 I build AttestOS. It does the same job without the puzzle: a small proof-of-work check runs quietly in the visitor's browser and your server verifies the token with a call shaped like reCAPTCHA's siteverify. Your visitors just submit the form.
 
@@ -117,16 +117,19 @@ Happy to answer anything about it here.
 ${who(env)}`,
   };
 }
-/** T2, day 7 with no reply: the links, threaded. */
+/** T2, day 7 with no reply: a gift first (the attached swap guide, mail/brief.ts), then the links, threaded. */
 export function followUp(env: Env, p: { domain: string; page_url: string }, subject: string) {
   return {
     subject: reSubj(subject),
     body: `Hi again,
 
-In case it's useful, here is the free scan of ${p.domain} I mentioned: ${scanUrl(env, p.page_url)}
+Rather than ask twice, I made you something: attached is a short guide to swapping the puzzle on ${p.domain} for a check your visitors never see. It shows what the scan found, then the swap itself, two lines on the page and one verify call on your server, with the code ready to paste. A developer can try it on a staging copy in about ten minutes.
 
-The swap is two steps, one script tag on the page and one verify call on your server, and the docs walk through both: ${env.SITE_URL}/docs/
-The free plan covers 10,000 verifications a month, no card: ${env.SITE_URL}/app/#signup
+Your free scan, live: ${scanUrl(env, p.page_url)}
+The docs: ${env.SITE_URL}/docs/
+The free plan, 10,000 verifications a month, no card: ${env.SITE_URL}/app/#signup
+
+Every visitor who no longer meets a puzzle is one who gets to say yes.
 
 ${footer(env)}`,
   };

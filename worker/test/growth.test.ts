@@ -104,13 +104,27 @@ describe("honest outreach", () => {
     await processOutbox(env);
     expect(sent[1].mime).toMatch(/Subject: Re: /);
     expect(sent[1].mime).toContain(`In-Reply-To: ${firstId}`);
-    expect(dec(sent[1].mime)).toContain("/scanner/?url=");
-    expect(dec(sent[1].mime)).toContain("/docs/");
+    const t2 = sent[1].mime;
+    expect(t2).toMatch(/Content-Type: multipart\/mixed; boundary="jl_/);
+    const parts = t2.split(/\r\n--jl_[0-9a-f]+(?:--)?\r\n/);
+    const part = (re: RegExp) => parts.find((x) => re.test(x.split("\r\n\r\n")[0]))!;
+    const un = (x: string) => Buffer.from(x.split("\r\n\r\n").slice(1).join("").replace(/\r\n/g, ""), "base64");
+    const t2text = un(part(/text\/plain/)).toString();
+    expect(t2text).toContain("/scanner/?url=");
+    expect(t2text).toContain("/docs/");
+    expect(t2text).toContain("attached is a short guide");
+    const pdf = part(/application\/pdf/);
+    expect(pdf).toContain('filename="shop.example-attestos-swap-guide.pdf"');
+    const bytes = un(pdf).toString("latin1");
+    expect(bytes.startsWith("%PDF-1.4")).toBe(true);
+    expect(bytes).toContain("swapping reCAPTCHA v2");
+    expect(bytes).toContain("/api/siteverify");
     expect((await outreachTick(env)).queued).toBe(0); // T3 waits another 7 days
     q("UPDATE prospects SET follow_sent_at = datetime('now','-8 days')");
     expect((await outreachTick(env)).queued).toBe(1);
     await processOutbox(env);
     expect(dec(sent[2].mime)).toContain("I won't email again");
+    expect(sent[2].mime).not.toMatch(/Content-Disposition: attachment/i);
     expect(q("SELECT status FROM prospects")[0].status).toBe("nudged");
     q("UPDATE prospects SET first_sent_at = datetime('now','-30 days'), follow_sent_at = datetime('now','-30 days')");
     expect((await outreachTick(env)).queued).toBe(0); // three emails, ever

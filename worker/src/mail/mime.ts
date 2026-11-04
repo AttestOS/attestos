@@ -37,6 +37,7 @@ export interface MimeInput {
   listUnsubscribe?: string; // https URL; adds RFC 8058 one-click header
   listUnsubscribeMailto?: string; // address for "mailto:...?subject=unsubscribe" (works in every client)
   replyTo?: string;
+  attachments?: { filename: string; content: Uint8Array; type?: string }[]; // the day-7 guide (plain-text mails only)
 }
 
 export function buildMime(m: MimeInput, boundarySeed = crypto.randomUUID()): string {
@@ -58,6 +59,18 @@ export function buildMime(m: MimeInput, boundarySeed = crypto.randomUUID()): str
     ].filter(Boolean);
     h.push(`List-Unsubscribe: ${targets.join(", ")}`);
     if (m.listUnsubscribe) h.push("List-Unsubscribe-Post: List-Unsubscribe=One-Click");
+  }
+  if (!m.html && m.attachments && m.attachments.length) {
+    const b = `jl_${boundarySeed.replace(/-/g, "")}`;
+    h.push(`Content-Type: multipart/mixed; boundary="${b}"`);
+    const parts = [h.join("\r\n"), "", `--${b}`, 'Content-Type: text/plain; charset="UTF-8"', "Content-Transfer-Encoding: base64", "", b64Body(m.text)];
+    for (const a of m.attachments) {
+      const name = clean(a.filename).replace(/["\\]/g, "").replace(/[^\x20-\x7e]/g, "_").slice(0, 80) || "guide.pdf";
+      parts.push(`--${b}`, `Content-Type: ${a.type || "application/pdf"}; name="${name}"`, `Content-Disposition: attachment; filename="${name}"`, "Content-Transfer-Encoding: base64", "",
+        bytesToB64(a.content).replace(/.{1,76}/g, "$&\r\n").trimEnd());
+    }
+    parts.push(`--${b}--`, "");
+    return parts.join("\r\n");
   }
   if (!m.html) {
     h.push('Content-Type: text/plain; charset="UTF-8"', "Content-Transfer-Encoding: base64");

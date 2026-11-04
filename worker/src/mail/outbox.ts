@@ -2,6 +2,7 @@ import type { Env } from "../env";
 import { all, first, logError, run } from "../lib/db";
 import { signToken } from "../lib/crypto";
 import { notifyOwner } from "../lib/notify";
+import { attachmentsFor, type Attachment } from "./brief";
 import { buildMime } from "./mime";
 import { SmtpError, SmtpSession } from "./smtp";
 import { COLD_KINDS, laneCounts, laneState, laneUsable, lanes, saveLaneState, type Lane, type LaneState } from "./lanes";
@@ -66,7 +67,9 @@ export async function processOutbox(env: Env, o: { onlyId?: number; max?: number
       if (cold && (await isSuppressed(env, row.to_email))) { await run(env, "UPDATE outbox SET status = 'failed', error = 'suppressed' WHERE id = ?", row.id); continue; }
       const messageId = `<${crypto.randomUUID()}@${lc.lane.user.split("@")[1] || "attestos.local"}>`;
       const unsub = cold ? await unsubscribeUrl(env, row.to_email) : undefined;
-      const mime = buildMime({ from: lc.lane.user, fromName: lc.lane.fromName, to: row.to_email, subject: row.subject, text: row.body, messageId, listUnsubscribe: unsub, listUnsubscribeMailto: cold ? lc.lane.user : undefined, inReplyTo: parent?.message_id || undefined });
+      let attachments: Attachment[] = [];
+      try { attachments = await attachmentsFor(env, row); } catch (e) { await logError(env, "outbox", `guide: ${e instanceof Error ? e.message : String(e)}`); }
+      const mime = buildMime({ from: lc.lane.user, fromName: lc.lane.fromName, to: row.to_email, subject: row.subject, text: row.body, messageId, listUnsubscribe: unsub, listUnsubscribeMailto: cold ? lc.lane.user : undefined, inReplyTo: parent?.message_id || undefined, attachments });
       try {
         lc.s ??= await SmtpSession.open({ host: lc.lane.host, port: lc.lane.smtpPort, user: lc.lane.user, pass: lc.lane.pass });
         await lc.s.send(lc.lane.user, row.to_email, mime);
