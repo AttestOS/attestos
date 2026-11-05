@@ -126,7 +126,7 @@ AUDIENCE_BRIEF = {
 LIMITS = {"x": 280, "linkedin": 1200, "pinterest": 450, "bsky": 300, "whop_public": 1800,
           "whop_private": 1800, "devto": 2500, "nostrnote": 300, "nostr": 300,   # devto: SHORT articles now too (owner 2026-10-01)
           "telegram": 3000, "facebook": 800, "instagram": 800, "threads": 450,
-          "youtube": 900, "tiktok": 400, "gbp": 750, "mastodon": 300, "discord": 1800}
+          "youtube": 900, "tiktok": 400, "gbp": 750, "mastodon": 500, "discord": 1800}
 # nostrnote restored 2026-10-01: the devto edit dropped its cap and every authoring call on the
 # rail raised KeyError('nostrnote') for two days - llm_error quietly, zero posts, no alert.
 # tests/test_limits.py now pins: every planned rail carries a limit; the dry-rail witness
@@ -311,6 +311,71 @@ PIN_VALUE_FRAME = (
     "wants forms that keep bots out without annoying people. Write the topic as a form-security lesson "
     "(the signup form, the login page, the checkout, the contact form, robots.txt) - concrete, visual, "
     "skimmable; never a generic security scare. No product talk, no links.\n")
+# press v3 (playbook/PRESS-V3.md): every platform gets its own brief, and the findability rules are enforced by the
+# editor (too many hashtags, a long first line) and by finalize_text (missing hashtags topped up from the topic,
+# none at all on Pinterest, whose search ignores them).
+PLATFORM_BRIEF = {
+    "bsky": ("Bluesky voice: conversational and direct, one idea with one concrete example, no corporate tone. Put the "
+             "phrase a reader would search for in the first sentence. End with 1-2 relevant CamelCase hashtags.\n"),
+    "mastodon": ("Mastodon voice: plain-spoken and generous, no hype and no engagement bait. People find posts here "
+                 "through hashtags: end with 3-5 CamelCase hashtags on their own line.\n"),
+    "linkedin": ("LinkedIn voice: first-person professional insight. The first line is a sharp, true observation under "
+                 "150 characters, and the first two lines must make sense alone (they show before 'see more'). Short "
+                 "paragraphs with a blank line between them; a numbered list of 3-5 concrete steps when it fits. End "
+                 "with an honest question, then 3-5 professional CamelCase hashtags on the last line.\n"),
+    "facebook": ("Facebook voice: warm and plain, like talking to someone you know. First line under 125 characters. "
+                 "End with a real question. At most 2 hashtags.\n"),
+    "pinterest": ("Pinterest is a search engine: open with the phrase a reader would type into Pinterest search, written "
+                  "naturally, then say in 2-3 sentences what the pin teaches. No hashtags at all.\n"),
+    "nostrnote": "Nostr: a plain note; end with 2-4 CamelCase hashtags.\n",
+    "threads": "Threads voice: casual and quick, one thought, at most 2 hashtags.\n",
+}
+HASHTAG_RANGE = {"bsky": (1, 3), "mastodon": (3, 5), "linkedin": (3, 5), "facebook": (0, 2), "pinterest": (0, 0),
+                 "nostrnote": (2, 4), "threads": (0, 2)}
+FIRST_LINE_MAX = {"linkedin": 150, "facebook": 125}
+TAG_CASE = {"career": "Career", "recruiting": "Recruiting", "smallbusiness": "SmallBusiness", "productivity": "Productivity",
+            "automation": "Automation", "recruitment": "Recruitment", "resume": "Resume", "jobsearch": "JobSearch",
+            "negotiation": "Negotiation", "ai": "AI", "interviews": "Interviews", "datascience": "DataScience", "growth": "Growth",
+            "mentalhealth": "MentalHealth", "security": "Security", "opensource": "OpenSource", "business": "Business",
+            "webdev": "WebDev", "ecommerce": "Ecommerce", "javascript": "JavaScript", "tutorial": "Tutorial", "seo": "SEO",
+            "agency": "Agency", "shopify": "Shopify", "saas": "SaaS", "startup": "Startup", "wordpress": "WordPress", "devops": "DevOps"}
+DEFAULT_HASHTAGS = {"ecom": ["Ecommerce", "Shopify", "WooCommerce", "FraudPrevention", "WebSecurity"],
+                    "saas": ["SaaS", "AppSec", "WebSecurity", "Startup", "DevOps"],
+                    "sales": ["AICrawlers", "SEO", "Publishing", "RobotsTxt", "WebDev"],
+                    "agency": ["WebDev", "WebAgency", "Freelance", "WebSecurity", "Accessibility"],
+                    "": ["WebSecurity", "WebDev", "AppSec", "SaaS", "Startup"]}
+HASHTAG_RX = re.compile(r"(?<![\w/#&])#([A-Za-z][A-Za-z0-9_]{1,63})")
+
+
+def topic_hashtags(topic: dict) -> list[str]:
+    """CamelCase hashtags for a topic: its own tags first, then the audience defaults."""
+    own = [TAG_CASE.get(x.strip().lower(), x.strip()[:1].upper() + x.strip()[1:]) for x in str(topic.get("tags") or "").split(",") if x.strip()]
+    dflt = DEFAULT_HASHTAGS.get(topic.get("audience") or "", DEFAULT_HASHTAGS[""])
+    out = []
+    for t in own + dflt:
+        if t and t.lower() not in [o.lower() for o in out]:
+            out.append(t)
+    return out
+
+
+def findable(ch: str, kind: str, topic: dict, text: str) -> str:
+    """Make a passed post findable on its platform: Pinterest loses hashtags (its search reads words), the rest are
+    topped up to the platform's minimum from the topic, on their own last line, never past the rail's limit."""
+    fam = rail_family(ch)
+    if kind in ("longform", "reply") or fam not in HASHTAG_RANGE:
+        return text
+    lo, hi = HASHTAG_RANGE[fam]
+    if hi == 0:
+        return re.sub(r"[ \t]{2,}", " ", HASHTAG_RX.sub(lambda m: m.group(1), text)).strip()
+    have = [h.lower() for h in HASHTAG_RX.findall(text)]
+    need = [t for t in topic_hashtags(topic) if t.lower() not in have][:max(0, lo - len(have))]
+    if not need:
+        return text
+    out = text.rstrip() + "\n\n" + " ".join("#" + t for t in need)
+    lim = LIMITS.get(ch)
+    return out if not lim or len(out) <= lim else text
+
+
 GAP_LONGFORM_DAYS = 7
 VALUE_PLATFORMS = ("x", "linkedin", "pinterest", "bsky", "nostrnote", "devto",
                  "whop_private", "telegram", "facebook", "instagram", "threads",
@@ -822,6 +887,7 @@ def llm(prompt: str, kind: str, topic: dict, channel: str, st: dict | None = Non
         + (f"{prompt.strip()}\n\n" if prompt.strip() else "")
         + (f"{brief}\n" if brief and kind != "reply" else "")
         + (PIN_VALUE_FRAME if kind == "value" and rail_family(channel) == "pinterest" else "")
+        + (PLATFORM_BRIEF.get(rail_family(channel), "") if kind in ("value", "promo") else "")
         + f"Deliverable kind: {kind}\n"
         + (f"Target channel: {channel} (platform: {rail_family(channel)}; HARD LIMIT "
               f"{LIMITS.get(channel) or LIMITS[rail_family(channel)]} characters -"
@@ -949,6 +1015,13 @@ def validate_copy(kind: str, topic: dict, channel: str, text: str) -> list[str]:
         if nlinks_promo > 1:
             p.append(f"{channel}: promo should carry exactly one link")
     p += [f"{channel}: {c}" for c in facts.check_claims(text)]
+    fam = rail_family(channel)
+    if kind in ("value", "promo") and fam in HASHTAG_RANGE:
+        n = len(HASHTAG_RX.findall(text))
+        if fam != "pinterest" and n > HASHTAG_RANGE[fam][1]:
+            p.append(f"{channel}: {n} hashtags, {fam} takes at most {HASHTAG_RANGE[fam][1]} (findability)")
+    if kind in ("value", "promo") and fam in FIRST_LINE_MAX and len(text.strip().split("\n", 1)[0]) > FIRST_LINE_MAX[fam]:
+        p.append(f"{channel}: first line over {FIRST_LINE_MAX[fam]} characters (findability: it must show before 'see more')")
     if kind != "longform" and channel in LIMITS and len(text) > LIMITS[channel]:
         p.append(f"{channel}: {len(text)} chars over {LIMITS[channel]}")
     if kind == "longform":
@@ -977,6 +1050,8 @@ def _fixlist(probs: list[str]) -> str:
         out.append("- remove every statistic and percentage outright (stats are banned in "
                    "press copy): delete the sentence or restate the claim without numbers, "
                    "do not reword the stat")
+    if any("(findability)" in p for p in probs):
+        out.append("- follow the platform's hashtag rule exactly, and keep the first line short enough to show before 'see more'")
     if any("(voice)" in p for p in probs):
         out.append("- no em/en dashes anywhere: use commas, colons, or a plain hyphen")
     if any("names the product" in p for p in probs):
@@ -1210,10 +1285,17 @@ def finalize_text(ch: str, kind: str, topic: dict, text: str) -> str:
     soft pointer (the free audit for the topic's audience; it never names the
     product), then every link becomes a tracked mint link. Over the rail's limit? Drop the pointer,
     then the tracking, never the post."""
-    base = text
+    base = findable(ch, kind, topic, text)   # press v3: hashtags always end the post
     if kind == "value" and ch in POINTER_RAILS and "http" not in text:
         target, line = POINTER.get(topic.get("audience", DEFAULT_AUDIENCE), POINTER[DEFAULT_AUDIENCE])
-        text = f"{text.rstrip()}\n\n{line.format(url=LINKS[target])}"
+        paras = text.rstrip().split("\n\n")
+        if len(paras) > 1 and re.fullmatch(r"(?:\s*#\w+)+\s*", paras[-1]):   # keep the author's hashtag line last
+            text = "\n\n".join(paras[:-1] + [line.format(url=LINKS[target]), paras[-1].strip()])
+        else:
+            text = f"{text.rstrip()}\n\n{line.format(url=LINKS[target])}"
+        text = findable(ch, kind, topic, text)
+    else:
+        text = base
     lim = LIMITS.get(ch)
     for cand in (track_links(text, ch, topic["id"]), text, track_links(base, ch, topic["id"]), base):
         if not lim or len(cand) <= lim:
@@ -1396,8 +1478,11 @@ def pub_buffer(st: dict, channel: str, text: str, due: str, promo: bool, pin_img
             item["youtube_title"] = str((img or {}).get("video_title") or text.splitlines()[0] or "AttestOS")[:100]
     elif url:
         item["image_url"] = url
+    if (img or {}).get("alt"):
+        item["alt"] = img["alt"]
     if rail_family(channel) == "pinterest":
-        item.update({"image": pin_img, "board": board, "pin_title": text[:80]})
+        # the pin title is what Pinterest search ranks first: the topic's own title, not the post's opening words
+        item.update({"image": pin_img, "board": board, "pin_title": str((img or {}).get("title") or text.splitlines()[0])[:100]})
         if link:
             item["link"] = link
     r = push._gql(push.MUTATION, {"i": push.build_create_post_input(item)}, tok)
@@ -1941,15 +2026,31 @@ def _bsky_session(ident: str, pw: str, st: dict | None = None) -> dict:
     return sess
 
 
+def bsky_facets(text: str) -> list:
+    """Links and hashtags become clickable (and searchable) only as facets, with UTF-8 byte offsets."""
+    out = []
+    for m in re.finditer(r"https?://[^\s)]+", text):
+        u = m.group(0).rstrip(".,;:!?")
+        b0 = len(text[:m.start()].encode())
+        out.append({"index": {"byteStart": b0, "byteEnd": b0 + len(u.encode())}, "features": [{"$type": "app.bsky.richtext.facet#link", "uri": u}]})
+    for m in HASHTAG_RX.finditer(text):
+        b0 = len(text[:m.start()].encode())
+        out.append({"index": {"byteStart": b0, "byteEnd": b0 + len(m.group(0).encode())}, "features": [{"$type": "app.bsky.richtext.facet#tag", "tag": m.group(1)}]})
+    return out
+
+
 def pub_bsky(text: str, img: dict | None = None, rail: str | None = None,
-             st: dict | None = None) -> bool:
+             st: dict | None = None, tags: list | None = None) -> bool:
     import reply
     ident, pw = bsky_creds(rail or "bsky")
     if not ident or not pw:
         log("skip_no_key", platform="bsky")
         return False
     sess = _bsky_session(ident, pw, st)
-    rec = {"text": text, "createdAt": time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())}
+    rec = {"text": text, "createdAt": time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime()), "langs": ["en"],
+           "facets": bsky_facets(text)}
+    if tags:
+        rec["tags"] = [re.sub(r"[^A-Za-z0-9]", "", t)[:64] for t in tags][:8]  # searchable, not shown
     png = (img or {}).get("png", b"")
     if png:
         try:
@@ -2014,9 +2115,11 @@ def publish(st: dict, job: dict, texts: dict[str, str], live: bool, draft_longfo
                 elif rail_family(ch) in BUFFER_FAMILIES:
                     pin = img["url"] if rail_family(ch) == "pinterest" else ""
                     link = pin_link(kind, t, text, rail=ch) if rail_family(ch) == "pinterest" else ""
+                    if img is not None and rail_family(ch) == "pinterest":
+                        img["title"] = str(t.get("title") or "")
                     rec["ok"] = pub_buffer(st, ch, text, job.get("due", {}).get(ch, ""), kind == "promo", pin, img, link, rail=ch)
                 elif rail_family(ch) == "bsky":
-                    rec["ok"] = pub_bsky(text, img, rail=ch, st=st)
+                    rec["ok"] = pub_bsky(text, img, rail=ch, st=st, tags=topic_hashtags(t))
                 elif ch == "nostrnote":
                     rec["ok"] = pub_nostr_note(text, img)
                 elif ch == "telegram":

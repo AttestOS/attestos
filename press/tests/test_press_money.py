@@ -85,7 +85,9 @@ def test_linkedin_value_post_gets_the_audience_pointer_tracked(auto):
     for aud, key in (("sales", "robots"), ("saas", "scanner"), ("ecom", "scanner"), ("agency", "scanner")):
         t = {"id": "speed-to-lead", "audience": aud}
         out = auto.finalize_text("linkedin", "value", t, "A demo request answered tomorrow competes with today.")
-        assert out.endswith(f"{MINT}/go/{key}?src=l-speed-to-lead"), out
+        body, tags = out.rsplit("\n\n", 1)                # press v3: the hashtag line ends the post
+        assert body.endswith(f"{MINT}/go/{key}?src=l-speed-to-lead"), out
+        assert 3 <= tags.count("#") <= 5, out
         assert "attestos" not in out.split(MINT)[0].lower()        # the pointer never names the product
         assert "$" not in out
 
@@ -94,18 +96,19 @@ def test_no_pointer_off_pointer_rails_or_when_a_link_exists(auto):
     t = {"id": "a", "audience": "ecom"}
     assert auto.finalize_text("x", "value", t, "Plain words.") == "Plain words."
     out = auto.finalize_text("linkedin", "value", t, f"See {auto.LINKS['tools']}")
-    assert out == f"See {MINT}/go/scanner?src=l-a"
+    assert out == f"See {MINT}/go/scanner?src=l-a\n\n#Ecommerce #Shopify #WooCommerce"
 
 
 def test_pointer_is_dropped_before_the_post_breaks_the_rail_limit(auto):
     long = "word " * 234                                   # 1170 chars, LinkedIn limit 1200
     out = auto.finalize_text("linkedin", "value", {"id": "a", "audience": "sales"}, long)
-    assert out == long and len(out) <= auto.LIMITS["linkedin"]
+    assert out.startswith(long.rstrip()) and len(out) <= auto.LIMITS["linkedin"]
+    assert MINT not in out                                  # the pointer went first; the hashtags still fit
 
 
 def test_promo_link_is_tracked(auto):
     out = auto.finalize_text("bsky", "promo", {"id": "promo-store"}, f"Plans: {auto.LINKS['store']}")
-    assert out == f"Plans: {MINT}/go/pricing?src=b-promo-store"
+    assert out == f"Plans: {MINT}/go/pricing?src=b-promo-store\n\n#WebSecurity"   # press v3: one tag so Bluesky search finds it
 
 
 def test_pins_get_a_destination_link(auto):
@@ -124,7 +127,7 @@ def test_publish_sends_tracked_text_and_pin_link_to_buffer(auto, monkeypatch):
     job = {"kind": "value", "topic": {"id": "speed-to-lead", "title": "T", "audience": "sales"},
            "channels": ["linkedin", "pinterest"], "due": {"linkedin": "d", "pinterest": "d"}}
     auto.publish(st, job, {"linkedin": "Body for sales leaders here.", "pinterest": "Pin body words here."}, True, False)
-    assert got["linkedin"][0].endswith(f"{MINT}/go/robots?src=l-speed-to-lead")
+    assert f"{MINT}/go/robots?src=l-speed-to-lead" in got["linkedin"][0]
     assert got["pinterest"] == ("Pin body words here.", f"{MINT}/go/robots?src=p-speed-to-lead")
     outbox = (auto.ADIR / "outbox").glob("*-linkedin.md")
     assert f"{MINT}/go/robots?src=l-speed-to-lead" in next(outbox).read_text()
@@ -402,3 +405,11 @@ def test_press_author_ceiling_includes_fallback_and_never_calls_network_after_li
     with pytest.raises(RuntimeError, match='request ceiling'):
         auto.llm('', 'value', {}, 'x')
     assert calls == [1]
+
+
+def test_press_v3_hashtags_follow_the_audience_and_pinterest_has_none(auto):
+    assert auto.topic_hashtags({"audience": "sales"})[:2] == ["AICrawlers", "SEO"]
+    assert auto.topic_hashtags({"audience": "agency", "tags": "webdev"})[:2] == ["WebDev", "WebAgency"]
+    assert "#" not in auto.finalize_text("pinterest", "value", {"id": "a", "audience": "ecom"}, "Card testing at checkout #Shopify looks like this.")
+    fs = auto.bsky_facets("Read https://x.example/a #AppSec")
+    assert sorted(f["features"][0]["$type"].rsplit("#", 1)[1] for f in fs) == ["link", "tag"]

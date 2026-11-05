@@ -117,6 +117,8 @@ def build_create_post_input(item: dict) -> dict:
         inp["assets"] = [{"video": {"url": vid if vid.startswith("https://") else VID_BASE + vid.lstrip("/")}}]
     elif src:
         inp["assets"] = [{"image": {"url": src if src.startswith("https://") else IMG_BASE + src}}]
+        if item.get("alt"):
+            inp["assets"][0]["image"]["metadata"] = {"altText": str(item["alt"])[:500]}  # image search and screen readers
     if item.get("url"):
         inp["text"] = item["text"] + "\n\n" + item["url"]
     if item.get("board"):
