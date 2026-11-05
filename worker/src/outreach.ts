@@ -155,7 +155,8 @@ export function outreachRamp(now = new Date(), start = "2026-11-05"): number {
 /** The brake: new first touches pause when the last 7 days show bounces > 5% or "no" replies > 3% (20+ sends). */
 export function brakeReason(sent: number, bounced: number, stops: number): string {
   if (sent < 20) return "";
-  if (bounced / sent > 0.05) return `brake: ${bounced} bounces in ${sent} sends this week (over 5%)`;
+  // owner 2026-11-04: a wrong address or missing domain is not a failure; it never brakes or pauses outreach
+  void bounced;
   if (stops / sent > 0.03) return `brake: ${stops} "no" replies in ${sent} sends this week (over 3%)`;
   return "";
 }

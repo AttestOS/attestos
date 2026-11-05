@@ -137,7 +137,7 @@ describe("honest outreach", () => {
     expect(outreachRamp(new Date("2026-11-19T00:00:00Z"))).toBe(50);
     expect(brakeReason(19, 10, 10)).toBe("");
     expect(brakeReason(40, 2, 1)).toBe("");
-    expect(brakeReason(40, 3, 0)).toMatch(/bounces/);
+    expect(brakeReason(40, 20, 0)).toBe(""); // owner 2026-11-04: a wrong address is not a failure
     expect(brakeReason(40, 0, 2)).toMatch(/"no"/);
   });
 
