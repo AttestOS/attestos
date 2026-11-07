@@ -3,5 +3,5 @@
 channel: pinterest
 kind: value
 
-"secure online store forms"
-This pin teaches you how to spot card testing patterns, like many low-value attempts and declines, and how to add a pre-payment check to slow down attackers. It's about keeping bots out without annoying real buyers with visible puzzles.
+"protecting my online store from bots"
+This pin teaches you how to spot and stop card testing, credential stuffing, and other bot attacks on your checkout, login, and signup forms. Learn the patterns of fake orders and accounts. Keep your store secure without annoying real customers.

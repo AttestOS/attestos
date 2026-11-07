@@ -303,3 +303,11 @@
 {"ts": "2026-11-07T20:24:50+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
 {"ts": "2026-11-07T20:24:50+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "promo-plans-store", "live": true}
 {"ts": "2026-11-07T20:24:50+00:00", "ev": "topic_not_spent", "topic": "promo-plans-store", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:26:54+00:00", "ev": "buffer_discovered", "services": ["mastodon", "pinterest"], "boards": ["AttestoS"]}
+{"ts": "2026-11-07T20:27:02+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:27:03+00:00", "ev": "published", "channel": "pinterest", "topic": "card-testing-pattern", "live": true}
+{"ts": "2026-11-07T20:27:06+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:27:06+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-plans-store", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:27:07+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:27:07+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-plans-store", "attempt": 2, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:27:07+00:00", "ev": "job_skipped", "topic": "promo-plans-store"}

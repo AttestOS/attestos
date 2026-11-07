@@ -10,7 +10,8 @@
   "http-402-crawling": 1,
   "training-vs-search": 1,
   "promo-store-free-plan": 1,
-  "robots-mistakes": 1
+  "robots-mistakes": 1,
+  "card-testing-pattern": 1
  },
  "published": [
   {
@@ -212,6 +213,18 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/910d04e73023991aad485649a11f35cb0d36e317f163e0ea623e71c3c3ce5cb5.png",
    "img_src": "card",
    "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:27:02+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "card-testing-pattern",
+   "due": "2026-11-07T20:41:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/d21c4afdfbd16813d95d62cfaefbfa592d1d6584c9f49bf2997d77c4c2711a64.png",
+   "img_src": "card",
+   "img_ok": true
   }
  ],
  "channel_last": {
@@ -220,7 +233,8 @@
   "bsky": "2026-11-07T19:39:25+00:00",
   "mastodon": "2026-11-07T19:39:32+00:00",
   "nostrnote": "2026-11-07T20:24:31+00:00",
-  "whop_public": "2026-11-07T20:14:37+00:00"
+  "whop_public": "2026-11-07T20:14:37+00:00",
+  "pinterest": "2026-11-07T20:27:03+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -243,12 +257,12 @@
    "bsky": 3,
    "nostrnote": 3,
    "mastodon": 3,
-   "pinterest": 0,
+   "pinterest": 1,
    "whop_public": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 0
+  "2026-11-07": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -261,7 +275,8 @@
   "http-402-crawling": "2026-11-07T19:44:45+00:00",
   "training-vs-search": "2026-11-07T20:22:52+00:00",
   "promo-store-free-plan": "2026-11-07T20:23:16+00:00",
-  "robots-mistakes": "2026-11-07T20:24:43+00:00"
+  "robots-mistakes": "2026-11-07T20:24:43+00:00",
+  "card-testing-pattern": "2026-11-07T20:27:03+00:00"
  },
  "llm_cb": {},
  "alerted": {
@@ -272,5 +287,21 @@
   "whop_prices": "2026-11-07",
   "pinterest": "2026-11-07"
  },
- "buffer_channels": {}
+ "buffer_channels": {
+  "b62fa971978dd910": {
+   "at": 1794083214,
+   "map": {
+    "mastodon": "6aef6eaae29c69a171977373",
+    "pinterest": "6aef6e78e29c69a171976f1b"
+   },
+   "boards": [
+    {
+     "id": "6aef6e897f33e75b2a0589a9",
+     "serviceId": "283163964010384720",
+     "name": "AttestoS",
+     "url": "https://www.pinterest.com/attestos/attestos"
+    }
+   ]
+  }
+ }
 }
