@@ -17,7 +17,11 @@
   "crawl-logs": 1,
   "checkout-puzzle-cost": 2,
   "pow-explained": 1,
-  "promo-saas-scan": 1
+  "promo-saas-scan": 1,
+  "agent-keys": 1,
+  "verify-on-server": 2,
+  "risk-score-use": 1,
+  "promo-saas-integrity": 1
  },
  "published": [
   {
@@ -327,17 +331,101 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/36ed519acf02f71b7bfdbb960bc1ff973d9c85dfba79a520c7eba6abc340445f.png",
    "img_src": "card",
    "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:25+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "agent-keys",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:27+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "agent-keys",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/08ece27924fb924efb8656ab4953dbb5436066dcd11915186067cb235c98ad3c.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:40+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "agent-keys",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:44+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "verify-on-server",
+   "due": "2026-11-07T21:00:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/590bb85955b37e7577e553972dafa69f3fdde22b071a7381d842c4b3d3635e68.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:48+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "risk-score-use",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/8fb7cec0d5a3ae5ebaf3e12b3b3467e43c1e447c6ff18c506539a9a9abdbb27b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:52+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "verify-on-server",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/bdc7cec4c30d0cd9a2f2e4241965c807ae411b51890b851a739d1fec2acc1455.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:45:57+00:00",
+   "kind": "promo",
+   "platform": "tumblr",
+   "topic": "promo-saas-integrity",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/d7eec9391c8681cc978603da56d03a08b77e86205608f4e98b0eb2d62b606370.png",
+   "img_src": "card",
+   "img_ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-07T20:43:51+00:00",
-  "bsky": "2026-11-07T20:43:19+00:00",
-  "mastodon": "2026-11-07T20:43:34+00:00",
-  "nostrnote": "2026-11-07T20:43:22+00:00",
+  "discord": "2026-11-07T20:45:48+00:00",
+  "bsky": "2026-11-07T20:45:25+00:00",
+  "mastodon": "2026-11-07T20:45:40+00:00",
+  "nostrnote": "2026-11-07T20:45:27+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-07T20:43:39+00:00",
-  "tumblr": "2026-11-07T20:43:52+00:00"
+  "pinterest": "2026-11-07T20:45:45+00:00",
+  "tumblr": "2026-11-07T20:45:57+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -356,17 +444,17 @@
  "day_counts": {
   "2026-11-07": {
    "nostr30023": 1,
-   "discord": 0,
-   "bsky": 0,
-   "nostrnote": 0,
-   "mastodon": 0,
-   "pinterest": 0,
+   "discord": 1,
+   "bsky": 1,
+   "nostrnote": 1,
+   "mastodon": 1,
+   "pinterest": 1,
    "whop_public": 1,
-   "tumblr": 0
+   "tumblr": 2
   }
  },
  "runs_today": {
-  "2026-11-07": 0
+  "2026-11-07": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -386,7 +474,11 @@
   "crawl-logs": "2026-11-07T20:43:36+00:00",
   "checkout-puzzle-cost": "2026-11-07T20:43:46+00:00",
   "pow-explained": "2026-11-07T20:43:42+00:00",
-  "promo-saas-scan": "2026-11-07T20:43:52+00:00"
+  "promo-saas-scan": "2026-11-07T20:43:52+00:00",
+  "agent-keys": "2026-11-07T20:45:42+00:00",
+  "verify-on-server": "2026-11-07T20:45:53+00:00",
+  "risk-score-use": "2026-11-07T20:45:49+00:00",
+  "promo-saas-integrity": "2026-11-07T20:45:57+00:00"
  },
  "llm_cb": {},
  "alerted": {
