@@ -197,6 +197,21 @@ jobs:
           python3 press/auto.py autoreply $F
           python3 press/auto.py status || true
 
+      - name: manual post pack (the rails with no API)
+        # Reddit, Quora, Medium, Tumblr and itch.io have no publishing rail. This writes a pack of
+        # editor-checked drafts for them into the ledger branch so the owner can copy and paste.
+        # Mondays only; --force is not offered, so a re-dispatch on another day does nothing.
+        # continue-on-error: a pack is a convenience and must never fail a live press run.
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          if [ "$(date -u +%%u)" != "1" ]; then
+            echo "manual pack runs on Mondays; skipping"
+            exit 0
+          fi
+          python3 press/manual.py pack --topics 2 --out "press/auto/manual-$(date -u +%%F).md" || \
+            echo "::warning::manual pack failed; the publishing rails are unaffected"
+
       - name: rail health
         id: health
         env: { MODE: "${{ github.event.inputs.mode || 'live' }}" }

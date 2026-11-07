@@ -123,6 +123,20 @@ AI path is unaffected. The press gets its own `AO_CF_AI_*` secrets, never the de
 - **Worker cost:** each post adds one card upload (one D1 row write) and one image fetch. Cards are purged after 21
   days. Each tracked click is one D1 write, behind the per-IP flood guard.
 
+## 5b. Platforms with no API (copy and paste)
+
+Reddit, Quora, Medium, Tumblr and itch.io have no rail in this press and no write API worth the ban risk.
+`press/manual.py` writes a pack of drafts for exactly those five, from the same voice pack, product facts and
+topic pool as every automated rail, and runs the press editor over each piece before it lands in the file:
+
+```
+python3 press/manual.py pack --topics 2      # -> press/manual/<date>-pack.md
+```
+
+In CI it runs on Mondays and writes into the ledger branch (`press-state`, `auto/manual-<date>.md`); a failure there
+is a warning, never a failed press run. Topic rotation is remembered in `press/auto/manual.json`, so consecutive
+packs move on instead of reworking the same idea.
+
 ## 6. What the owner still does by hand
 
 - Create the accounts above. Phone or CAPTCHA checks are the reason this step is manual.

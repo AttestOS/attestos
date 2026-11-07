@@ -892,7 +892,7 @@ def llm(prompt: str, kind: str, topic: dict, channel: str, st: dict | None = Non
         + (PLATFORM_BRIEF.get(rail_family(channel), "") if kind in ("value", "promo") else "")
         + f"Deliverable kind: {kind}\n"
         + (f"Target channel: {channel} (platform: {rail_family(channel)}; HARD LIMIT "
-              f"{LIMITS.get(channel) or LIMITS[rail_family(channel)]} characters -"
+              f"{LIMITS.get(channel) or LIMITS.get(rail_family(channel)) or 12000} characters -"
               f" anything longer is auto-rejected; stay well under it).\n"
           if kind != "longform" else f"Target channel: {channel}\n")
         # 2026-11-07: the longform brief carried no length target while the editor rejects
