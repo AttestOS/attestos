@@ -11,7 +11,9 @@
   "training-vs-search": 1,
   "promo-store-free-plan": 1,
   "robots-mistakes": 1,
-  "card-testing-pattern": 1
+  "card-testing-pattern": 1,
+  "login-stuffing": 1,
+  "promo-plans-store": 1
  },
  "published": [
   {
@@ -225,6 +227,30 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/d21c4afdfbd16813d95d62cfaefbfa592d1d6584c9f49bf2997d77c4c2711a64.png",
    "img_src": "card",
    "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:32:49+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "login-stuffing",
+   "due": "2026-11-07T20:47:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/d41fcf8bd523df4705702007bb14b7c48d314ff6a5792a24dec0eea2ae398e2b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:32:54+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-plans-store",
+   "due": "2026-11-07T21:27:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/549a86e0b6e256bb62a8d3921ca8c9d620ac0d420d9c7919b7900beb0c76744d.png",
+   "img_src": "card",
+   "img_ok": true
   }
  ],
  "channel_last": {
@@ -234,7 +260,7 @@
   "mastodon": "2026-11-07T19:39:32+00:00",
   "nostrnote": "2026-11-07T20:24:31+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-07T20:27:03+00:00"
+  "pinterest": "2026-11-07T20:32:54+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -257,12 +283,12 @@
    "bsky": 3,
    "nostrnote": 3,
    "mastodon": 3,
-   "pinterest": 1,
+   "pinterest": 3,
    "whop_public": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 1
+  "2026-11-07": 2
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -276,7 +302,9 @@
   "training-vs-search": "2026-11-07T20:22:52+00:00",
   "promo-store-free-plan": "2026-11-07T20:23:16+00:00",
   "robots-mistakes": "2026-11-07T20:24:43+00:00",
-  "card-testing-pattern": "2026-11-07T20:27:03+00:00"
+  "card-testing-pattern": "2026-11-07T20:27:03+00:00",
+  "login-stuffing": "2026-11-07T20:32:50+00:00",
+  "promo-plans-store": "2026-11-07T20:32:54+00:00"
  },
  "llm_cb": {},
  "alerted": {
