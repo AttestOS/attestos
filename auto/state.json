@@ -6,7 +6,8 @@
   "verify-crawler-ip": 1,
   "trial-abuse": 1,
   "api-key-farming": 1,
-  "promo-store-scan": 1
+  "promo-store-scan": 1,
+  "http-402-crawling": 1
  },
  "published": [
   {
@@ -160,13 +161,26 @@
    "topic": "at://did:plc:er6",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-07T19:44:33+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "http-402-crawling",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/ebcb061e266ed18ee738b347e2e2b40df077a0a0ace9d66dd07bee2130be5a4f.png",
+   "img_src": "card",
+   "img_ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
   "discord": "2026-11-07T19:39:18+00:00",
   "bsky": "2026-11-07T19:39:25+00:00",
-  "mastodon": "2026-11-07T19:39:32+00:00"
+  "mastodon": "2026-11-07T19:39:32+00:00",
+  "nostrnote": "2026-11-07T19:44:33+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -187,12 +201,12 @@
    "nostr30023": 1,
    "discord": 3,
    "bsky": 3,
-   "nostrnote": 0,
+   "nostrnote": 1,
    "mastodon": 3
   }
  },
  "runs_today": {
-  "2026-11-07": 0
+  "2026-11-07": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -201,7 +215,8 @@
   "verify-crawler-ip": "2026-11-07T19:39:10+00:00",
   "trial-abuse": "2026-11-07T19:39:14+00:00",
   "api-key-farming": "2026-11-07T19:39:19+00:00",
-  "promo-store-scan": "2026-11-07T19:39:34+00:00"
+  "promo-store-scan": "2026-11-07T19:39:34+00:00",
+  "http-402-crawling": "2026-11-07T19:44:45+00:00"
  },
  "llm_cb": {},
  "alerted": {

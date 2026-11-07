@@ -234,3 +234,11 @@
 {"ts": "2026-11-07T19:39:57+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
 {"ts": "2026-11-07T19:42:56+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
 {"ts": "2026-11-07T19:43:51+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
+{"ts": "2026-11-07T19:44:33+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-07T19:44:45+00:00", "ev": "published", "channel": "nostrnote", "topic": "http-402-crawling", "live": true}
+{"ts": "2026-11-07T19:44:48+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-07T19:44:48+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-store-free-plan", "attempt": 1, "problems": ["nostrnote: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T19:44:49+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-07T19:44:49+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-store-free-plan", "attempt": 2, "problems": ["nostrnote: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T19:44:49+00:00", "ev": "job_skipped", "topic": "promo-store-free-plan"}
+{"ts": "2026-11-07T19:45:08+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
