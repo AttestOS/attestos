@@ -189,18 +189,6 @@
    "img_ok": true
   },
   {
-   "ts": "2026-11-07T20:22:54+00:00",
-   "kind": "value",
-   "platform": "pinterest",
-   "topic": "card-testing-pattern",
-   "due": "2026-11-07T20:37:00Z",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/643e557504de1924f2e5815734f93fc40fb1836ea04d26f1c44a76dcb8bfc3f3.png",
-   "img_src": "card",
-   "img_ok": false
-  },
-  {
    "ts": "2026-11-07T20:23:03+00:00",
    "kind": "promo",
    "platform": "nostrnote",
@@ -219,7 +207,6 @@
   "bsky": "2026-11-07T19:39:25+00:00",
   "mastodon": "2026-11-07T19:39:32+00:00",
   "nostrnote": "2026-11-07T20:23:03+00:00",
-  "pinterest": "2026-11-07T20:22:54+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
@@ -243,12 +230,12 @@
    "bsky": 3,
    "nostrnote": 2,
    "mastodon": 3,
-   "pinterest": 1,
+   "pinterest": 0,
    "whop_public": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 1
+  "2026-11-07": 0
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
