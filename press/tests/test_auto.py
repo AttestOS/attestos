@@ -524,18 +524,25 @@ import urllib.error as _uerr  # noqa: E402
 
 
 def test_chain_scavenged_lanes(auto, monkeypatch):
+    # 2026-11-07: github-models left this test and the chain - GitHub Models was retired 2026-07-30
+    # and models.github.ai now answers every token with "200 text/plain OK", so a lane pointed at
+    # it can only raise JSONDecodeError. Cloudflare Workers AI is the default lane; the press reads
+    # its own AO_CF_AI_* names first so the Worker deploy token never reaches it.
     for k in ("PRESS_LLM_API_KEY", "GROQ_API_KEY", "GEMINI_API_KEY", "MISTRAL_API_KEY",
-              "COHERE_API_KEY", "CEREBRAS_API_KEY", "GH_MODELS_TOKEN",
-              "CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"):
+              "COHERE_API_KEY", "CEREBRAS_API_KEY", "GH_MODELS_TOKEN", "AO_CF_AI_TOKEN",
+              "AO_CF_AI_ACCOUNT", "CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"):
         monkeypatch.delenv(k, raising=False)
     assert auto.author_chain() == []
-    monkeypatch.setenv("GH_MODELS_TOKEN", "ghp_x")
-    monkeypatch.setenv("CLOUDFLARE_API_TOKEN", "cfk")
-    assert [c[0] for c in auto.author_chain()] == ["github-models"]  # CF needs BOTH envs
-    monkeypatch.setenv("CLOUDFLARE_ACCOUNT_ID", "acc")
+    monkeypatch.setenv("AO_CF_AI_TOKEN", "cfk")
+    assert auto.author_chain() == []                                   # needs BOTH values
+    monkeypatch.setenv("AO_CF_AI_ACCOUNT", "acc")
     lanes = {c[0]: c for c in auto.author_chain()}
     assert "accounts/acc/ai/v1/chat/completions" in lanes["cloudflare-ai"][2]
     assert lanes["cloudflare-ai"][3] == ("@cf/meta/llama-3.3-70b-instruct-fp8-fast",)
+    # local-dev fallback still honoured when the AO_ names are absent
+    monkeypatch.delenv("AO_CF_AI_TOKEN")
+    monkeypatch.setenv("CLOUDFLARE_API_TOKEN", "deploy")
+    assert [c[0] for c in auto.author_chain()] == ["cloudflare-ai"]
 
 
 def _lanes(auto, monkeypatch, failing_url):

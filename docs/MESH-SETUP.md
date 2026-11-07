@@ -81,10 +81,20 @@ X replies go out through Buffer account A.
 
 ## 4. Writing (optional)
 
-The author works with no extra keys: GitHub Models runs on the workflow's own token, with a free public fallback
-behind it. One key is worth adding: the workflow's own token authenticates but hits `402 Payment Required` on
-models.github.ai once its small free slice is spent, which silently stops the reply lane mid-run — set
-`GH_MODELS_TOKEN` (a classic PAT with `models: read`) and it takes the run token's place in that lane. Free keys from Groq, Gemini, Mistral, Cohere or Cerebras add faster lanes:
+The press writes with **Cloudflare Workers AI** by default, so there is nothing to sign up for here: the two
+secrets below point at the same Cloudflare account that already runs the Worker. That account's free daily neurons
+are otherwise idle — nothing under `worker/src` calls `env.AI` — and a post costs roughly 10 neurons, so a full day
+of slots and replies is a fraction of a single percent of the free allowance.
+
+| Provider | Secret |
+|---|---|
+| Cloudflare Workers AI (default lane) | `AO_CF_AI_TOKEN` (an API token with *Workers AI: Read*), `AO_CF_AI_ACCOUNT` (the account ID) |
+
+GitHub Models used to be the keyless lane and is **not** one any more: it was retired 2026-07-30
+([changelog](https://github.blog/changelog/2026-07-30-github-models-is-now-retired/)) and `models.github.ai` now
+answers every path and every token with `200 text/plain OK`, which is a JSON parse error, not a post. The lane is
+gone from `author_chain`; leaving it in cost two wasted calls and ~40s per job and made the rail health check report
+"authoring failures, nothing landed" for rails that were only ever waiting on an author. Free keys from Groq, Gemini, Mistral, Cohere or Cerebras add faster lanes:
 
 | Provider | Secret |
 |---|---|
@@ -94,7 +104,8 @@ models.github.ai once its small free slice is spent, which silently stops the re
 | Cohere | `COHERE_API_KEY` |
 | Cerebras | `CEREBRAS_API_KEY` |
 
-The press never uses Cloudflare Workers AI, so the Worker's free AI quota stays untouched.
+The press uses Cloudflare Workers AI for authoring (see §4); the Worker itself does not, so the product's own
+AI path is unaffected. The press gets its own `AO_CF_AI_*` secrets, never the deploy token.
 
 ## 5. Budget and the public repository
 

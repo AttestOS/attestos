@@ -102,7 +102,11 @@ jobs:
           S_WHOP_MEMBER_EXP_NAME: ${{ secrets.WHOP_MEMBER_EXP_NAME }}
           S_PRESS_WHOP_CHANNEL: ${{ secrets.PRESS_WHOP_CHANNEL }}
           S_PRESS_WHOP_PRIVATE_EXP: ${{ secrets.PRESS_WHOP_PRIVATE_EXP }}
-          S_GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}   # 2026-11-07: a real PAT; the run token 402s on models.github.ai
+          # 2026-11-07: the author lane. GitHub Models was retired 2026-07-30 and its endpoint now
+          # answers every request with "200 text/plain OK"; this is the lane that actually writes.
+          # AO_-prefixed on purpose: the Worker deploy token/account must never reach the press.
+          S_AO_CF_AI_TOKEN: ${{ secrets.AO_CF_AI_TOKEN }}
+          S_AO_CF_AI_ACCOUNT: ${{ secrets.AO_CF_AI_ACCOUNT }}
           S_PRESS_LLM_API_KEY: ${{ secrets.PRESS_LLM_API_KEY }}
           S_PRESS_LLM_BASE: ${{ secrets.PRESS_LLM_BASE }}
           S_PRESS_LLM_MODEL: ${{ secrets.PRESS_LLM_MODEL }}
@@ -170,15 +174,12 @@ jobs:
           import os, secrets as rnd
           vals = {k[2:]: v for k, v in os.environ.items() if k.startswith("S_") and v.strip()}
           vals.pop("AO_OPS_TOKEN", None)   # prospect intake token: the press has no business with it
-          # GH_MODELS_TOKEN: the GH_MODELS_TOKEN secret wins when the owner sets one (2026-11-07: the run
-          # token authenticates but 402s Payment Required on models.github.ai once the free slice is gone,
-          # which silenced the reply lane); otherwise fall back to this run's token.
-          vals.setdefault("GH_MODELS_TOKEN", os.environ["GH_RUN_TOKEN"])
+          # No GH_MODELS_TOKEN: GitHub Models was retired 2026-07-30 (see author_chain in press/auto.py).
           with open(os.environ["GITHUB_ENV"], "a") as f:
               for k, v in vals.items():
                   d = "EOF_" + rnd.token_hex(8)
                   f.write(f"{k}<<{d}\n{v}\n{d}\n")
-          print("press secrets present:", ", ".join(sorted(k for k in vals if k != "GH_MODELS_TOKEN")) or "none yet")
+          print("press secrets present:", ", ".join(sorted(vals)) or "none yet")
           PY
 
       - name: author + validate + publish, then replies

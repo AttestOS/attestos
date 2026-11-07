@@ -812,18 +812,20 @@ def author_chain() -> list:
         key = os.environ.get(env, "").strip()
         if key:
             chain.append((name, style, url, models, key))
-    # Two more free LLM lanes scavenged from the owner's Apps Script "Shortlist Press Factory"
-    # (doc 27): both sit on infrastructure the outfit already uses at $0. GitHub Models wants a
-    # classic PAT (the auto GITHUB_TOKEN has no models scope) - sandbox-unverifiable, so the
-    # first CI run's run.log 'author' events are the verdict. Cloudflare AI reuses the D1
-    # token + account id; model verified live 2026-09-30.
-    gh = os.environ.get("GH_MODELS_TOKEN", "").strip()
-    if gh:
-        chain.append(("github-models", "openai",
-                      "https://models.github.ai/inference/chat/completions",
-                      ("openai/gpt-4o-mini", "openai/gpt-4o"), gh))
-    cfk = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
-    cfa = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "").strip()
+    # GitHub Models is GONE: retired 2026-07-30 (github.blog changelog "GitHub Models is now
+    # retired"). models.github.ai answers every path and every token - valid PAT, run token, even
+    # a garbage one - with "200 text/plain OK", so the lane could only ever raise JSONDecodeError.
+    # It was left in the chain after the retirement and it poisoned the ledger: 2026-11-07's runs
+    # logged 84 llm_errors (2 wasted calls and ~40s per job) before every piece fell through to the
+    # keyless composer, and rail_health read those failures as "bsky: 73 authoring failures in 48h,
+    # nothing landed". Do not re-add it without a live probe of the replacement.
+    #
+    # Cloudflare Workers AI is the working lane: OpenAI-shaped JSON, ~1s per call, and the Worker
+    # itself never touches env.AI (grep worker/src), so the account's free daily neurons are idle.
+    # Dedicated AO_CF_AI_* names so the deploy token/account never reach the press; the old
+    # CLOUDFLARE_* read is kept as a local-development fallback only (press.yml does not export it).
+    cfk = (os.environ.get("AO_CF_AI_TOKEN") or os.environ.get("CLOUDFLARE_API_TOKEN") or "").strip()
+    cfa = (os.environ.get("AO_CF_AI_ACCOUNT") or os.environ.get("CLOUDFLARE_ACCOUNT_ID") or "").strip()
     if cfk and cfa:
         chain.append(("cloudflare-ai", "openai",
                       f"https://api.cloudflare.com/client/v4/accounts/{cfa}/ai/v1/chat/completions",
