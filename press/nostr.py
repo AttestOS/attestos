@@ -21,8 +21,13 @@ import os
 import time
 from pathlib import Path
 
+# 2026-11-07: a note only counts as published when >= 2 relays answer OK, and the old five were
+# not reliably two: relay.nostr.band frequently never completes the handshake and relay.damus.io
+# comes and goes (503), so nostrnote logged 'publish_failed' with no error at all while the note
+# was fine. Eight relays, so two failures never silence the rail.
 RELAYS = ["wss://relay.damus.io", "wss://nos.lol", "wss://relay.nostr.band",
-          "wss://purplepag.es", "wss://relay.snort.social"]
+          "wss://purplepag.es", "wss://relay.snort.social", "wss://relay.primal.net",
+          "wss://offchain.pub", "wss://nostr.mom", "wss://relay.nostr.net"]
 ARTICLE_KIND = 30023
 BRAND = "https://attestos-edge.attestos.workers.dev"
 LANDING = "https://attestos-edge.attestos.workers.dev/"

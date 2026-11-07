@@ -1404,6 +1404,25 @@ def make_image(st: dict, topic: dict, kind: str, ch: str, text: str, kit_id: str
 
 BUFFER_SERVICE = {"x": "twitter", "gbp": "googlebusiness"}   # rail family -> Buffer `service`
 _BUFFER_DISCOVERED: dict[str, dict] = {}
+_BUFFER_BOARDS: dict[str, list] = {}     # token hash -> Pinterest boards seen at discovery
+
+
+def resolve_pinboard(rail: str, tok: str = "") -> str:
+    """Pinterest's `boardServiceId` wants the board's PINTEREST id (`serviceId`), not Buffer's own
+    board id and not the board name. 2026-11-07: PRESS_PINBOARD held Buffer's id, so every pin died
+    with 'Failed to create post: Board not found'. Accept any of the three in PRESS_PINBOARD / the
+    console and resolve it to the service id; fall back to the configured value untouched, so an
+    explicit service id (or a board on an account we could not read) still goes through as-is."""
+    want = pinboard_for(rail)
+    if not want:
+        return ""
+    boards = _BUFFER_BOARDS.get(hashlib.sha256(tok.encode()).hexdigest()[:16], []) if tok else []
+    for b in boards:
+        if want in (str(b.get("serviceId") or ""), str(b.get("id") or "")) \
+                or want.casefold() == str(b.get("name") or "").casefold():
+            return str(b.get("serviceId") or want)
+    return want
+
 
 
 def buffer_discover(tok: str, st: dict | None = None) -> dict[str, str]:
@@ -1428,17 +1447,25 @@ def buffer_discover(tok: str, st: dict | None = None) -> dict[str, str]:
         return json.loads(urllib.request.urlopen(req, timeout=20).read() or b"{}")
 
     out: dict[str, str] = {}
+    boards: list[dict] = []
     try:
         orgs = ((gql("query { account { organizations { id } } }").get("data") or {})
                 .get("account") or {}).get("organizations") or []
         for o in orgs[:3]:
-            d = gql("query($input: ChannelsInput!) { channels(input: $input) { id service isDisconnected } }",
+            d = gql("query($input: ChannelsInput!) { channels(input: $input) { id service isDisconnected "
+                    "metadata { __typename ... on PinterestMetadata { boards { id serviceId name url } } } } }",
                     {"input": {"organizationId": o["id"]}})
             for c in (d.get("data") or {}).get("channels") or []:
                 if c.get("isDisconnected"):
                     continue
                 out.setdefault(str(c.get("service") or "").lower(), str(c["id"]))
-        log("buffer_discovered", services=sorted(out))
+                md = c.get("metadata") or {}
+                if isinstance(md, dict) and md.get("boards"):
+                    boards.extend(b for b in md["boards"] if isinstance(b, dict))
+        if boards:
+            _BUFFER_BOARDS[key] = boards
+        log("buffer_discovered", services=sorted(out),
+            boards=[b.get("name") for b in boards] or None)
     except Exception as exc:  # noqa: BLE001
         log("buffer_discover_failed", err=repr(exc)[:120])
         return {}
@@ -1471,7 +1498,7 @@ def pub_buffer(st: dict, channel: str, text: str, due: str, promo: bool, pin_img
     if not tok or not ch_id:
         log("skip_no_key", platform="buffer", channel=channel, slot=buffer_slot(rail))
         return False
-    board = pinboard_for(rail)
+    board = resolve_pinboard(rail, tok)
     if rail_family(channel) == "pinterest" and not board:
         log("skip_no_pinboard", platform="buffer", channel=channel)
         return False

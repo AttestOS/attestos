@@ -917,3 +917,49 @@ def test_longform_brief_names_a_word_target(auto, monkeypatch):
     out = auto.llm("", "longform", {"id": "t", "audience": "stores"}, "nostr30023", {})
     assert "1200 words" in seen["prompt"] and "seven" in seen["prompt"]
     assert not auto.validate_copy("longform", {"id": "t"}, "nostr30023", out)
+
+
+# ---- 2026-11-07: Pinterest wants the board's Pinterest id, not Buffer's ----
+
+def test_resolve_pinboard_accepts_name_id_or_service_id(auto, monkeypatch):
+    """PRESS_PINBOARD held Buffer's board id; Pinterest's boardServiceId wanted its own, so every
+    pin died with 'Failed to create post: Board not found'. All three forms now resolve."""
+    import hashlib
+    boards = [{"id": "buf_board_1", "serviceId": "283163964010384720", "name": "AttestoS"}]
+    key = hashlib.sha256(b"tok-co-A").hexdigest()[:16]
+    monkeypatch.setattr(auto, "_BUFFER_BOARDS", {key: boards})
+    for given in ("AttestoS", "attestos", "buf_board_1", "283163964010384720"):
+        monkeypatch.setenv("PRESS_PINBOARD", given)
+        assert auto.resolve_pinboard("pinterest", "tok-co-A") == "283163964010384720", given
+
+
+def test_resolve_pinboard_passes_unknown_through(auto, monkeypatch):
+    """A board we could not discover must not be silently dropped - send what was configured."""
+    monkeypatch.setattr(auto, "_BUFFER_BOARDS", {})
+    monkeypatch.setenv("PRESS_PINBOARD", "999999999999")
+    assert auto.resolve_pinboard("pinterest", "tok-co-A") == "999999999999"
+
+
+def test_pub_buffer_pinterest_sends_resolved_board(auto, monkeypatch):
+    import hashlib
+    monkeypatch.setenv("PRESS_PINBOARD", "AttestoS")
+    monkeypatch.setenv("AO_CHANNEL_PINTEREST", "ch-pin")
+    key = hashlib.sha256(b"tok-co-A").hexdigest()[:16]
+    monkeypatch.setattr(auto, "_BUFFER_BOARDS",
+                        {key: [{"id": "b1", "serviceId": "283163964010384720", "name": "AttestoS"}]})
+    seen = {}
+    monkeypatch.setattr(auto, "push", __import__("push"), raising=False)
+    import push
+    monkeypatch.setattr(push, "_gql", lambda q, v, t: (seen.update(v) or
+                        {"data": {"createPost": {"__typename": "PostActionSuccess"}}}))
+    st = {"channel_last": {}}
+    ok = auto.pub_buffer(st, "pinterest", "value post text body here", "2026-11-07T21:00:00Z",
+                         False, pin_img="https://x/y.jpg", link="https://x/", rail="pinterest")
+    assert ok
+    assert seen["i"]["metadata"]["pinterest"]["boardServiceId"] == "283163964010384720"
+
+
+def test_nostr_relay_pool_is_wide_enough_for_the_two_ok_rule():
+    """A note counts only with >=2 relay OKs; the pool must survive several dead relays."""
+    import nostr
+    assert len(set(nostr.RELAYS)) >= 8
