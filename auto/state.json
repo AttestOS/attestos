@@ -279,16 +279,16 @@
  "day_counts": {
   "2026-11-07": {
    "nostr30023": 1,
-   "discord": 3,
-   "bsky": 3,
-   "nostrnote": 3,
-   "mastodon": 3,
-   "pinterest": 3,
+   "discord": 0,
+   "bsky": 0,
+   "nostrnote": 0,
+   "mastodon": 0,
+   "pinterest": 0,
    "whop_public": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 2
+  "2026-11-07": 0
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
