@@ -143,8 +143,14 @@ def schnorr_verify(px: bytes, m: bytes, sig: bytes) -> bool:
         return False
     y2 = (pow(x, 3, _P) + 7) % _P
     y = pow(y2, (_P + 1) // 4, _P)
-    if (y * y) % _P != y2 or y % 2 != 0:
-        return False
+    if (y * y) % _P != y2:
+        return False                      # x is not on the curve (BIP-340 lift_x failure)
+    if y % 2 != 0:
+        y = _P - y                        # BIP-340 lift_x takes the EVEN y; refusing odd y here
+        # rejected every valid signature whose pubkey lifts to an odd y - i.e. ~half of them.
+        # 2026-11-07: this is what made pub_nostr_note die on `assert nostr.verify_sig(ev)` and
+        # left nostrnote at "3 failed live posts today / nothing landed" while bsky and mastodon
+        # published fine. Verified against the official BIP-340 test vectors below in the tests.
     e = int.from_bytes(_tagged("BIP0340/challenge", sig[:32] + px + m), "big") % _N
     R = _padd(_pmul(s, (_GX, _GY)), _pmul((_N - e) % _N, (x, y)))
     return R is not None and R[1] % 2 == 0 and R[0] == r
