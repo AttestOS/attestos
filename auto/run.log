@@ -242,3 +242,30 @@
 {"ts": "2026-11-07T19:44:49+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-store-free-plan", "attempt": 2, "problems": ["nostrnote: promo with no pointer link is just vibes"]}
 {"ts": "2026-11-07T19:44:49+00:00", "ev": "job_skipped", "topic": "promo-store-free-plan"}
 {"ts": "2026-11-07T19:45:08+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
+{"ts": "2026-11-07T20:14:07+00:00", "ev": "buffer_discovered", "services": ["mastodon", "pinterest"]}
+{"ts": "2026-11-07T20:14:08+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:14:22+00:00", "ev": "publish_failed", "channel": "nostrnote", "topic": "training-vs-search", "live": true}
+{"ts": "2026-11-07T20:14:22+00:00", "ev": "topic_not_spent", "topic": "training-vs-search", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:14:23+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:14:24+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
+{"ts": "2026-11-07T20:14:24+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "card-testing-pattern", "live": true}
+{"ts": "2026-11-07T20:14:24+00:00", "ev": "topic_not_spent", "topic": "card-testing-pattern", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:14:26+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:14:27+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
+{"ts": "2026-11-07T20:14:27+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "login-stuffing", "live": true}
+{"ts": "2026-11-07T20:14:27+00:00", "ev": "topic_not_spent", "topic": "login-stuffing", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:14:28+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:14:28+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-store-free-plan", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:14:30+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:14:30+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-store-free-plan", "attempt": 2, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:14:32+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:14:32+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-store-free-plan", "attempt": 1, "problems": ["nostrnote: promo with no pointer link is just vibes", "nostrnote: 362 chars over 300"]}
+{"ts": "2026-11-07T20:14:34+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:14:34+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-store-free-plan", "attempt": 2, "problems": ["nostrnote: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:14:37+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "whop_public"}
+{"ts": "2026-11-07T20:14:37+00:00", "ev": "whop_auth_preflight", "key_role": "account", "status": 200, "expected_company": false}
+{"ts": "2026-11-07T20:14:37+00:00", "ev": "whop_auth_preflight", "key_role": "app", "status": 200, "expected_company": false}
+{"ts": "2026-11-07T20:14:37+00:00", "ev": "whop_wrong_company", "status": 0, "note": "no configured key verified the AttestOS company; no post attempted"}
+{"ts": "2026-11-07T20:14:37+00:00", "ev": "publish_failed", "channel": "whop_public", "topic": "promo-store-free-plan", "live": true}
+{"ts": "2026-11-07T20:14:37+00:00", "ev": "topic_not_spent", "topic": "promo-store-free-plan", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:14:56+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["whop_public", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices"]}
