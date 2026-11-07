@@ -317,3 +317,21 @@
 {"ts": "2026-11-07T20:32:52+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-plans-store", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
 {"ts": "2026-11-07T20:32:54+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
 {"ts": "2026-11-07T20:32:54+00:00", "ev": "published", "channel": "pinterest", "topic": "promo-plans-store", "live": true}
+{"ts": "2026-11-07T20:43:16+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "bsky"}
+{"ts": "2026-11-07T20:43:18+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:43:19+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "mastodon"}
+{"ts": "2026-11-07T20:43:20+00:00", "ev": "bsky_session", "mode": "create"}
+{"ts": "2026-11-07T20:43:22+00:00", "ev": "published", "channel": "bsky", "topic": "crawl-logs", "live": true}
+{"ts": "2026-11-07T20:43:34+00:00", "ev": "published", "channel": "nostrnote", "topic": "crawl-logs", "live": true}
+{"ts": "2026-11-07T20:43:36+00:00", "ev": "published", "channel": "mastodon", "topic": "crawl-logs", "live": true}
+{"ts": "2026-11-07T20:43:38+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:43:39+00:00", "ev": "published", "channel": "pinterest", "topic": "checkout-puzzle-cost", "live": true}
+{"ts": "2026-11-07T20:43:41+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "discord"}
+{"ts": "2026-11-07T20:43:42+00:00", "ev": "published", "channel": "discord", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-07T20:43:46+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "tumblr"}
+{"ts": "2026-11-07T20:43:46+00:00", "ev": "published", "channel": "tumblr", "topic": "checkout-puzzle-cost", "live": true}
+{"ts": "2026-11-07T20:43:49+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "discord"}
+{"ts": "2026-11-07T20:43:51+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "tumblr"}
+{"ts": "2026-11-07T20:43:52+00:00", "ev": "published", "channel": "discord", "topic": "promo-saas-scan", "live": true}
+{"ts": "2026-11-07T20:43:52+00:00", "ev": "published", "channel": "tumblr", "topic": "promo-saas-scan", "live": true}
+{"ts": "2026-11-07T20:44:12+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["images"]}

@@ -3,5 +3,5 @@
 channel: pinterest
 kind: value
 
-"Secure online store forms"
-This pin teaches you how to keep bots out of your store's signup, login, checkout, and contact forms without annoying real buyers. It's about moving checks out of sight and onto the server, so real people don't pay the price.
+"secure online store forms"
+This pin teaches you how to keep bots out of your signup, login, and checkout pages without annoying real customers. A visible puzzle at checkout can tax the buyer who already decided to pay, while bots use solving services or replayed tokens to bypass it. Move the check out of sight and onto the server to secure your forms.
