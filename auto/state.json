@@ -1,6 +1,7 @@
 {
  "used": {
-  "store-abuse-map": 1
+  "store-abuse-map": 1,
+  "signup-friction": 1
  },
  "published": [
   {
@@ -22,33 +23,68 @@
    "topic": "at://did:plc:myu",
    "due": "",
    "ok": false
+  },
+  {
+   "ts": "2026-11-07T19:32:53+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/cded8be5d41572b3c2e1763ee37c717bd92f4eae679ee0f163f047ff3a863ecb.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:35:21+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:2uc",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
-  "nostr30023": "2026-11-07T19:23:35+00:00"
+  "nostr30023": "2026-11-07T19:23:35+00:00",
+  "discord": "2026-11-07T19:32:53+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
  "reply_targets": [
-  "at://did:plc:myutg2pwkjbukv7pq2hp5mtl/app.bsky.feed.post/6lxydpcpjo7tp"
+  "at://did:plc:myutg2pwkjbukv7pq2hp5mtl/app.bsky.feed.post/6lxydpcpjo7tp",
+  "at://did:plc:2uccdpdhk75kies2czi4wmzy/app.bsky.feed.post/3mzhs36flhc2k"
  ],
  "reply_day": {
   "2026-11-07": {
-   "bsky": 1
+   "bsky": 2
   }
  },
  "pin_i": 0,
  "day_counts": {
   "2026-11-07": {
-   "nostr30023": 1
+   "nostr30023": 1,
+   "discord": 1
   }
  },
  "runs_today": {
   "2026-10-28": 2,
-  "2026-11-07": 2
+  "2026-11-07": 3
  },
  "used_ts": {
-  "store-abuse-map": "2026-11-07T19:23:36+00:00"
+  "store-abuse-map": "2026-11-07T19:23:36+00:00",
+  "signup-friction": "2026-11-07T19:32:54+00:00"
  },
- "llm_cb": {}
+ "llm_cb": {
+  "github-models": {
+   "until": 1794083240.179247,
+   "kind": "soft",
+   "code": 0
+  }
+ },
+ "alerted": {
+  "bsky": "2026-11-07",
+  "mastodon": "2026-11-07",
+  "nostrnote": "2026-11-07"
+ }
 }
