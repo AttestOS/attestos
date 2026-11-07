@@ -173,66 +173,6 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/ebcb061e266ed18ee738b347e2e2b40df077a0a0ace9d66dd07bee2130be5a4f.png",
    "img_src": "card",
    "img_ok": true
-  },
-  {
-   "ts": "2026-11-07T20:14:08+00:00",
-   "kind": "value",
-   "platform": "nostrnote",
-   "topic": "training-vs-search",
-   "due": "",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/403aa911bb02395f6bdd549384675b2cbc7fad52bde9be5301507b81587ca6de.png",
-   "img_src": "card",
-   "img_ok": false
-  },
-  {
-   "ts": "2026-11-07T20:14:23+00:00",
-   "kind": "value",
-   "platform": "pinterest",
-   "topic": "card-testing-pattern",
-   "due": "2026-11-07T20:29:00Z",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/4048a73826b6416420739f2f6de724ed0bfdfb1a20622e58d3026e0bc67bf11e.png",
-   "img_src": "card",
-   "img_ok": false
-  },
-  {
-   "ts": "2026-11-07T20:14:26+00:00",
-   "kind": "value",
-   "platform": "pinterest",
-   "topic": "login-stuffing",
-   "due": "2026-11-07T21:09:00Z",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/6c2e38544ffd0e3d5f70c3a2d5f1329e37c76de5aef3dcb493e3e81dc2f7fa2f.png",
-   "img_src": "card",
-   "img_ok": false
-  },
-  {
-   "ts": "2026-11-07T20:19:52+00:00",
-   "kind": "value",
-   "platform": "nostrnote",
-   "topic": "robots-mistakes",
-   "due": "",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/a08049955bc4676114034d4f8a1108b377bd8d3f9e35d0c8f3ff90f2020d45cd.png",
-   "img_src": "card",
-   "img_ok": false
-  },
-  {
-   "ts": "2026-11-07T20:20:07+00:00",
-   "kind": "value",
-   "platform": "pinterest",
-   "topic": "checkout-puzzle-cost",
-   "due": "2026-11-07T20:35:00Z",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/b455f447f2de5605c96d343134e1c6e0153251a2a688be781c82aa6c97da13c8.png",
-   "img_src": "card",
-   "img_ok": false
   }
  ],
  "channel_last": {
@@ -263,14 +203,14 @@
    "nostr30023": 1,
    "discord": 3,
    "bsky": 3,
-   "nostrnote": 3,
+   "nostrnote": 0,
    "mastodon": 3,
-   "pinterest": 3,
+   "pinterest": 0,
    "whop_public": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 3
+  "2026-11-07": 0
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
