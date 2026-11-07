@@ -1,7 +1,12 @@
 {
  "used": {
   "store-abuse-map": 1,
-  "signup-friction": 1
+  "signup-friction": 1,
+  "robots-ai-user-agents": 1,
+  "verify-crawler-ip": 1,
+  "trial-abuse": 1,
+  "api-key-farming": 1,
+  "promo-store-scan": 1
  },
  "published": [
   {
@@ -43,37 +48,198 @@
    "topic": "at://did:plc:2uc",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-07T19:38:56+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "robots-ai-user-agents",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:38:59+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "robots-ai-user-agents",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/58a1914f44a617ebcf9fa4bbfed34ed90a4b8175cd46512ba1826acfc1dd1a9c.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-07T19:38:59+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "robots-ai-user-agents",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:06+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "verify-crawler-ip",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:08+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "verify-crawler-ip",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/e56a7d14c47eada772a243e492eb67cc44c4911ca767f1f8dd0b438568501a59.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-07T19:39:08+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "verify-crawler-ip",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:14+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "trial-abuse",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/ed5e657789b3edac6ed6992b80022b288d16db82f9caf60b99d7144e016af52e.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:18+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "api-key-farming",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/ae604ebbb4d81d48ff6733962ebfa4fc3bd6823e26f9dd0e9faaa8c71a7b198e.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:25+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:32+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/59dbbd4520482aa3a5ea9b92793724a1b4e3de7afb1bade857bd50171ca4985e.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-07T19:39:32+00:00",
+   "kind": "promo",
+   "platform": "mastodon",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:55+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:er6",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-07T19:39:57+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:er6",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-07T19:32:53+00:00"
+  "discord": "2026-11-07T19:39:18+00:00",
+  "bsky": "2026-11-07T19:39:25+00:00",
+  "nostrnote": "2026-11-07T19:39:32+00:00",
+  "mastodon": "2026-11-07T19:39:32+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
  "reply_targets": [
   "at://did:plc:myutg2pwkjbukv7pq2hp5mtl/app.bsky.feed.post/6lxydpcpjo7tp",
-  "at://did:plc:2uccdpdhk75kies2czi4wmzy/app.bsky.feed.post/3mzhs36flhc2k"
+  "at://did:plc:2uccdpdhk75kies2czi4wmzy/app.bsky.feed.post/3mzhs36flhc2k",
+  "at://did:plc:er6ylznyrcdm3hpuijxoc2kf/app.bsky.feed.post/3moba7hakqk2e",
+  "at://did:plc:er6ylznyrcdm3hpuijxoc2kf/app.bsky.feed.post/3mnr3mgyu2k2o"
  ],
  "reply_day": {
   "2026-11-07": {
-   "bsky": 2
+   "bsky": 4
   }
  },
  "pin_i": 0,
  "day_counts": {
   "2026-11-07": {
    "nostr30023": 1,
-   "discord": 1
+   "discord": 3,
+   "bsky": 3,
+   "nostrnote": 3,
+   "mastodon": 3
   }
  },
  "runs_today": {
   "2026-10-28": 2,
-  "2026-11-07": 3
+  "2026-11-07": 4
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
-  "signup-friction": "2026-11-07T19:32:54+00:00"
+  "signup-friction": "2026-11-07T19:32:54+00:00",
+  "robots-ai-user-agents": "2026-11-07T19:39:01+00:00",
+  "verify-crawler-ip": "2026-11-07T19:39:10+00:00",
+  "trial-abuse": "2026-11-07T19:39:14+00:00",
+  "api-key-farming": "2026-11-07T19:39:19+00:00",
+  "promo-store-scan": "2026-11-07T19:39:34+00:00"
  },
  "llm_cb": {},
  "alerted": {
