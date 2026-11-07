@@ -1436,8 +1436,17 @@ def buffer_discover(tok: str, st: dict | None = None) -> dict[str, str]:
         return _BUFFER_DISCOVERED[key]
     cache = st.setdefault("buffer_channels", {}) if st is not None else {}
     ent = cache.get(key) or {}
-    if ent.get("at", 0) > time.time() - 86400 and isinstance(ent.get("map"), dict):
+    # "boards" must be present: a cache entry written before 2026-11-07 (or by an older worker)
+    # has no board map, and trusting it silently reintroduces 'Board not found'. One extra
+    # discovery per legacy entry, then normal 24h caching resumes.
+    if ent.get("at", 0) > time.time() - 86400 and isinstance(ent.get("map"), dict) \
+            and isinstance(ent.get("boards"), list):
         _BUFFER_DISCOVERED[key] = ent["map"]
+        # the board map has to survive the cache too: resolve_pinboard reads it, and without
+        # this a cached run fell back to whatever PRESS_PINBOARD held (Buffer's board id), which
+        # Pinterest rejects as 'Board not found' - the exact bug the resolver exists to fix.
+        if isinstance(ent.get("boards"), list):
+            _BUFFER_BOARDS[key] = ent["boards"]
         return ent["map"]
 
     def gql(query: str, variables: dict | None = None) -> dict:
@@ -1471,7 +1480,7 @@ def buffer_discover(tok: str, st: dict | None = None) -> dict[str, str]:
         return {}
     _BUFFER_DISCOVERED[key] = out
     if st is not None:
-        cache[key] = {"at": int(time.time()), "map": out}
+        cache[key] = {"at": int(time.time()), "map": out, "boards": boards}
     return out
 
 

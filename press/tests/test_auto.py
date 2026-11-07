@@ -963,3 +963,53 @@ def test_nostr_relay_pool_is_wide_enough_for_the_two_ok_rule():
     """A note counts only with >=2 relay OKs; the pool must survive several dead relays."""
     import nostr
     assert len(set(nostr.RELAYS)) >= 8
+
+
+def test_buffer_boards_survive_the_discovery_cache(auto, monkeypatch):
+    """Regression on my own fix: resolve_pinboard reads _BUFFER_BOARDS, so a cached discovery pass
+    (the normal case - 24h TTL) must restore the board map too, or every pin silently falls back to
+    Buffer's board id and dies 'Board not found'."""
+    import hashlib, time
+    tok = "tok-co-A"
+    key = hashlib.sha256(tok.encode()).hexdigest()[:16]
+    boards = [{"id": "buf1", "serviceId": "pin_service_1", "name": "AttestoS"}]
+    st = {"buffer_channels": {key: {"at": int(time.time()), "map": {"pinterest": "ch-pin"},
+                                    "boards": boards}}}
+    monkeypatch.setattr(auto, "_BUFFER_DISCOVERED", {})
+    monkeypatch.setattr(auto, "_BUFFER_BOARDS", {})
+    # no network: the cache must answer
+    monkeypatch.setattr(auto.urllib.request, "urlopen",
+                        lambda *a, **k: (_ for _ in ()).throw(AssertionError("hit the network")))
+    assert auto.buffer_discover(tok, st) == {"pinterest": "ch-pin"}
+    assert auto._BUFFER_BOARDS[key] == boards
+    monkeypatch.setenv("PRESS_PINBOARD", "AttestoS")
+    assert auto.resolve_pinboard("pinterest", tok) == "pin_service_1"
+
+
+def test_buffer_discovery_cache_without_boards_is_refreshed(auto, monkeypatch):
+    """A board-less cache entry (written before the board fix) must not be trusted, or the resolver
+    falls back to Buffer's board id and every pin fails again."""
+    import hashlib, time
+    tok = "tok-co-A"
+    key = hashlib.sha256(tok.encode()).hexdigest()[:16]
+    st = {"buffer_channels": {key: {"at": int(time.time()), "map": {"pinterest": "ch-pin"}}}}  # no boards
+    monkeypatch.setattr(auto, "_BUFFER_DISCOVERED", {})
+    monkeypatch.setattr(auto, "_BUFFER_BOARDS", {})
+    calls = []
+
+    class R:
+        def __init__(self, payload): self._p = payload
+        def read(self): return json.dumps(self._p).encode()
+
+    payloads = [
+        {"data": {"account": {"organizations": [{"id": "org1"}]}}},
+        {"data": {"channels": [{"id": "ch-pin", "service": "pinterest", "isDisconnected": False,
+                                "metadata": {"boards": [{"id": "buf1", "serviceId": "pin_service_1",
+                                                         "name": "AttestoS"}]}}]}},
+    ]
+    monkeypatch.setattr(auto.urllib.request, "urlopen",
+                        lambda req, timeout=0: (calls.append(1), R(payloads[len(calls) - 1]))[1])
+    out = auto.buffer_discover(tok, st)
+    assert calls, "a board-less cache entry must trigger a fresh discovery"
+    assert out == {"pinterest": "ch-pin"}
+    assert auto._BUFFER_BOARDS[key][0]["serviceId"] == "pin_service_1"
