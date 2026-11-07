@@ -209,18 +209,6 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/6c2e38544ffd0e3d5f70c3a2d5f1329e37c76de5aef3dcb493e3e81dc2f7fa2f.png",
    "img_src": "card",
    "img_ok": false
-  },
-  {
-   "ts": "2026-11-07T20:14:37+00:00",
-   "kind": "promo",
-   "platform": "whop_public",
-   "topic": "promo-store-free-plan",
-   "due": "",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/fd31338852ea8b938cf5a4378256170b039118d68284ec0df6a9043c5faba0c4.png",
-   "img_src": "card",
-   "img_ok": false
   }
  ],
  "channel_last": {
