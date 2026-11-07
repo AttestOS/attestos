@@ -3,5 +3,5 @@
 channel: pinterest
 kind: value
 
-"secure ecommerce forms"
-This pin teaches you how to spot and stop card testing, a pattern of many low-value attempts and declines, often on new accounts or guest checkouts. It shows where a simple check before payment adds cost to every attempt, making it harder for bots to abuse your store. Protect your store without annoying customers.
+"secure online store forms"
+This pin teaches you how to spot card testing patterns, like many low-value attempts and declines, and how to add a pre-payment check to slow down attackers. It's about keeping bots out without annoying real buyers with visible puzzles.

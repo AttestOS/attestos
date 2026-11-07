@@ -291,3 +291,15 @@
 {"ts": "2026-11-07T20:23:03+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
 {"ts": "2026-11-07T20:23:16+00:00", "ev": "published", "channel": "nostrnote", "topic": "promo-store-free-plan", "live": true}
 {"ts": "2026-11-07T20:23:34+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["pinterest"]}
+{"ts": "2026-11-07T20:24:31+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:24:43+00:00", "ev": "published", "channel": "nostrnote", "topic": "robots-mistakes", "live": true}
+{"ts": "2026-11-07T20:24:45+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:24:46+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
+{"ts": "2026-11-07T20:24:46+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "card-testing-pattern", "live": true}
+{"ts": "2026-11-07T20:24:46+00:00", "ev": "topic_not_spent", "topic": "card-testing-pattern", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:24:48+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:24:48+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-plans-store", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:24:50+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:24:50+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
+{"ts": "2026-11-07T20:24:50+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "promo-plans-store", "live": true}
+{"ts": "2026-11-07T20:24:50+00:00", "ev": "topic_not_spent", "topic": "promo-plans-store", "note": "every channel failed; the topic stays fresh"}
