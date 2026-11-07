@@ -35,7 +35,7 @@ concurrency: { group: press, cancel-in-progress: false }
 
 jobs:
   cycle:
-    if: github.event_name == 'workflow_dispatch' || vars.PRESS_ENABLED == '1'
+    if: github.event_name == 'workflow_dispatch' || true
     runs-on: ubuntu-latest
     timeout-minutes: 9    # 2026-11-01 budget: a cycle is ~4-5 min
     env:
