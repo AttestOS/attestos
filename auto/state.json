@@ -64,18 +64,6 @@
   {
    "ts": "2026-11-07T19:38:59+00:00",
    "kind": "value",
-   "platform": "nostrnote",
-   "topic": "robots-ai-user-agents",
-   "due": "",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/58a1914f44a617ebcf9fa4bbfed34ed90a4b8175cd46512ba1826acfc1dd1a9c.png",
-   "img_src": "card",
-   "img_ok": false
-  },
-  {
-   "ts": "2026-11-07T19:38:59+00:00",
-   "kind": "value",
    "platform": "mastodon",
    "topic": "robots-ai-user-agents",
    "due": "",
@@ -96,18 +84,6 @@
    "img": "upload",
    "img_src": "card",
    "img_ok": true
-  },
-  {
-   "ts": "2026-11-07T19:39:08+00:00",
-   "kind": "value",
-   "platform": "nostrnote",
-   "topic": "verify-crawler-ip",
-   "due": "",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/e56a7d14c47eada772a243e492eb67cc44c4911ca767f1f8dd0b438568501a59.png",
-   "img_src": "card",
-   "img_ok": false
   },
   {
    "ts": "2026-11-07T19:39:08+00:00",
@@ -156,18 +132,6 @@
    "img": "upload",
    "img_src": "card",
    "img_ok": true
-  },
-  {
-   "ts": "2026-11-07T19:39:32+00:00",
-   "kind": "promo",
-   "platform": "nostrnote",
-   "topic": "promo-store-scan",
-   "due": "",
-   "ok": false,
-   "live": true,
-   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/59dbbd4520482aa3a5ea9b92793724a1b4e3de7afb1bade857bd50171ca4985e.png",
-   "img_src": "card",
-   "img_ok": false
   },
   {
    "ts": "2026-11-07T19:39:32+00:00",
