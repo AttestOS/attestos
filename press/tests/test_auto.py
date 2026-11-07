@@ -1123,3 +1123,11 @@ def test_pub_tumblr_reports_http_errors(auto, monkeypatch):
     monkeypatch.setattr(auto.urllib.request, "urlopen", boom)
     assert auto.pub_tumblr("A value post about card testing.") is False
     assert "publish_error" in auto.LOG_F.read_text()
+
+
+def test_tumblr_is_a_url_rail_so_the_card_is_hosted(auto):
+    """A text post cannot carry PNG bytes; the card reaches Tumblr as a URL in the body. If tumblr
+    is not in URL_RAILS, make_image never sets img["url"], pub_tumblr has nothing to attach, and
+    every post lands imageless (rail health: "landed without an image")."""
+    assert "tumblr" in auto.URL_RAILS
+    assert "tumblr" not in auto.BYTE_RAILS

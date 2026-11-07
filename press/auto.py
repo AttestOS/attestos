@@ -1344,6 +1344,10 @@ def _recent(st: dict, tid: str, days: int = 28) -> bool:
 URL_RAILS = (
     "x", "linkedin", "pinterest", "facebook", "instagram", "threads", "youtube", "tiktok", "gbp",
     "devto", "nostr30023", "nostrnote", "whop_public", "whop_private", "telegram", "discord",
+    # 2026-11-07: tumblr carries the card as a URL in the post body, so it needs the hosted card.
+    # Without this it fell to the byte-upload path, and pub_tumblr has no binary channel for a
+    # text post - every post landed with no image and rail health alarmed "landed without an image".
+    "tumblr",
 ) + tuple(r for r in SELLER_RAILS if rail_family(r) in BUFFER_FAMILIES)
 BYTE_RAILS = ("bsky", "mastodon")                                                 # upload the bytes
 IMG_FALLBACK = {"wide": facts.site_url() + "/promo/og-default-1200x630.jpg",
