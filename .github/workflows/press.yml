@@ -35,7 +35,10 @@ concurrency: { group: press, cancel-in-progress: false }
 
 jobs:
   cycle:
-    if: github.event_name == 'workflow_dispatch' || true
+    # 2026-11-07: this read `|| true`, so PRESS_ENABLED gated nothing and every scheduled run fired.
+    # It is the documented off switch (docs/MESH-SETUP.md §0) and press/tests/test_workflow_secrets.py
+    # expects to see vars.PRESS_ENABLED here, so make it real: manual dispatch always runs.
+    if: github.event_name == 'workflow_dispatch' || vars.PRESS_ENABLED == '1'
     runs-on: ubuntu-latest
     timeout-minutes: 9    # 2026-11-01 budget: a cycle is ~4-5 min
     env:
@@ -99,6 +102,7 @@ jobs:
           S_WHOP_MEMBER_EXP_NAME: ${{ secrets.WHOP_MEMBER_EXP_NAME }}
           S_PRESS_WHOP_CHANNEL: ${{ secrets.PRESS_WHOP_CHANNEL }}
           S_PRESS_WHOP_PRIVATE_EXP: ${{ secrets.PRESS_WHOP_PRIVATE_EXP }}
+          S_GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}   # 2026-11-07: a real PAT; the run token 402s on models.github.ai
           S_PRESS_LLM_API_KEY: ${{ secrets.PRESS_LLM_API_KEY }}
           S_PRESS_LLM_BASE: ${{ secrets.PRESS_LLM_BASE }}
           S_PRESS_LLM_MODEL: ${{ secrets.PRESS_LLM_MODEL }}
@@ -166,7 +170,10 @@ jobs:
           import os, secrets as rnd
           vals = {k[2:]: v for k, v in os.environ.items() if k.startswith("S_") and v.strip()}
           vals.pop("AO_OPS_TOKEN", None)   # prospect intake token: the press has no business with it
-          vals.setdefault("GH_MODELS_TOKEN", os.environ["GH_RUN_TOKEN"])   # models: read on this run's token
+          # GH_MODELS_TOKEN: the GH_MODELS_TOKEN secret wins when the owner sets one (2026-11-07: the run
+          # token authenticates but 402s Payment Required on models.github.ai once the free slice is gone,
+          # which silenced the reply lane); otherwise fall back to this run's token.
+          vals.setdefault("GH_MODELS_TOKEN", os.environ["GH_RUN_TOKEN"])
           with open(os.environ["GITHUB_ENV"], "a") as f:
               for k, v in vals.items():
                   d = "EOF_" + rnd.token_hex(8)

@@ -82,7 +82,9 @@ X replies go out through Buffer account A.
 ## 4. Writing (optional)
 
 The author works with no extra keys: GitHub Models runs on the workflow's own token, with a free public fallback
-behind it. Free keys from Groq, Gemini, Mistral, Cohere or Cerebras add faster lanes:
+behind it. One key is worth adding: the workflow's own token authenticates but hits `402 Payment Required` on
+models.github.ai once its small free slice is spent, which silently stops the reply lane mid-run — set
+`GH_MODELS_TOKEN` (a classic PAT with `models: read`) and it takes the run token's place in that lane. Free keys from Groq, Gemini, Mistral, Cohere or Cerebras add faster lanes:
 
 | Provider | Secret |
 |---|---|
