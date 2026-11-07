@@ -269,3 +269,10 @@
 {"ts": "2026-11-07T20:14:37+00:00", "ev": "publish_failed", "channel": "whop_public", "topic": "promo-store-free-plan", "live": true}
 {"ts": "2026-11-07T20:14:37+00:00", "ev": "topic_not_spent", "topic": "promo-store-free-plan", "note": "every channel failed; the topic stays fresh"}
 {"ts": "2026-11-07T20:14:56+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["whop_public", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices", "whop_prices"]}
+{"ts": "2026-11-07T20:19:52+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:20:05+00:00", "ev": "publish_failed", "channel": "nostrnote", "topic": "robots-mistakes", "live": true}
+{"ts": "2026-11-07T20:20:05+00:00", "ev": "topic_not_spent", "topic": "robots-mistakes", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:20:07+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:20:08+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
+{"ts": "2026-11-07T20:20:08+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "checkout-puzzle-cost", "live": true}
+{"ts": "2026-11-07T20:20:08+00:00", "ev": "topic_not_spent", "topic": "checkout-puzzle-cost", "note": "every channel failed; the topic stays fresh"}
