@@ -3,7 +3,5 @@
 channel: nostrnote
 kind: value
 
-Blocking training data collection doesn't have to block search crawlers. Review each crawler's purpose, decide per category, and verify using published IP ranges to control access to your content LiveFetchers versus trainers. 
-PrivateAccessTokens
-
-#AICrawlers #SEO
+Decide per crawler category, not company. Training and search crawlers serve different purposes, block or allow accordingly. Verify by IP range, use agent keys or Private Access Tokens for control. 
+CrawlerManagementIsKey #RobotsTxtMatters #CrawlerVerification

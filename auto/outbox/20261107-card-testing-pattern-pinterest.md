@@ -3,5 +3,5 @@
 channel: pinterest
 kind: value
 
-"protecting my online store from bots"
-This pin teaches you how to spot and stop card testing, credential stuffing, and fake accounts on your checkout, login, and signup forms. Learn how to add a cheap defence before the payment call. Keep bots out without annoying real buyers.
+"secure ecommerce forms"
+This pin teaches you how to spot and stop card testing, a pattern of many low-value attempts and declines, often on new accounts or guest checkouts. It shows where a simple check before payment adds cost to every attempt, making it harder for bots to abuse your store. Protect your store without annoying customers.

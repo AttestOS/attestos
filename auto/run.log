@@ -276,3 +276,18 @@
 {"ts": "2026-11-07T20:20:08+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
 {"ts": "2026-11-07T20:20:08+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "checkout-puzzle-cost", "live": true}
 {"ts": "2026-11-07T20:20:08+00:00", "ev": "topic_not_spent", "topic": "checkout-puzzle-cost", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:22:39+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:22:52+00:00", "ev": "published", "channel": "nostrnote", "topic": "training-vs-search", "live": true}
+{"ts": "2026-11-07T20:22:54+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-07T20:22:55+00:00", "ev": "publish_error", "platform": "buffer", "channel": "pinterest", "err": "Failed to create post: Board not found"}
+{"ts": "2026-11-07T20:22:55+00:00", "ev": "publish_failed", "channel": "pinterest", "topic": "card-testing-pattern", "live": true}
+{"ts": "2026-11-07T20:22:55+00:00", "ev": "topic_not_spent", "topic": "card-testing-pattern", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-07T20:22:57+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:22:57+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-store-free-plan", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:22:59+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-07T20:22:59+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-store-free-plan", "attempt": 2, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:23:01+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:23:01+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-store-free-plan", "attempt": 1, "problems": ["nostrnote: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-07T20:23:03+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-07T20:23:16+00:00", "ev": "published", "channel": "nostrnote", "topic": "promo-store-free-plan", "live": true}
+{"ts": "2026-11-07T20:23:34+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["pinterest"]}

@@ -7,7 +7,9 @@
   "trial-abuse": 1,
   "api-key-farming": 1,
   "promo-store-scan": 1,
-  "http-402-crawling": 1
+  "http-402-crawling": 1,
+  "training-vs-search": 1,
+  "promo-store-free-plan": 1
  },
  "published": [
   {
@@ -173,6 +175,42 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/ebcb061e266ed18ee738b347e2e2b40df077a0a0ace9d66dd07bee2130be5a4f.png",
    "img_src": "card",
    "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:22:39+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "training-vs-search",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/c00bc5d8d061d255c959fc4836a249ddc3360d976f418f27633ab63ac8485883.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T20:22:54+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "card-testing-pattern",
+   "due": "2026-11-07T20:37:00Z",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/643e557504de1924f2e5815734f93fc40fb1836ea04d26f1c44a76dcb8bfc3f3.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-07T20:23:03+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-store-free-plan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/143ea4b4ea2731886033fc875ebd1e6c98a24372a6168d014a9f9581bdf8f60e.png",
+   "img_src": "card",
+   "img_ok": true
   }
  ],
  "channel_last": {
@@ -180,8 +218,8 @@
   "discord": "2026-11-07T19:39:18+00:00",
   "bsky": "2026-11-07T19:39:25+00:00",
   "mastodon": "2026-11-07T19:39:32+00:00",
-  "nostrnote": "2026-11-07T20:19:52+00:00",
-  "pinterest": "2026-11-07T20:20:07+00:00",
+  "nostrnote": "2026-11-07T20:23:03+00:00",
+  "pinterest": "2026-11-07T20:22:54+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
@@ -203,14 +241,14 @@
    "nostr30023": 1,
    "discord": 3,
    "bsky": 3,
-   "nostrnote": 0,
+   "nostrnote": 2,
    "mastodon": 3,
-   "pinterest": 0,
+   "pinterest": 1,
    "whop_public": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 0
+  "2026-11-07": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -220,7 +258,9 @@
   "trial-abuse": "2026-11-07T19:39:14+00:00",
   "api-key-farming": "2026-11-07T19:39:19+00:00",
   "promo-store-scan": "2026-11-07T19:39:34+00:00",
-  "http-402-crawling": "2026-11-07T19:44:45+00:00"
+  "http-402-crawling": "2026-11-07T19:44:45+00:00",
+  "training-vs-search": "2026-11-07T20:22:52+00:00",
+  "promo-store-free-plan": "2026-11-07T20:23:16+00:00"
  },
  "llm_cb": {},
  "alerted": {
@@ -228,7 +268,8 @@
   "mastodon": "2026-11-07",
   "nostrnote": "2026-11-07",
   "whop_public": "2026-11-07",
-  "whop_prices": "2026-11-07"
+  "whop_prices": "2026-11-07",
+  "pinterest": "2026-11-07"
  },
  "buffer_channels": {
   "b62fa971978dd910": {
