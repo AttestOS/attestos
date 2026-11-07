@@ -855,3 +855,65 @@ def test_planner_rotates_audience_start(auto, monkeypatch):
         if vals:
             seen.add(vals[0]["topic"].get("audience"))
     assert len(seen) >= 3, seen
+
+
+# ---- 2026-11-07 go-live fixes: Whop field drift + company-title case ----
+
+def test_whop_price_drift_reads_billing_type(auto, monkeypatch):
+    """Whop renamed plan_type -> billing_type. Reading only the old name made all four tiers
+    alarm as 'None/30d usd, which BILLING does not sell' on a shop whose prices were exact."""
+    _whop_env(monkeypatch)
+    monkeypatch.setenv("WHOP_COMPANY_ID", "biz_x")
+    usd = auto.facts.billing()["usd"]
+    titles = {"integrity": "AttestOS IntegrityRuntime", "agent": "AttestOS AgentPass",
+              "hardware": "AttestOS Hardware Gateway", "enterprise": "AttestOS Enterprise"}
+    rows = [{"id": f"plan_{t}", "visibility": "visible", "currency": "usd",
+             "billing_type": "renewal", "billing_period": 30,
+             "initial_price": 0.0, "renewal_price": float(p),
+             "product": {"title": titles[t]}} for t, p in usd.items()]
+    monkeypatch.setattr(auto, "_whop_api", lambda path, m="GET", b=None, key=None: (200, {"data": rows}))
+    assert auto.whop_price_drift() == []
+
+    # the check must still bite: a first-payment fee IS drift
+    rows[0]["initial_price"] = 30.0
+    assert any("first-payment fee" in p for p in auto.whop_price_drift())
+
+
+def test_whop_company_title_guard_is_case_insensitive(auto, monkeypatch):
+    """The company Whop created is titled 'AttestoS'; the guard demanded 'AttestOS', so a correct
+    key on the correct company failed preflight and refused every post."""
+    _whop_env(monkeypatch); calls = []
+    monkeypatch.setattr(auto, "_whop_api",
+                        _whop_stub(calls, [], title="AttestoS"))
+    monkeypatch.setattr(auto, "_whop_forum_post", lambda exp, text, title, key, img=None: True)
+    assert auto.pub_whop("value post text body here", public=True) is True
+
+
+def test_whop_company_titles_honours_the_documented_env(auto, monkeypatch):
+    """WHOP_COMPANY_TITLES is in docs/MESH-SETUP.md and exported by press.yml; it must be read."""
+    import importlib
+    monkeypatch.setenv("WHOP_COMPANY_TITLES", "Acme Labs, AttestoS")
+    mod = importlib.reload(auto)
+    try:
+        assert {"acme labs", "attestos"} <= {c.casefold() for c in mod.WHOP_COMPANY_TITLES}
+    finally:
+        monkeypatch.delenv("WHOP_COMPANY_TITLES")
+        importlib.reload(mod)
+
+
+def test_longform_brief_names_a_word_target(auto, monkeypatch):
+    """The editor rejects essays outside 700-1700 words. The brief named no target, so every
+    essay came back ~470-550 words and the weekly slot never published once."""
+    monkeypatch.delenv("PRESS_FAKE_LLM", raising=False)
+    seen = {}
+
+    def fake(url, key, model, system, user):
+        seen["prompt"] = user
+        return "\n## one\n" + "word " * 450 + "\n## two\n" + "word " * 450
+
+    monkeypatch.setattr(auto, "_openai_like", fake)
+    monkeypatch.setattr(auto, "author_chain", lambda: [("t", "openai", "u", ("m",), "k")])
+    monkeypatch.setattr(auto, "log", lambda *a, **k: None)
+    out = auto.llm("", "longform", {"id": "t", "audience": "stores"}, "nostr30023", {})
+    assert "1200 words" in seen["prompt"] and "seven" in seen["prompt"]
+    assert not auto.validate_copy("longform", {"id": "t"}, "nostr30023", out)

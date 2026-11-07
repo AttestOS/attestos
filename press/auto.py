@@ -895,7 +895,13 @@ def llm(prompt: str, kind: str, topic: dict, channel: str, st: dict | None = Non
               f"{LIMITS.get(channel) or LIMITS[rail_family(channel)]} characters -"
               f" anything longer is auto-rejected; stay well under it).\n"
           if kind != "longform" else f"Target channel: {channel}\n")
-        + ("Write ONLY the article body markdown (no title line, no code fences)."
+        # 2026-11-07: the longform brief carried no length target while the editor rejects
+        # anything outside 700-1700 words. Every essay came back ~470-550 words and was thrown
+        # away twice, so the weekly long-form slot never once published. Name the target.
+        + ("Write ONLY the article body markdown (no title line, no code fences). Produce a "
+           "complete long-form essay of at least 1200 words: an opening paragraph, then seven "
+           "`## ` sections of 150-200 words each, then a closing section. Do not summarise early; "
+           "develop every section fully before moving on."
            if kind == "longform" else
            ("Reply to the quoted post by building on its mechanism, adding one thing it missed, and conceding what it gets right. No product talk, no links, 120-300 characters, one idea."
             if kind == "reply" else
@@ -1748,7 +1754,13 @@ WHOP_MEMBER_EXP_NAME = "Member updates"
 # Guard: the asset-bot key also reaches Cedar Loom's company. The rename landed live
 # 2026-10-14 (title "STPi", route whop.com/stpi, old jacaranda-labs URL still resolves), so
 # the guard is tight again: anything titled otherwise — including "Jacaranda Labs" — bounces.
-WHOP_COMPANY_TITLES = ("AttestOS",)
+# 2026-11-07: read from WHOP_COMPANY_TITLES (documented in docs/MESH-SETUP.md and exported by
+# press.yml, but never actually read - it was a hardcoded tuple), and compare case-insensitively.
+# The company Whop actually created is titled 'AttestoS'; the guard demanded 'AttestOS', so a
+# correct key on a correct company failed preflight and every Whop post was refused.
+WHOP_COMPANY_TITLES = tuple(t.strip() for t in
+                            (os.environ.get("WHOP_COMPANY_TITLES") or "AttestOS,AttestoS").split(",")
+                            if t.strip())
 
 
 def _whop_keys() -> list[str]:
@@ -1969,7 +1981,8 @@ def pub_whop(text: str, public: bool, title: str = "", img: dict | None = None) 
     verified = []
     for index, key in enumerate(keys):
         status, company = _whop_api(f"/companies/{biz}", key=key)
-        if status == 200 and (company.get("title") or "").strip() in WHOP_COMPANY_TITLES:
+        title = (company.get("title") or "").strip().casefold()
+        if status == 200 and title in {c.casefold() for c in WHOP_COMPANY_TITLES}:
             verified.append(key)
         else:
             log("whop_auth_preflight", key_role="account" if key == os.environ.get("WHOP_API_KEY", "").strip() else "app",
@@ -2376,7 +2389,10 @@ def whop_price_drift() -> list[str]:
                  and p.get("visibility") == "visible"]
         seen = set()
         for p in plans:
-            cur, kind = p.get("currency"), p.get("plan_type")
+            # 2026-11-07: Whop renamed this field to `billing_type`; reading only `plan_type`
+            # made every plan look like kind=None, so all four tiers alarmed as "None/30d usd,
+            # which BILLING does not sell" against a shop whose prices were exactly right.
+            cur, kind = p.get("currency"), (p.get("billing_type") or p.get("plan_type"))
             if kind == "renewal" and p.get("billing_period") == 30:
                 slot, price = (cur, "month"), float(p.get("renewal_price") or 0)
                 if float(p.get("initial_price") or 0):
