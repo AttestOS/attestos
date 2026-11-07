@@ -50,11 +50,5 @@
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00"
  },
- "llm_cb": {
-  "github-models": {
-   "until": 1794083088.7933297,
-   "kind": "soft",
-   "code": 0
-  }
- }
+ "llm_cb": {}
 }
