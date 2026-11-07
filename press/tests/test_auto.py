@@ -1013,3 +1013,110 @@ def test_buffer_discovery_cache_without_boards_is_refreshed(auto, monkeypatch):
     assert calls, "a board-less cache entry must trigger a fresh discovery"
     assert out == {"pinterest": "ch-pin"}
     assert auto._BUFFER_BOARDS[key][0]["serviceId"] == "pin_service_1"
+
+
+# ---- 2026-11-07: Tumblr rail (OAuth 1.0a, stdlib only) ----
+
+TUMBLR_ENV = {"AO_TUMBLR_CK": "ck", "AO_TUMBLR_CS": "cs", "AO_TUMBLR_TOKEN": "tok",
+              "AO_TUMBLR_TOKEN_SECRET": "sec", "AO_TUMBLR_BLOG": "attestos.tumblr.com"}
+
+
+def test_tumblr_signature_matches_rfc5849_style_vector(auto, monkeypatch):
+    """The signer must produce a stable, verifiable HMAC-SHA1 signature. RFC 5849's worked example
+    (section 3.4.1) is reproduced here by pinning nonce and timestamp, which are the only
+    non-deterministic inputs."""
+    import base64, hashlib, hmac, urllib.parse
+
+    def q(s):
+        return urllib.parse.quote(str(s), safe="~-._")
+
+    monkeypatch.setattr(auto.secrets, "token_hex", lambda n: "kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg")
+    monkeypatch.setattr(auto.time, "time", lambda: 137131201)
+    hdr = auto._oauth1_header(
+        "POST", "http://example.com/request",
+        {},
+        "dpf43f3p2l4k3l03", "kd94hf93k423kf44",
+        "nnch734d00sl2jdk", "pfkkdhi9sl3r4s00",
+        body={"b5": "=%3D", "a3": "a", "c@": "", "a2": "r b"})
+    # the Authorization header carries every value percent-encoded (RFC 5849 3.5.1), so the
+    # signature's trailing '=' arrives as %3D: decode before comparing
+    import urllib.parse as _up
+    got = _up.unquote(dict((k, v) for k, v in
+               (p.split("=", 1) for p in hdr[len("OAuth "):].replace('"', "").split(", ")))["oauth_signature"])
+    # same inputs, recomputed by hand, must match what the header carries
+    oauth = {"oauth_consumer_key": "dpf43f3p2l4k3l03",
+             "oauth_nonce": "kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg",
+             "oauth_signature_method": "HMAC-SHA1", "oauth_timestamp": "137131201",
+             "oauth_version": "1.0", "oauth_token": "nnch734d00sl2jdk"}
+    signing = dict(oauth)
+    signing.update({"b5": "=%3D", "a3": "a", "c@": "", "a2": "r b"})
+    param_str = "&".join(f"{k}={v}" for k, v in sorted((q(k), q(v)) for k, v in signing.items()))
+    base = "&".join(["POST", q("http://example.com/request"), q(param_str)])
+    want = base64.b64encode(hmac.new(b"kd94hf93k423kf44&pfkkdhi9sl3r4s00",
+                                     base.encode(), hashlib.sha1).digest()).decode()
+    assert got == want
+    # and the signature must actually change when the body changes
+    other = auto._oauth1_header("POST", "http://example.com/request", {}, "ck", "cs", "t", "s",
+                                body={"type": "text"})
+    assert other.split('oauth_signature="')[1][:20] != got[:20]
+
+
+def test_tumblr_not_armed_without_all_five_values(auto, monkeypatch):
+    for k in TUMBLR_ENV:
+        monkeypatch.delenv(k, raising=False)
+    assert auto._rail_armed("tumblr") is False
+    for k, v in TUMBLR_ENV.items():
+        monkeypatch.setenv(k, v)
+    assert auto._rail_armed("tumblr") is True
+    monkeypatch.delenv("AO_TUMBLR_TOKEN_SECRET")      # a half-configured OAuth1 rail can only fail
+    assert auto._rail_armed("tumblr") is False
+
+
+def test_pub_tumblr_skips_without_keys(auto, monkeypatch):
+    for k in TUMBLR_ENV:
+        monkeypatch.delenv(k, raising=False)
+    assert auto.pub_tumblr("some post body long enough to post") is False
+    assert "skip_no_key" in auto.LOG_F.read_text()
+
+
+def test_pub_tumblr_posts_a_text_post_with_tags_and_card(auto, monkeypatch):
+    for k, v in TUMBLR_ENV.items():
+        monkeypatch.setenv(k, v)
+    seen = {}
+
+    class R:
+        status = 201
+        def read(self): return json.dumps({"response": {"id": "123"}}).encode()
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+
+    def fake_urlopen(req, timeout=0):
+        seen["url"] = req.full_url
+        seen["body"] = req.data.decode()
+        seen["auth"] = req.headers.get("Authorization") or req.headers.get("authorization")
+        return R()
+
+    monkeypatch.setattr(auto.urllib.request, "urlopen", fake_urlopen)
+    img = {"url": "https://attestos-edge.attestos.workers.dev/api/press/img/x.png", "alt": "card"}
+    assert auto.pub_tumblr("A value post about card testing.", img, ["#cardtesting", "#ecommerce"]) is True
+    assert seen["url"] == "https://api.tumblr.com/v2/blog/attestos.tumblr.com/posts"
+    body = seen["body"]
+    assert "body=" in body and "type=text" in body
+    assert "tags=cardtesting%2Cecommerce" in body or "tags=cardtesting,ecommerce" in body
+    assert "img%2Fx.png" in body                 # the card rides along
+    assert seen["auth"].startswith("OAuth ") and "oauth_signature=" in seen["auth"]
+    assert img["attached"] is True
+
+
+def test_pub_tumblr_reports_http_errors(auto, monkeypatch):
+    for k, v in TUMBLR_ENV.items():
+        monkeypatch.setenv(k, v)
+    import urllib.error
+
+    def boom(req, timeout=0):
+        raise urllib.error.HTTPError(req.full_url, 401, "Unauthorized", {},
+                                     __import__("io").BytesIO(b'{"meta":{"status":401}}'))
+
+    monkeypatch.setattr(auto.urllib.request, "urlopen", boom)
+    assert auto.pub_tumblr("A value post about card testing.") is False
+    assert "publish_error" in auto.LOG_F.read_text()

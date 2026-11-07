@@ -149,5 +149,9 @@
   "longform_days": 7,
   "reply_per_day": 4,
   "topic_max_rails": 5,
+  "tumblr": {
+    "per_day": 2,
+    "min_hours_between": 4
+  },
   "_notes": "3-Buffer-Account Architecture (Company + Seller A + Seller B), ported from the STPi mesh as is: Buffer Account A = X, LinkedIn, Pinterest; Buffer Account B = Facebook Page, Instagram, Threads; Buffer Account C = YouTube, TikTok, Google Business Profile (videos from AO_VIDEOS_REPO). A rail only plans when its credentials exist; channels are discovered from each Buffer token."
 }

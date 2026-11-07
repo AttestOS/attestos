@@ -72,6 +72,7 @@ Extra keys for some channels:
 | Facebook Page (direct, instead of Buffer B) | A Page access token | `AO_FB_PAGE_TOKEN`, `AO_FB_PAGE_ID` |
 | Mastodon | Account on an instance; Preferences → Development → new app with `write:statuses` | `AO_MASTODON_TOKEN`, `AO_MASTODON_INSTANCE` (e.g. `https://mastodon.social`) |
 | Discord | A server channel, then Integrations → Webhooks | `AO_DISCORD_PRESS_WEBHOOK` |
+| Tumblr | Nothing to create, the app exists: `python3 tumblr_connect.py link`, approve as the blog, then `python3 tumblr_connect.py exchange "<redirect URL>"` | `AO_TUMBLR_CK`, `AO_TUMBLR_CS`, `AO_TUMBLR_TOKEN`, `AO_TUMBLR_TOKEN_SECRET`, `AO_TUMBLR_BLOG` (all five, or the rail stays off) |
 
 ## 3. Replies (optional)
 

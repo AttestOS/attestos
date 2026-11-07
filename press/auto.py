@@ -33,9 +33,12 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import base64
+import hmac
 import os
 import random
 import re
+import secrets
 import sys
 import time
 import urllib.error
@@ -123,7 +126,8 @@ AUDIENCE_BRIEF = {
                "about contact-form spam, server-side verification on every form, key handover and domain "
                "allowlists, accessibility of puzzles, monitoring verify failures and spam incident response."),
 }
-LIMITS = {"x": 280, "linkedin": 1200, "pinterest": 450, "bsky": 300, "whop_public": 1800,
+LIMITS = {
+    "tumblr": 3000,"x": 280, "linkedin": 1200, "pinterest": 450, "bsky": 300, "whop_public": 1800,
           "whop_private": 1800, "devto": 2500, "nostrnote": 300, "nostr": 300,   # devto: SHORT articles now too (owner 2026-10-01)
           "telegram": 3000, "facebook": 800, "instagram": 800, "threads": 450,
           "youtube": 900, "tiktok": 400, "gbp": 750, "mastodon": 500, "discord": 1800}
@@ -245,6 +249,11 @@ def _rail_armed(ch: str) -> bool:
         return bool(os.environ.get("AO_MASTODON_TOKEN", "").strip())
     if ch == "discord":
         return bool(os.environ.get("AO_DISCORD_PRESS_WEBHOOK", "").strip())
+    if ch == "tumblr":
+        # all five parts or nothing: a half-configured OAuth1 rail can only fail
+        return all(os.environ.get(k, "").strip() for k in
+                   ("AO_TUMBLR_CK", "AO_TUMBLR_CS", "AO_TUMBLR_TOKEN",
+                    "AO_TUMBLR_TOKEN_SECRET", "AO_TUMBLR_BLOG"))
     if ch == "whop_private":
         # 2026-10-27 (audit F10): with no explicit target the rail auto-discovered, failed auth /
         # found no channel on every slot and burned value topics. Plan it only once the owner
@@ -1753,6 +1762,68 @@ def pub_devto(title: str, body: str, tags: str, publish: bool, img: dict | None 
     return d.get("url", "")
 
 
+# ---------- Tumblr (OAuth 1.0a, stdlib only) ----------
+
+def _oauth1_header(method: str, url: str, params: dict, ck: str, cs: str,
+                   token: str, token_secret: str, body: dict | None = None) -> str:
+    """OAuth 1.0a Authorization header, HMAC-SHA1. No dependency: the press already ships only
+    pillow/coincurve/websockets, and requests-oauthlib is not one of them."""
+    def q(s) -> str:
+        return urllib.parse.quote(str(s), safe="~-._")
+    oauth = {"oauth_consumer_key": ck, "oauth_nonce": secrets.token_hex(16),
+             "oauth_signature_method": "HMAC-SHA1", "oauth_timestamp": str(int(time.time())),
+             "oauth_version": "1.0", "oauth_token": token}
+    signing = dict(oauth)
+    signing.update(params or {})
+    signing.update(body or {})
+    param_str = "&".join(f"{k}={v}" for k, v in sorted((q(k), q(v)) for k, v in signing.items()))
+    base = "&".join([method.upper(), q(url.split("?")[0]), q(param_str)])
+    digest = hmac.new(f"{q(cs)}&{q(token_secret)}".encode(), base.encode(), hashlib.sha1).digest()
+    oauth["oauth_signature"] = base64.b64encode(digest).decode()
+    return "OAuth " + ", ".join(f'{q(k)}="{q(v)}"' for k, v in sorted(oauth.items()))
+
+
+def pub_tumblr(text: str, img: dict | None = None, tags: list | None = None) -> bool:
+    """Posts to the AttestOS Tumblr blog. Plain text post (Tumblr's own limit is far above our
+    3000-char cap), plus the card as an inline image when the Worker has one, plus up to three
+    tags. Tumblr's legacy /v2/blog/<blog>/posts endpoint, signed with OAuth 1.0a."""
+    ck = os.environ.get("AO_TUMBLR_CK", "").strip()
+    cs = os.environ.get("AO_TUMBLR_CS", "").strip()
+    tok = os.environ.get("AO_TUMBLR_TOKEN", "").strip()
+    sec = os.environ.get("AO_TUMBLR_TOKEN_SECRET", "").strip()
+    blog = os.environ.get("AO_TUMBLR_BLOG", "").strip()
+    if not (ck and cs and tok and sec and blog):
+        log("skip_no_key", platform="tumblr")
+        return False
+    url = f"https://api.tumblr.com/v2/blog/{blog}/posts"
+    body = {"type": "text", "body": text, "format": "markdown"}
+    if tags:
+        body["tags"] = ",".join(str(x).lstrip("#") for x in tags[:3])
+    if (img or {}).get("url"):
+        # Tumblr accepts an HTML body; keeping the markdown body and appending the card keeps the
+        # text readable in both renderers
+        body["body"] = f"{text}\n\n![]({img['url']})"
+    req = urllib.request.Request(
+        url, data=urllib.parse.urlencode(body).encode(), method="POST",
+        headers={"Authorization": _oauth1_header("POST", url, {}, ck, cs, tok, sec, body),
+                 "Content-Type": "application/x-www-form-urlencoded", "User-Agent": UA})
+    try:
+        with urllib.request.urlopen(req, timeout=40) as r:
+            d = json.loads(r.read() or b"{}")
+            ok = r.status in (200, 201) and bool((d.get("response") or {}).get("id"))
+    except urllib.error.HTTPError as e:
+        log("publish_error", platform="tumblr", err=e.read()[:220].decode("utf-8", "ignore"))
+        return False
+    except Exception as e:  # noqa: BLE001
+        log("publish_error", platform="tumblr", err=repr(e)[:160])
+        return False
+    if img is not None:
+        img["attached"] = bool((img or {}).get("url"))
+    if not ok:
+        log("publish_error", platform="tumblr", err=str(d)[:160])
+    return ok
+
+
 def pub_nostr_note(text: str, img: dict | None = None) -> bool:
     import nostr
     if not os.environ.get("AO_NOSTR_NSEC"):
@@ -2181,6 +2252,8 @@ def publish(st: dict, job: dict, texts: dict[str, str], live: bool, draft_longfo
                     rec["ok"] = pub_mastodon(text, img)
                 elif ch == "discord":
                     rec["ok"] = pub_discord(text, img)
+                elif ch == "tumblr":
+                    rec["ok"] = pub_tumblr(text, img, topic_hashtags(t))
                 elif ch == "devto":
                     rec["ref"] = pub_devto(t["title"], text, t.get("tags", ""), not draft_longform, img)
                     rec["ok"] = bool(rec["ref"])

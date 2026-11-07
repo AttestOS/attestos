@@ -120,6 +120,12 @@ jobs:
           S_AO_BSKY_PASS: ${{ secrets.AO_BSKY_PASS }}
           S_PRESS_PINBOARD: ${{ secrets.PRESS_PINBOARD }}
           S_AO_PINBOARD: ${{ secrets.AO_PINBOARD }}
+          # 2026-11-07: Tumblr (OAuth 1.0a; all five values come from tumblr_connect.py)
+          S_AO_TUMBLR_CK: ${{ secrets.AO_TUMBLR_CK }}
+          S_AO_TUMBLR_CS: ${{ secrets.AO_TUMBLR_CS }}
+          S_AO_TUMBLR_TOKEN: ${{ secrets.AO_TUMBLR_TOKEN }}
+          S_AO_TUMBLR_TOKEN_SECRET: ${{ secrets.AO_TUMBLR_TOKEN_SECRET }}
+          S_AO_TUMBLR_BLOG: ${{ secrets.AO_TUMBLR_BLOG }}
           S_AO_BSKY_ID_A: ${{ secrets.AO_BSKY_ID_A }}
           S_AO_BSKY_PASS_A: ${{ secrets.AO_BSKY_PASS_A }}
           S_PRESS_PINBOARD_A: ${{ secrets.PRESS_PINBOARD_A }}

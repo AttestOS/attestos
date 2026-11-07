@@ -217,7 +217,7 @@ def test_cadence_owner_volume_directive():
     assert cad["linkedin"]["per_day"] == 3 and cad["nostrnote"]["per_day"] == 3
     assert "pinterest_a" not in cad
     total = sum(v["per_day"] for v in cad.values() if isinstance(v, dict))
-    assert total == 101  # 15 owner venues (42) + 2 whop x1 (2) + 19 seller rails x3 (57)
+    assert total == 103  # 15 owner venues (42) + 2 whop x1 (2) + 19 seller rails x3 (57) + tumblr x2 (tumblr: 2026-11-07)
 
 
 def test_audience_brief_reaches_the_author(auto, monkeypatch):
