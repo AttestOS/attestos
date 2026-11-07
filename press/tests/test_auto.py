@@ -367,7 +367,8 @@ def test_cadence_readable_and_topic_cap(auto):
     # owner directive 2026-09-30 (supersedes the 09-27 ceiling): 3/day/platform/persona,
     # 2 value + 1 promo; whop forums stay at 1 (thread-flooding risks the money account)
     # 2026-10-13+: +telegram 3 +facebook 2 +mastodon 3 +discord 3 +instagram 3 +threads 3 +youtube 2 +tiktok 3 +gbp 2 = 44
-    assert sum(cad[p]["per_day"] for p in own) == 44   # incl devto + 3-Buffer-account rails
+    # 2026-11-07+: +tumblr 2 = 46
+    assert sum(cad[p]["per_day"] for p in own) == 46   # incl devto + 3-Buffer-account rails + tumblr
     for r in auto.SELLER_RAILS:
         if r in cad:
             assert cad[r]["per_day"] == 3
@@ -1099,11 +1100,13 @@ def test_pub_tumblr_posts_a_text_post_with_tags_and_card(auto, monkeypatch):
     monkeypatch.setattr(auto.urllib.request, "urlopen", fake_urlopen)
     img = {"url": "https://attestos-edge.attestos.workers.dev/api/press/img/x.png", "alt": "card"}
     assert auto.pub_tumblr("A value post about card testing.", img, ["#cardtesting", "#ecommerce"]) is True
-    assert seen["url"] == "https://api.tumblr.com/v2/blog/attestos.tumblr.com/posts"
+    # /post (singular) is the form-encoded legacy route; /posts is NPF and wants JSON
+    assert seen["url"] == "https://api.tumblr.com/v2/blog/attestos.tumblr.com/post"
     body = seen["body"]
     assert "body=" in body and "type=text" in body
     assert "tags=cardtesting%2Cecommerce" in body or "tags=cardtesting,ecommerce" in body
     assert "img%2Fx.png" in body                 # the card rides along
+    assert "native_inline_images=true" in body
     assert seen["auth"].startswith("OAuth ") and "oauth_signature=" in seen["auth"]
     assert img["attached"] is True
 

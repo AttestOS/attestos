@@ -96,7 +96,7 @@ AUDIENCES = ("ecom", "saas", "sales", "agency")
 OPERATOR_RAILS = ("linkedin", "whop_private", "whop_public")
 SEEKER_RAILS = ("x", "pinterest", "bsky", "nostrnote", "devto",
                 "telegram", "facebook", "instagram", "threads",
-                "youtube", "tiktok", "gbp", "mastodon", "discord")
+                "youtube", "tiktok", "gbp", "mastodon", "discord", "tumblr")
 AUDIENCE_RAILS = {   # value-post routing: which audience's topics a rail draws first
     "sales": ("linkedin", "whop_private", "x", "bsky", "mastodon", "nostrnote"),
     "saas": ("devto", "x", "bsky", "linkedin", "mastodon", "discord", "nostrnote", "telegram"),
@@ -340,7 +340,8 @@ PLATFORM_BRIEF = {
     "threads": "Threads voice: casual and quick, one thought, at most 2 hashtags.\n",
 }
 HASHTAG_RANGE = {"bsky": (1, 3), "mastodon": (3, 5), "linkedin": (3, 5), "facebook": (0, 2), "pinterest": (0, 0),
-                 "nostrnote": (2, 4), "threads": (0, 2)}
+                 "nostrnote": (2, 4), "threads": (0, 2),
+                 "tumblr": (3, 5)}   # 2026-11-07: Tumblr is tag-driven; three is the house floor
 FIRST_LINE_MAX = {"linkedin": 150, "facebook": 125}
 TAG_CASE = {"career": "Career", "recruiting": "Recruiting", "smallbusiness": "SmallBusiness", "productivity": "Productivity",
             "automation": "Automation", "recruitment": "Recruitment", "resume": "Resume", "jobsearch": "JobSearch",
@@ -388,7 +389,7 @@ def findable(ch: str, kind: str, topic: dict, text: str) -> str:
 GAP_LONGFORM_DAYS = 7
 VALUE_PLATFORMS = ("x", "linkedin", "pinterest", "bsky", "nostrnote", "devto",
                  "whop_private", "telegram", "facebook", "instagram", "threads",
-                 "youtube", "tiktok", "gbp", "mastodon", "discord") + SELLER_RAILS
+                 "youtube", "tiktok", "gbp", "mastodon", "discord", "tumblr") + SELLER_RAILS
 BUFFER_KEY = {"x": "twitter"}           # autopilot rail name -> Buffer service name
 
 
@@ -1795,14 +1796,20 @@ def pub_tumblr(text: str, img: dict | None = None, tags: list | None = None) -> 
     if not (ck and cs and tok and sec and blog):
         log("skip_no_key", platform="tumblr")
         return False
-    url = f"https://api.tumblr.com/v2/blog/{blog}/posts"
+    # Endpoint note (2026-11-07, learned the hard way): `/posts` (plural) is the NPF route and
+    # wants a JSON `content` array. A form-encoded text post posted to it answers
+    # 400 code 8001 "Posting failed. Please try again." with no hint about the real problem -
+    # six different payload shapes all failed identically before this was found. The form-encoded
+    # legacy route is `/post` (singular) and answers 201 immediately.
+    url = f"https://api.tumblr.com/v2/blog/{blog}/post"
     body = {"type": "text", "body": text, "format": "markdown"}
     if tags:
         body["tags"] = ",".join(str(x).lstrip("#") for x in tags[:3])
     if (img or {}).get("url"):
-        # Tumblr accepts an HTML body; keeping the markdown body and appending the card keeps the
-        # text readable in both renderers
+        # markdown body plus the card; native_inline_images makes Tumblr host its own copy so the
+        # post does not depend on the Worker serving that file forever
         body["body"] = f"{text}\n\n![]({img['url']})"
+        body["native_inline_images"] = "true"
     req = urllib.request.Request(
         url, data=urllib.parse.urlencode(body).encode(), method="POST",
         headers={"Authorization": _oauth1_header("POST", url, {}, ck, cs, tok, sec, body),
