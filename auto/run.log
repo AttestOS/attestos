@@ -1,3 +1,103 @@
 {"ts": "2026-10-28T10:22:47+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
 {"ts": "2026-10-28T11:29:41+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
 {"ts": "2026-11-07T18:48:35+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}
+{"ts": "2026-11-07T19:22:23+00:00", "ev": "llm_cb_soft", "provider": "github-models", "fails": 1, "err": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"}
+{"ts": "2026-11-07T19:22:23+00:00", "ev": "author_down_to_keyless", "attempts": "github-models/openai/gpt-4o-mini: JSONDecodeError: Expecting value: line 1 column 1 (char 0) | github-models/openai/gpt-4o: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"}
+{"ts": "2026-11-07T19:23:36+00:00", "ev": "planned", "channel": "nostr30023", "topic": "store-abuse-map", "live": false}
+{"ts": "2026-11-07T19:23:36+00:00", "ev": "llm_cb_soft", "provider": "github-models", "fails": 2, "err": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"}
+{"ts": "2026-11-07T19:23:36+00:00", "ev": "author_down_to_keyless", "attempts": "github-models/openai/gpt-4o-mini: JSONDecodeError: Expecting value: line 1 column 1 (char 0) | github-models/openai/gpt-4o: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "llm_error", "channel": "bsky", "topic": "robots-ai-user-agents", "err": "<HTTPError 400: 'Bad Request'>"}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "llm_cb", "provider": "github-models", "kind": "soft", "held": 3600, "code": 0}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "author_down_to_keyless", "attempts": "github-models/openai/gpt-4o-mini: JSONDecodeError: Expecting value: line 1 column 1 (char 0) | github-models/openai/gpt-4o: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "llm_error", "channel": "nostrnote", "topic": "robots-ai-user-agents", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3599}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "llm_error", "channel": "mastodon", "topic": "robots-ai-user-agents", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "job_skipped", "topic": "robots-ai-user-agents"}
+{"ts": "2026-11-07T19:24:14+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3599}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "llm_error", "channel": "bsky", "topic": "verify-crawler-ip", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3599}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "llm_error", "channel": "nostrnote", "topic": "verify-crawler-ip", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "llm_error", "channel": "mastodon", "topic": "verify-crawler-ip", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "job_skipped", "topic": "verify-crawler-ip"}
+{"ts": "2026-11-07T19:24:15+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:16+00:00", "ev": "llm_error", "channel": "discord", "topic": "trial-abuse", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:16+00:00", "ev": "job_skipped", "topic": "trial-abuse"}
+{"ts": "2026-11-07T19:24:16+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:16+00:00", "ev": "llm_error", "channel": "discord", "topic": "signup-friction", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:16+00:00", "ev": "job_skipped", "topic": "signup-friction"}
+{"ts": "2026-11-07T19:24:35+00:00", "ev": "llm_cb_soft", "provider": "github-models", "fails": 2, "err": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"}
+{"ts": "2026-11-07T19:24:35+00:00", "ev": "author_down_to_keyless", "attempts": "github-models/openai/gpt-4o-mini: JSONDecodeError: Expecting value: line 1 column 1 (char 0) | github-models/openai/gpt-4o: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"}
+{"ts": "2026-11-07T19:24:48+00:00", "ev": "reply_planned", "platform": "bsky", "target": "at://did:plc:myu"}
+{"ts": "2026-11-07T19:24:48+00:00", "ev": "llm_cb", "provider": "github-models", "kind": "soft", "held": 3600, "code": 0}
+{"ts": "2026-11-07T19:24:48+00:00", "ev": "author_down_to_keyless", "attempts": "github-models/openai/gpt-4o-mini: JSONDecodeError: Expecting value: line 1 column 1 (char 0) | github-models/openai/gpt-4o: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3599}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3599}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3599}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:49+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3598}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:50+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3597}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3597}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3597}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3597}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:51+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3596}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3596}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3596}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3596}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:52+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3595}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3595}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3595}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3595}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:53+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3594}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3594}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3594}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3594}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:54+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3593}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3593}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3593}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3593}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:55+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3592}
+{"ts": "2026-11-07T19:24:56+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:56+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3592}
+{"ts": "2026-11-07T19:24:56+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:56+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3592}
+{"ts": "2026-11-07T19:24:56+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:56+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3591}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3591}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3591}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_cb_skip", "provider": "github-models", "resume_in": 3591}
+{"ts": "2026-11-07T19:24:57+00:00", "ev": "llm_error", "channel": "bsky", "topic": "reply-at://did:plc", "err": "<HTTPError 402: 'Payment Required'>"}
+{"ts": "2026-11-07T19:24:58+00:00", "ev": "whop_price_check_skipped", "note": "WHOP_COMPANY_ID unset"}

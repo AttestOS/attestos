@@ -1,16 +1,60 @@
 {
- "used": {},
- "published": [],
- "channel_last": {},
- "last_longform": null,
+ "used": {
+  "store-abuse-map": 1
+ },
+ "published": [
+  {
+   "ts": "2026-11-07T19:23:35+00:00",
+   "kind": "longform",
+   "platform": "nostr30023",
+   "topic": "store-abuse-map",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/831e7e36f3d90101c821c4e840a53e831e380d0649360b589871d5681a027bf7.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-07T19:24:48+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:myu",
+   "due": "",
+   "ok": false
+  }
+ ],
+ "channel_last": {
+  "nostr30023": "2026-11-07T19:23:35+00:00"
+ },
+ "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
- "reply_targets": [],
- "reply_day": {},
+ "reply_targets": [
+  "at://did:plc:myutg2pwkjbukv7pq2hp5mtl/app.bsky.feed.post/6lxydpcpjo7tp"
+ ],
+ "reply_day": {
+  "2026-11-07": {
+   "bsky": 1
+  }
+ },
  "pin_i": 0,
- "day_counts": {},
+ "day_counts": {
+  "2026-11-07": {
+   "nostr30023": 1
+  }
+ },
  "runs_today": {
   "2026-10-28": 2,
-  "2026-11-07": 1
+  "2026-11-07": 2
  },
- "used_ts": {}
+ "used_ts": {
+  "store-abuse-map": "2026-11-07T19:23:36+00:00"
+ },
+ "llm_cb": {
+  "github-models": {
+   "until": 1794083088.7933297,
+   "kind": "soft",
+   "code": 0
+  }
+ }
 }
