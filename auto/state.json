@@ -21,7 +21,10 @@
   "agent-keys": 1,
   "verify-on-server": 2,
   "risk-score-use": 1,
-  "promo-saas-integrity": 1
+  "promo-saas-integrity": 1,
+  "passkeys-for-saas": 1,
+  "token-single-use": 2,
+  "promo-saas-docs": 1
  },
  "published": [
   {
@@ -415,17 +418,169 @@
    "img": "https://attestos-edge.attestos.workers.dev/api/press/img/d7eec9391c8681cc978603da56d03a08b77e86205608f4e98b0eb2d62b606370.png",
    "img_src": "card",
    "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:02+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:04+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/4f0a49bdfb712e1a3dd2f73b2410e1b74669b53395736eda97d1f0e95541a978.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:17+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:19+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/df0d30f3ac257a516054cab45757171fab6154165935604e93636f0c710bb152.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:21+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "token-single-use",
+   "due": "2026-11-08T11:02:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/893a332ea793aa688bd821fb932c8c32790d0973e5cfc6cb62f60e47c40ca5cb.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:26+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "token-single-use",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/4c6767fef0c839c30a006698f37815ba071c69c3957a917d0d51a5f74a9b947e.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:42+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-saas-docs",
+   "due": "2026-11-08T11:42:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/62daabdc72e5d35f71ab1875dcb7e07bc75edade57d2063a1aa7c6d3dcb08592.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:43+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-saas-docs",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:44+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-saas-docs",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/885519c0185477ced6d9594fefa11606b9fc2c8a2cb37435a18ef903ce0fc9d3.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:47:57+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-saas-docs",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/6902cb28ea26e0038a7bb77e9b21d9d0cae3f3bea9e1f4ec26a86ec4097401de.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-08T10:48:18+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:er6",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-08T10:48:19+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:g2i",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-08T10:48:22+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:qog",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-08T10:48:24+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:hqq",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-07T20:45:48+00:00",
-  "bsky": "2026-11-07T20:45:25+00:00",
-  "mastodon": "2026-11-07T20:45:40+00:00",
-  "nostrnote": "2026-11-07T20:45:27+00:00",
+  "discord": "2026-11-08T10:47:57+00:00",
+  "bsky": "2026-11-08T10:47:43+00:00",
+  "mastodon": "2026-11-08T10:47:17+00:00",
+  "nostrnote": "2026-11-08T10:47:44+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-07T20:45:45+00:00",
-  "tumblr": "2026-11-07T20:45:57+00:00"
+  "pinterest": "2026-11-08T10:47:43+00:00",
+  "tumblr": "2026-11-08T10:47:26+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -433,10 +588,17 @@
   "at://did:plc:myutg2pwkjbukv7pq2hp5mtl/app.bsky.feed.post/6lxydpcpjo7tp",
   "at://did:plc:2uccdpdhk75kies2czi4wmzy/app.bsky.feed.post/3mzhs36flhc2k",
   "at://did:plc:er6ylznyrcdm3hpuijxoc2kf/app.bsky.feed.post/3moba7hakqk2e",
-  "at://did:plc:er6ylznyrcdm3hpuijxoc2kf/app.bsky.feed.post/3mnr3mgyu2k2o"
+  "at://did:plc:er6ylznyrcdm3hpuijxoc2kf/app.bsky.feed.post/3mnr3mgyu2k2o",
+  "at://did:plc:er6ylznyrcdm3hpuijxoc2kf/app.bsky.feed.post/3mmfgcisbfs25",
+  "at://did:plc:g2i4w35vgds2faieuar4axbe/app.bsky.feed.post/3mjnuql252z22",
+  "at://did:plc:qog6nsef4qorna5p2gphot37/app.bsky.feed.post/3mijkz5msds2e",
+  "at://did:plc:hqqjt33dtdcl6kz5bqwi7cws/app.bsky.feed.post/3miipktdvsf2l"
  ],
  "reply_day": {
   "2026-11-07": {
+   "bsky": 4
+  },
+  "2026-11-08": {
    "bsky": 4
   }
  },
@@ -451,10 +613,19 @@
    "pinterest": 1,
    "whop_public": 1,
    "tumblr": 2
+  },
+  "2026-11-08": {
+   "bsky": 2,
+   "nostrnote": 2,
+   "mastodon": 1,
+   "discord": 2,
+   "pinterest": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
-  "2026-11-07": 1
+  "2026-11-07": 1,
+  "2026-11-08": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -478,7 +649,10 @@
   "agent-keys": "2026-11-07T20:45:42+00:00",
   "verify-on-server": "2026-11-07T20:45:53+00:00",
   "risk-score-use": "2026-11-07T20:45:49+00:00",
-  "promo-saas-integrity": "2026-11-07T20:45:57+00:00"
+  "promo-saas-integrity": "2026-11-07T20:45:57+00:00",
+  "passkeys-for-saas": "2026-11-08T10:47:20+00:00",
+  "token-single-use": "2026-11-08T10:47:27+00:00",
+  "promo-saas-docs": "2026-11-08T10:47:58+00:00"
  },
  "llm_cb": {},
  "alerted": {
