@@ -386,3 +386,42 @@
 {"ts": "2026-11-08T10:48:22+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:qog"}
 {"ts": "2026-11-08T10:48:24+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
 {"ts": "2026-11-08T10:48:24+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:hqq"}
+{"ts": "2026-11-09T11:00:42+00:00", "ev": "buffer_discovered", "services": ["mastodon", "pinterest"], "boards": ["AttestoS"]}
+{"ts": "2026-11-09T11:00:44+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "bsky"}
+{"ts": "2026-11-09T11:00:46+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-09T11:00:48+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "mastodon"}
+{"ts": "2026-11-09T11:00:48+00:00", "ev": "bsky_session", "mode": "create"}
+{"ts": "2026-11-09T11:00:50+00:00", "ev": "published", "channel": "bsky", "topic": "private-access-tokens", "live": true}
+{"ts": "2026-11-09T11:01:03+00:00", "ev": "published", "channel": "nostrnote", "topic": "private-access-tokens", "live": true}
+{"ts": "2026-11-09T11:01:05+00:00", "ev": "published", "channel": "mastodon", "topic": "private-access-tokens", "live": true}
+{"ts": "2026-11-09T11:01:07+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-09T11:01:08+00:00", "ev": "published", "channel": "pinterest", "topic": "fake-account-signals", "live": true}
+{"ts": "2026-11-09T11:01:11+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "discord"}
+{"ts": "2026-11-09T11:01:12+00:00", "ev": "published", "channel": "discord", "topic": "adaptive-difficulty", "live": true}
+{"ts": "2026-11-09T11:01:15+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "tumblr"}
+{"ts": "2026-11-09T11:01:16+00:00", "ev": "published", "channel": "tumblr", "topic": "fake-account-signals", "live": true}
+{"ts": "2026-11-09T11:01:17+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-09T11:01:17+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-plans-saas", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-09T11:01:20+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-09T11:01:21+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "bsky"}
+{"ts": "2026-11-09T11:01:21+00:00", "ev": "rejected", "channel": "bsky", "topic": "promo-plans-saas", "attempt": 1, "problems": ["bsky: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-09T11:01:23+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "bsky"}
+{"ts": "2026-11-09T11:01:26+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-09T11:01:26+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-plans-saas", "attempt": 1, "problems": ["nostrnote: promo with no pointer link is just vibes", "nostrnote: 328 chars over 300"]}
+{"ts": "2026-11-09T11:01:28+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-09T11:01:28+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "promo-plans-saas", "attempt": 2, "problems": ["nostrnote: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-09T11:01:30+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "mastodon"}
+{"ts": "2026-11-09T11:01:33+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "discord"}
+{"ts": "2026-11-09T11:01:34+00:00", "ev": "published", "channel": "pinterest", "topic": "promo-plans-saas", "live": true}
+{"ts": "2026-11-09T11:01:35+00:00", "ev": "bsky_session", "mode": "refresh"}
+{"ts": "2026-11-09T11:01:36+00:00", "ev": "published", "channel": "bsky", "topic": "promo-plans-saas", "live": true}
+{"ts": "2026-11-09T11:01:38+00:00", "ev": "published", "channel": "mastodon", "topic": "promo-plans-saas", "live": true}
+{"ts": "2026-11-09T11:01:39+00:00", "ev": "published", "channel": "discord", "topic": "promo-plans-saas", "live": true}
+{"ts": "2026-11-09T11:01:59+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-09T11:01:59+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:owm"}
+{"ts": "2026-11-09T11:02:01+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-09T11:02:01+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:kb4"}
+{"ts": "2026-11-09T11:02:02+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-09T11:02:03+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:ego"}
+{"ts": "2026-11-09T11:02:04+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-09T11:02:05+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:d5n"}
