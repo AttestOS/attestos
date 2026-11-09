@@ -43,7 +43,7 @@ def test_signer_matches_official_vector():
 
 def test_signed_notes_always_verify(monkeypatch):
     """The exact call pub_nostr_note makes. Before the fix this failed on ~half of all keys/notes."""
-    monkeypatch.setenv("AO_NOSTR_NSEC", "nsec1t4kqrgf9w6r0vfset72d0p44zjhry5fwjmshlhpmafmhm37pvmrsspxmed")
+    monkeypatch.setenv("AO_NOSTR_NSEC", "nsec1zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygs4rm7hz")
     for i in range(30):
         ev = nostr.sign(1, [], f"note {i}")
         assert nostr.verify_sig(ev) is True, f"note {i} failed its own signature check"
@@ -51,14 +51,18 @@ def test_signed_notes_always_verify(monkeypatch):
 
 
 def test_tampered_event_is_rejected(monkeypatch):
-    monkeypatch.setenv("AO_NOSTR_NSEC", "nsec1t4kqrgf9w6r0vfset72d0p44zjhry5fwjmshlhpmafmhm37pvmrsspxmed")
+    monkeypatch.setenv("AO_NOSTR_NSEC", "nsec1zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygs4rm7hz")
     ev = nostr.sign(1, [], "tamper me")
     ev["content"] = "tampered"
     assert nostr.verify_sig(ev) is False
 
 
 def test_identity_derivation_matches_the_account(monkeypatch):
-    """The AttestoS company key derives exactly the npub/hex the work-book records."""
-    monkeypatch.setenv("AO_NOSTR_NSEC", "nsec1t4kqrgf9w6r0vfset72d0p44zjhry5fwjmshlhpmafmhm37pvmrsspxmed")
-    assert nostr.pubkey_hex() == "0add076e2cd85e192fe3e6d95f1b059243df589f7fc35b884d7b041e89d0c6dd"
-    assert nostr.npub() == "npub1ptwswm3vmp0pjtlrumv47xc9jfpa7kyl0lp4hzzd0vzpazwscmwsteds6l"
+    """Derivation is consistent: one secret, one pubkey, one npub.
+
+    The key here is 0x11 repeated — a fixed test vector, never a real identity. The company key used
+    to sit in this file, which meant a public repository held the signing key for the account.
+    """
+    monkeypatch.setenv("AO_NOSTR_NSEC", "nsec1zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygs4rm7hz")
+    assert nostr.pubkey_hex() == "4f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa"
+    assert nostr.npub() == "npub1fu64hh9hes90w2808n8tjc2ajp5yhddjef0ctx4s7zmsgp6cwx4qgy4eg9"
