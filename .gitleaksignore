@@ -1,7 +1,0 @@
-# Historical, and now harmless: the AttestOS signing key was committed here and is in this
-# repository's history. It was rotated on 2026-11-09 — the old nsec no longer opens anything — so
-# these findings are pinned by fingerprint instead of by pattern, and the rule stays armed for every
-# other file. Do not add a live value to this file; rotate it instead.
-2d1bdb62095ba15323c9e113371570a6eae26535:press/tests/test_nostr_sig.py:nostr-nsec:46
-2d1bdb62095ba15323c9e113371570a6eae26535:press/tests/test_nostr_sig.py:nostr-nsec:54
-2d1bdb62095ba15323c9e113371570a6eae26535:press/tests/test_nostr_sig.py:nostr-nsec:62
