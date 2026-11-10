@@ -28,7 +28,11 @@
   "private-access-tokens": 1,
   "fake-account-signals": 2,
   "adaptive-difficulty": 1,
-  "promo-plans-saas": 1
+  "promo-plans-saas": 1,
+  "contact-form-spam": 1,
+  "headless-browsers": 2,
+  "siteverify-errors": 1,
+  "promo-robots-check": 1
  },
  "published": [
   {
@@ -726,17 +730,157 @@
    "topic": "at://did:plc:d5n",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-10T10:56:03+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "contact-form-spam",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:56:06+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "headless-browsers",
+   "due": "2026-11-10T11:11:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/0c4a3e1d385e8b2f04b00da16d16e247b5099be44b5dc431bcf2acb915933ddd.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:56:16+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "siteverify-errors",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/ae4b510dd24094a2f43972c2fc3e3d26534acea3f0ea04d575929de5487e7e25.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:56:30+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "siteverify-errors",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:56:31+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "siteverify-errors",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/77cb8d43ae9af6fa043173ed2263f59073a23eb6785b135f42d6b6a4d1fd40f9.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:56:37+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "headless-browsers",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/69c7c2c6f197f57671834653c86f9b5cf2b20581fc7df3fbca5baf6a8bd3eb29.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:01+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-robots-check",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:03+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-robots-check",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/a0543196bb98e6da15de3c3607bba141250d978a36fd804c57bcc52806456811.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:16+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-robots-check",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/c5ae92f4d8cc98e650ad76d0f79c4ad57db13c662633e859c1ce8b658679d1b1.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:40+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:dg6",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:42+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:bed",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:43+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:ht6",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-10T10:57:45+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:lhu",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-09T11:01:38+00:00",
-  "bsky": "2026-11-09T11:01:34+00:00",
-  "mastodon": "2026-11-09T11:01:36+00:00",
-  "nostrnote": "2026-11-09T11:00:50+00:00",
+  "discord": "2026-11-10T10:57:16+00:00",
+  "bsky": "2026-11-10T10:57:01+00:00",
+  "mastodon": "2026-11-10T10:56:30+00:00",
+  "nostrnote": "2026-11-10T10:57:03+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-09T11:01:34+00:00",
-  "tumblr": "2026-11-09T11:01:15+00:00"
+  "pinterest": "2026-11-10T10:56:08+00:00",
+  "tumblr": "2026-11-10T10:56:37+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -752,7 +896,11 @@
   "at://did:plc:owm3mwmb44o66rh74d4f34lz/app.bsky.feed.post/3miinn6bcoc2w",
   "at://did:plc:kb4r5p4f4rzz7li6lbjcwraz/app.bsky.feed.post/3miikgy5vzk2m",
   "at://did:plc:egoop22szzob7mszd3pfgdww/app.bsky.feed.post/3miihvuuwp22i",
-  "at://did:plc:d5nqrfnea6ccrixmd22tprwo/app.bsky.feed.post/3mgsxfdrhi227"
+  "at://did:plc:d5nqrfnea6ccrixmd22tprwo/app.bsky.feed.post/3mgsxfdrhi227",
+  "at://did:plc:dg646nlw7plufwpa2yhtf2hr/app.bsky.feed.post/3lj34my74ns2t",
+  "at://did:plc:bed6r6nqp57g24ijrst5wwgk/app.bsky.feed.post/3mzvj7e7nu225",
+  "at://did:plc:ht6f4socblj6d3pkwmru5aqv/app.bsky.feed.post/3mzvgiht3rs2o",
+  "at://did:plc:lhuito3l45sqw33udtrq2v5o/app.bsky.feed.post/3mzv76rcxh62l"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -762,6 +910,9 @@
    "bsky": 4
   },
   "2026-11-09": {
+   "bsky": 4
+  },
+  "2026-11-10": {
    "bsky": 4
   }
  },
@@ -792,12 +943,21 @@
    "pinterest": 2,
    "discord": 2,
    "tumblr": 1
+  },
+  "2026-11-10": {
+   "bsky": 2,
+   "pinterest": 1,
+   "nostrnote": 2,
+   "mastodon": 1,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
   "2026-11-07": 1,
   "2026-11-08": 1,
-  "2026-11-09": 1
+  "2026-11-09": 1,
+  "2026-11-10": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -828,7 +988,11 @@
   "private-access-tokens": "2026-11-09T11:01:05+00:00",
   "fake-account-signals": "2026-11-09T11:01:16+00:00",
   "adaptive-difficulty": "2026-11-09T11:01:12+00:00",
-  "promo-plans-saas": "2026-11-09T11:01:39+00:00"
+  "promo-plans-saas": "2026-11-09T11:01:39+00:00",
+  "contact-form-spam": "2026-11-10T10:56:04+00:00",
+  "headless-browsers": "2026-11-10T10:56:37+00:00",
+  "siteverify-errors": "2026-11-10T10:56:32+00:00",
+  "promo-robots-check": "2026-11-10T10:57:17+00:00"
  },
  "llm_cb": {},
  "alerted": {
