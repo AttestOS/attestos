@@ -1,60 +1,49 @@
-# AttestOS
+# Proofhand
 
-Invisible bot verification for sign-up, login and contact forms. A small proof-of-work check runs in the visitor's browser, and your server verifies the resulting token once. The verify call has the same shape as reCAPTCHA's siteverify. Paid modules add risk signals, Private Access Tokens (RFC 9576–9578), passkeys and per-crawler AI policy (AgentPass).
+**Proofhand replaces image puzzles on sign-up, login and contact forms with an invisible proof-of-work check and one server-side verification.**
 
-**Live:** https://attestos-edge.attestos.workers.dev · [Docs](https://attestos-edge.attestos.workers.dev/docs/) · [Pricing](https://attestos-edge.attestos.workers.dev/pricing/) · [Free scanner](https://attestos-edge.attestos.workers.dev/scanner/)
+Proofhand is a CAPTCHA replacement: the visitor's browser solves a small proof-of-work challenge silently, the form carries a token, and the server verifies it once with a call shaped like reCAPTCHA's siteverify.
 
-```html
-<script src="https://attestos-edge.attestos.workers.dev/v1/attestos.js" async defer></script>
-<form method="post" action="/signup">
-  …
-  <div class="attestos" data-sitekey="ao_site_…"></div>
-  <button>Sign up</button>
-</form>
-```
+- **Live:** [https://attestos.whop.site](https://attestos.whop.site)
+- **Facts:** [https://proofhand-store.pages.dev/facts.json](https://proofhand-store.pages.dev/facts.json)
+- **Every question answered:** [https://proofhand-store.pages.dev/answers/](https://proofhand-store.pages.dev/answers/)
+- **Built by:** Jacaranda Labs, Harare, Zimbabwe — [jacaranda-estate.pages.dev](https://jacaranda-estate.pages.dev/)
 
-```js
-const v = await fetch("https://attestos-edge.attestos.workers.dev/api/siteverify", {
-  method: "POST", headers: { "content-type": "application/json" },
-  body: JSON.stringify({ secret: process.env.ATTESTOS_SECRET, response: req.body["attestos-response"] }),
-}).then((r) => r.json());
-if (!v.success) return res.status(400).send("Bot check failed");
-```
+## What it costs
 
-## What it does, and what it doesn't
+- Free tier
+- $299 a month
+- $99 a month
+- $149 a month
+- $49 a month
+- Free tier
 
-- Proof-of-work makes every automated submission cost CPU time. It doesn't prove identity: keep your own rate limits, and use the risk score or passkeys where it matters.
-- Tokens are single-use, last 5 minutes, and are bound to your site key and domain. The server chooses the difficulty; clients can't lower it.
-- AgentPass checks crawler claims against the IP ranges operators publish (Google, Bing, OpenAI, Perplexity, Apple). Operators without published ranges are classified by user agent only and reported as `verified: null`.
+## Questions
 
-## Repository layout
+**What is Proofhand?**
 
-| Path | What |
-|---|---|
-| `worker/` | The Cloudflare Worker (TypeScript): verification API, portal and owner-console APIs, Whop webhook, scanner, outreach, crons. Tests are in `worker/test` (vitest + sql.js D1). |
-| `worker/migrations/` | D1 schema. |
-| `site-src/` → `site/` | Static pages. Run `python3 scripts/build-site.py` after editing `site-src/` (CI checks this). `site/v1/attestos.js` is the widget. |
-| `scripts/prospects.mjs` | Daily GitHub Action that finds sites showing a *visible* CAPTCHA and publishing a role contact address. |
-| `scripts/owner-password.mjs` | Generates `OWNER_PASSWORD_HASH` for the owner console. |
-| `press/` | The distribution mesh (Python, GitHub Actions `press.yml`): authors, checks and publishes posts across Buffer and direct rails, then answers replies. Off until the repo variable `PRESS_ENABLED=1`; each rail switches on when its secrets exist. Setup: `docs/MESH-SETUP.md`. Tests: `python3 -m pytest press/tests`. |
-| `brand/brand.json` | Plan names, prices and limits for the press (kept equal to `worker/src/plans.ts` by a test). |
+Proofhand replaces image puzzles on sign-up, login and contact forms with an invisible proof-of-work check: the browser solves it silently, the form carries a token, and the server verifies that token once.
 
-## Develop
+**Is Proofhand a CAPTCHA replacement?**
 
-```sh
-npm ci
-npm run check                      # tsc + vitest
-cd worker && npx wrangler d1 migrations apply attestos --local && npx wrangler dev
-```
+Yes. It does the same job as reCAPTCHA or hCaptcha without asking a real visitor to identify traffic lights, and the server-side verification call is shaped like reCAPTCHA's siteverify.
 
-Put `APP_SECRET`, `OWNER_PASSWORD_HASH` and `SITE_URL=http://localhost:8787` in `worker/.dev.vars`.
+**How much does Proofhand cost?**
 
-## Deploy
+There is a free tier. IntegrityRuntime Pro is $49 a month, AgentPass Pro is $99 a month, Hardware Gateway Pro is $149 a month and Enterprise is $299 a month.
 
-Pushes to `main` run `.github/workflows/deploy.yml`, which applies the D1 migrations and runs `wrangler deploy`. It needs the repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The Worker secrets are listed at the bottom of `worker/wrangler.toml`. The project runs on the Cloudflare free plan and stays within a self-imposed 20% of the account's daily D1 quota (`D1_WRITE_BUDGET` / `D1_READ_BUDGET`).
+**Does it stop bots as well as a puzzle does?**
 
-## Security
+Bots that solve puzzles with paid services get through those puzzles anyway; a proof-of-work check costs a machine real computation while costing a person nothing.
 
-Report vulnerabilities through [GitHub security advisories](https://github.com/AttestOS/attestos/security/advisories/new) or the contact in `/.well-known/security.txt`.
+**Will it work with my existing form?**
 
-Licensed under Apache-2.0 (see `LICENSE`).
+Yes. The change is a token on the form and one verification call on the server, so the form itself does not need redesigning.
+
+**Can I charge AI crawlers instead of blocking them?**
+
+Yes. Proofhand lets a site make crawlers either pay for access or stay out, instead of blocking all automation or allowing all of it.
+
+---
+
+Facts are generated from the live billing table and published at https://proofhand-store.pages.dev/facts.json, which is the authoritative copy.
