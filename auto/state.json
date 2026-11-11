@@ -1,7 +1,7 @@
 {
  "used": {
   "store-abuse-map": 1,
-  "signup-friction": 1,
+  "signup-friction": 2,
   "robots-ai-user-agents": 1,
   "verify-crawler-ip": 1,
   "trial-abuse": 1,
@@ -32,7 +32,9 @@
   "contact-form-spam": 1,
   "headless-browsers": 2,
   "siteverify-errors": 1,
-  "promo-robots-check": 1
+  "promo-robots-check": 1,
+  "gift-card-abuse": 2,
+  "promo-agentpass": 1
  },
  "published": [
   {
@@ -870,17 +872,145 @@
    "topic": "at://did:plc:lhu",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-11T11:03:50+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "gift-card-abuse",
+   "due": "2026-11-11T11:18:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/90249249f3a710b330d01c1813558c3d8dfd85cd442073d7cec74a6a96a5a45b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:01+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:03+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/a02166ab7b803f59629e82ad18ce250ce81b8a17aad496a1f32b28f032a758ee.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:16+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:18+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/e61bccce587d41ceb5b209e8baeb33138e5fcfbbbc2ef5e80489a9cf95345c03.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:22+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "gift-card-abuse",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/b5d9c2695dab4c03800298e65e89e61246ad7fd745f4ac044fef5fe2be1d586b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:52+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-agentpass",
+   "due": "2026-11-11T11:19:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/3d07540f872b3dd6a0667fde0a337eb5c37d47076b0d4fea7b0434b3523bfa3d.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:04:53+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-agentpass",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.attestos.workers.dev/api/press/img/4d01a6cc9feac90cb39e49ad9066b7c608955cb6110c87e7bc6ba1a984bf5e97.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-11T11:05:13+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:3il",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-11T11:05:14+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:3il",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-11T11:05:16+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:sj3",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-11T11:05:18+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:2wz",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-10T10:57:16+00:00",
-  "bsky": "2026-11-10T10:57:01+00:00",
-  "mastodon": "2026-11-10T10:56:30+00:00",
-  "nostrnote": "2026-11-10T10:57:03+00:00",
+  "discord": "2026-11-11T11:04:53+00:00",
+  "bsky": "2026-11-11T11:04:01+00:00",
+  "mastodon": "2026-11-11T11:04:16+00:00",
+  "nostrnote": "2026-11-11T11:04:03+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-10T10:56:08+00:00",
-  "tumblr": "2026-11-10T10:56:37+00:00"
+  "pinterest": "2026-11-11T11:04:53+00:00",
+  "tumblr": "2026-11-11T11:04:22+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -900,7 +1030,11 @@
   "at://did:plc:dg646nlw7plufwpa2yhtf2hr/app.bsky.feed.post/3lj34my74ns2t",
   "at://did:plc:bed6r6nqp57g24ijrst5wwgk/app.bsky.feed.post/3mzvj7e7nu225",
   "at://did:plc:ht6f4socblj6d3pkwmru5aqv/app.bsky.feed.post/3mzvgiht3rs2o",
-  "at://did:plc:lhuito3l45sqw33udtrq2v5o/app.bsky.feed.post/3mzv76rcxh62l"
+  "at://did:plc:lhuito3l45sqw33udtrq2v5o/app.bsky.feed.post/3mzv76rcxh62l",
+  "at://did:plc:3iltugf5ocp757s6mt3grnmz/app.bsky.feed.post/3mzuhnffnpa25",
+  "at://did:plc:3iltugf5ocp757s6mt3grnmz/app.bsky.feed.post/3mzuhltbgra25",
+  "at://did:plc:sj3q7bq52ejz3oanpnk6i4v2/app.bsky.feed.post/3mzu636dngn2p",
+  "at://did:plc:2wzcvs65wtf4lvyy3t7ogcas/app.bsky.feed.post/3mzu62nrcpc26"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -913,6 +1047,9 @@
    "bsky": 4
   },
   "2026-11-10": {
+   "bsky": 4
+  },
+  "2026-11-11": {
    "bsky": 4
   }
  },
@@ -951,17 +1088,26 @@
    "mastodon": 1,
    "discord": 2,
    "tumblr": 1
+  },
+  "2026-11-11": {
+   "pinterest": 2,
+   "bsky": 1,
+   "nostrnote": 1,
+   "mastodon": 1,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
   "2026-11-07": 1,
   "2026-11-08": 1,
   "2026-11-09": 1,
-  "2026-11-10": 1
+  "2026-11-10": 1,
+  "2026-11-11": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
-  "signup-friction": "2026-11-07T19:32:54+00:00",
+  "signup-friction": "2026-11-11T11:04:19+00:00",
   "robots-ai-user-agents": "2026-11-07T19:39:01+00:00",
   "verify-crawler-ip": "2026-11-07T19:39:10+00:00",
   "trial-abuse": "2026-11-07T19:39:14+00:00",
@@ -992,7 +1138,9 @@
   "contact-form-spam": "2026-11-10T10:56:04+00:00",
   "headless-browsers": "2026-11-10T10:56:37+00:00",
   "siteverify-errors": "2026-11-10T10:56:32+00:00",
-  "promo-robots-check": "2026-11-10T10:57:17+00:00"
+  "promo-robots-check": "2026-11-10T10:57:17+00:00",
+  "gift-card-abuse": "2026-11-11T11:04:22+00:00",
+  "promo-agentpass": "2026-11-11T11:04:53+00:00"
  },
  "llm_cb": {},
  "alerted": {
@@ -1006,7 +1154,7 @@
  },
  "buffer_channels": {
   "b62fa971978dd910": {
-   "at": 1794222042,
+   "at": 1794395028,
    "map": {
     "mastodon": "6aef6eaae29c69a171977373",
     "pinterest": "6aef6e78e29c69a171976f1b"
