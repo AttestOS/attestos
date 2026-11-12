@@ -7,7 +7,7 @@ Proofhand is a CAPTCHA replacement: the visitor's browser solves a small proof-o
 - **Live:** [https://attestos.whop.site](https://attestos.whop.site)
 - **Facts:** [https://proofhand-store.pages.dev/facts.json](https://proofhand-store.pages.dev/facts.json)
 - **Every question answered:** [https://proofhand-store.pages.dev/answers/](https://proofhand-store.pages.dev/answers/)
-- **Built by:** Jacaranda Labs, Harare, Zimbabwe — [jacaranda-estate.pages.dev](https://jacaranda-estate.pages.dev/)
+- **Built by:** Coldcode SI Labs, Harare, Zimbabwe — [coldcode-estate.pages.dev](https://coldcode-estate.pages.dev/)
 
 ## What it costs
 
