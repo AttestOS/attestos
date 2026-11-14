@@ -2,17 +2,17 @@
  "used": {
   "store-abuse-map": 1,
   "signup-friction": 2,
-  "robots-ai-user-agents": 1,
+  "robots-ai-user-agents": 2,
   "verify-crawler-ip": 1,
   "trial-abuse": 2,
-  "api-key-farming": 1,
+  "api-key-farming": 2,
   "promo-store-scan": 1,
   "http-402-crawling": 1,
   "training-vs-search": 1,
   "promo-store-free-plan": 1,
   "robots-mistakes": 1,
   "card-testing-pattern": 2,
-  "login-stuffing": 1,
+  "login-stuffing": 2,
   "promo-plans-store": 1,
   "crawl-logs": 1,
   "checkout-puzzle-cost": 2,
@@ -36,7 +36,9 @@
   "gift-card-abuse": 2,
   "promo-agentpass": 1,
   "honeypot-limits": 1,
-  "promo-plans-publisher": 1
+  "promo-plans-publisher": 1,
+  "client-handover-keys": 1,
+  "promo-agency-scan": 1
  },
  "published": [
   {
@@ -1154,17 +1156,181 @@
    "topic": "at://did:plc:wlk",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:05+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "robots-ai-user-agents",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:05+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "robots-ai-user-agents",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/e884cb9c09d09b5cc7fca816f115179bb9c1cf328f684dfcf20552dc8a36b7c6.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:06+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "robots-ai-user-agents",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:08+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "login-stuffing",
+   "due": "2026-11-14T02:22:00Z",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/d41fcf8bd523df4705702007bb14b7c48d314ff6a5792a24dec0eea2ae398e2b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:12+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "api-key-farming",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/7ab6b61a24cc977eb1de1fc88488b509be602f64d37b59f8680203ca67461ca8.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:22+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "client-handover-keys",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/056d0c4c5b1313695966d3a66760a8ba75b7539453ab30cc0258554e94fc90ef.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:36+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-agency-scan",
+   "due": "2026-11-14T03:02:00Z",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/5230874013451d77669e7c112b4e11388ea880cda533cb6c47bd22fd8e6c6f49.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:36+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-agency-scan",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:36+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-agency-scan",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/949d55231ed08d1730914b4783336b24f4db6bc34f6b1ba0b722ff993980f79d.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:36+00:00",
+   "kind": "promo",
+   "platform": "mastodon",
+   "topic": "promo-agency-scan",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:37+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-agency-scan",
+   "due": "",
+   "ok": false,
+   "live": false,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/f568ed7775013480b6e99a9242dcebd330906d3885a96e1f0455c95cf8787fb7.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T02:07:57+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:n2v",
+   "due": "",
+   "ok": false
+  },
+  {
+   "ts": "2026-11-14T02:08:02+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:sbj",
+   "due": "",
+   "ok": false
+  },
+  {
+   "ts": "2026-11-14T02:08:04+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:hze",
+   "due": "",
+   "ok": false
+  },
+  {
+   "ts": "2026-11-14T02:08:05+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:m6w",
+   "due": "",
+   "ok": false
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-12T11:08:54+00:00",
-  "bsky": "2026-11-12T11:08:52+00:00",
-  "mastodon": "2026-11-12T11:08:53+00:00",
-  "nostrnote": "2026-11-12T11:08:04+00:00",
+  "discord": "2026-11-14T02:07:37+00:00",
+  "bsky": "2026-11-14T02:07:36+00:00",
+  "mastodon": "2026-11-14T02:07:36+00:00",
+  "nostrnote": "2026-11-14T02:07:36+00:00",
   "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-12T11:08:52+00:00",
-  "tumblr": "2026-11-12T11:08:26+00:00"
+  "pinterest": "2026-11-14T02:07:36+00:00",
+  "tumblr": "2026-11-14T02:07:22+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -1192,7 +1358,11 @@
   "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3mzzspqgt6i2t",
   "at://did:plc:lhuito3l45sqw33udtrq2v5o/app.bsky.feed.post/3mzsysus62x2e",
   "at://did:plc:5bqe7ec7p73yfni4f5id5bbj/app.bsky.feed.post/3mzsx66txpk2b",
-  "at://did:plc:wlklmyzxwc56kcabjzah2l24/app.bsky.feed.post/3n22plu7atk2o"
+  "at://did:plc:wlklmyzxwc56kcabjzah2l24/app.bsky.feed.post/3n22plu7atk2o",
+  "at://did:plc:n2vi2aq63dkk2ltujxrdakbl/app.bsky.feed.post/3n27jutg3jk2r",
+  "at://did:plc:sbjot5k5sz3nwmbgp4egpgpr/app.bsky.feed.post/3n25p4ifwll2u",
+  "at://did:plc:hzebgrkbc42iyxsrmwsdjnej/app.bsky.feed.post/3n27ohzoqtn2e",
+  "at://did:plc:m6w6neqnvwnyvuzevryyuaft/app.bsky.feed.post/3n25jatavp72k"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -1211,6 +1381,9 @@
    "bsky": 4
   },
   "2026-11-12": {
+   "bsky": 4
+  },
+  "2026-11-14": {
    "bsky": 4
   }
  },
@@ -1265,6 +1438,14 @@
    "discord": 2,
    "pinterest": 2,
    "tumblr": 1
+  },
+  "2026-11-14": {
+   "bsky": 2,
+   "nostrnote": 2,
+   "mastodon": 2,
+   "pinterest": 2,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -1273,22 +1454,23 @@
   "2026-11-09": 1,
   "2026-11-10": 1,
   "2026-11-11": 1,
-  "2026-11-12": 1
+  "2026-11-12": 1,
+  "2026-11-14": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
   "signup-friction": "2026-11-11T11:04:19+00:00",
-  "robots-ai-user-agents": "2026-11-07T19:39:01+00:00",
+  "robots-ai-user-agents": "2026-11-14T02:07:06+00:00",
   "verify-crawler-ip": "2026-11-07T19:39:10+00:00",
   "trial-abuse": "2026-11-12T11:08:19+00:00",
-  "api-key-farming": "2026-11-07T19:39:19+00:00",
+  "api-key-farming": "2026-11-14T02:07:12+00:00",
   "promo-store-scan": "2026-11-07T19:39:34+00:00",
   "http-402-crawling": "2026-11-07T19:44:45+00:00",
   "training-vs-search": "2026-11-07T20:22:52+00:00",
   "promo-store-free-plan": "2026-11-07T20:23:16+00:00",
   "robots-mistakes": "2026-11-07T20:24:43+00:00",
   "card-testing-pattern": "2026-11-12T11:08:23+00:00",
-  "login-stuffing": "2026-11-07T20:32:50+00:00",
+  "login-stuffing": "2026-11-14T02:07:08+00:00",
   "promo-plans-store": "2026-11-07T20:32:54+00:00",
   "crawl-logs": "2026-11-07T20:43:36+00:00",
   "checkout-puzzle-cost": "2026-11-07T20:43:46+00:00",
@@ -1312,7 +1494,9 @@
   "gift-card-abuse": "2026-11-11T11:04:22+00:00",
   "promo-agentpass": "2026-11-11T11:04:53+00:00",
   "honeypot-limits": "2026-11-12T11:08:26+00:00",
-  "promo-plans-publisher": "2026-11-12T11:08:55+00:00"
+  "promo-plans-publisher": "2026-11-12T11:08:55+00:00",
+  "client-handover-keys": "2026-11-14T02:07:22+00:00",
+  "promo-agency-scan": "2026-11-14T02:07:37+00:00"
  },
  "llm_cb": {},
  "alerted": {
@@ -1326,7 +1510,7 @@
  },
  "buffer_channels": {
   "b62fa971978dd910": {
-   "at": 1794481673,
+   "at": 1794622015,
    "map": {
     "mastodon": "6aef6eaae29c69a171977373",
     "pinterest": "6aef6e78e29c69a171976f1b"
