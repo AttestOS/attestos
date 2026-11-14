@@ -43,7 +43,7 @@ jobs:
     timeout-minutes: 9    # 2026-11-01 budget: a cycle is ~4-5 min
     env:
       AO_BSKY_SESSIONS_FILE: /tmp/press-sessions/bsky.json   # runner-local (outside the repo), discarded with the VM
-      AO_SITE_URL: ${{ vars.AO_SITE_URL || 'https://attestos.whop.site' }}
+      AO_SITE_URL: ${{ vars.AO_SITE_URL || 'https://attestos-edge.proofhand.workers.dev' }}
       AO_VIDEOS_REPO: ${{ vars.AO_VIDEOS_REPO || '' }}
     steps:
       - uses: actions/checkout@v4

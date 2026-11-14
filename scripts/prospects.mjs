@@ -13,11 +13,11 @@
  * Input: Tranco top-1M list (research ranking, CC BY 4.0) in tranco.csv ("rank,domain"). A rotating window of
  * ranks 20,000–500,000 (mid-size businesses, not giants) is checked each day.
  *
- * Env: AO_URL (https://attestos.whop.site), AO_OPS_TOKEN, BATCH (default 300), DRY=1 (print only).
+ * Env: AO_URL (https://attestos-edge.proofhand.workers.dev), AO_OPS_TOKEN, BATCH (default 300), DRY=1 (print only).
  */
 import fs from "node:fs";
 
-const AO_URL = (process.env.AO_URL || "https://attestos.whop.site").replace(/\/$/, "");
+const AO_URL = (process.env.AO_URL || "https://attestos-edge.proofhand.workers.dev").replace(/\/$/, "");
 const TOKEN = process.env.AO_OPS_TOKEN || "";
 const BATCH = Math.min(1000, Number(process.env.BATCH || 300));
 const DRY = process.env.DRY === "1";

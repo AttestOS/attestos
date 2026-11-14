@@ -17,10 +17,10 @@ spec.loader.exec_module(push)
 
 def test_builder_shape():
     pin = {"channel": "pinterest", "channel_id": "ch-pin", "text": "Shipping shown late", "due": "2030-01-01T10:00:00Z",
-           "image": "store-audit-square.jpg", "board": "board-1", "link": "https://attestos.whop.site/store-audit"}
+           "image": "store-audit-square.jpg", "board": "board-1", "link": "https://attestos-edge.proofhand.workers.dev/store-audit"}
     inp = push.build_create_post_input(pin)
     assert inp["assets"] == [{"image": {"url": push.IMG_BASE + pin["image"]}}]
-    assert push.IMG_BASE.startswith("https://attestos.whop.site/covers/")
+    assert push.IMG_BASE.startswith("https://attestos-edge.proofhand.workers.dev/covers/")
     assert inp["dueAt"] == pin["due"] and inp["mode"] == "customScheduled"
     assert inp["metadata"]["pinterest"]["boardServiceId"] == "board-1"
     tw = {"channel": "twitter", "channel_id": "ch-x", "text": "a post", "due": "2030-01-01T10:00:00Z"}
@@ -84,7 +84,7 @@ def test_profile_event_valid_json_and_signed(monkeypatch):
     ev = nostr.profile_event()
     prof = json.loads(ev["content"])
     assert prof["name"] == "attestos" and "lud16" not in prof and "null" not in ev["content"]
-    assert prof["website"].startswith("https://attestos.whop.site")
+    assert prof["website"].startswith("https://attestos-edge.proofhand.workers.dev")
     assert ev["kind"] == 0 and nostr.verify_sig(ev)
 
 # ---- reply engine guards (offline) ----

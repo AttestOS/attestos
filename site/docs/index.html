@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Docs · AttestOS</title>
 <meta name="description" content="Add the AttestOS widget, verify tokens on your server (Node, PHP, Python), configure policy, passkeys, Private Access Tokens and AgentPass.">
-<link rel="canonical" href="https://attestos.whop.site/docs/">
+<link rel="canonical" href="https://attestos-edge.proofhand.workers.dev/docs/">
 <meta property="og:title" content="Docs · AttestOS">
 <meta property="og:description" content="Add the AttestOS widget, verify tokens on your server (Node, PHP, Python), configure policy, passkeys, Private Access Tokens and AgentPass.">
-<meta property="og:image" content="https://attestos.whop.site/assets/img/promo.webp">
+<meta property="og:image" content="https://attestos-edge.proofhand.workers.dev/assets/img/promo.webp">
 <meta name="theme-color" content="#060b16">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/css/site.css">
@@ -50,7 +50,7 @@
 <img class="shot" src="/assets/img/docs/portal-policy.webp" alt="Screenshot of the AttestOS portal Policy tab" loading="lazy" width="1200" height="760">
 
 <h2 id="widget">Widget</h2>
-<pre><code>&lt;script src="https://attestos.whop.site/v1/attestos.js" async defer&gt;&lt;/script&gt;
+<pre><code>&lt;script src="https://attestos-edge.proofhand.workers.dev/v1/attestos.js" async defer&gt;&lt;/script&gt;
 
 &lt;form method="post" action="/signup"&gt;
   &lt;input name="email" type="email" required&gt;
@@ -75,7 +75,7 @@ w.reset();         // discard and solve a fresh one (call after each submit)
 
 // Or one-shot, no UI:
 const token = await AttestOS.execute("ao_site_…");</code></pre>
-<p><b>Content-Security-Policy:</b> allow <code>script-src https://attestos.whop.site</code> and <code>connect-src https://attestos.whop.site</code>; add <code>worker-src blob:</code> for the faster worker solver.</p>
+<p><b>Content-Security-Policy:</b> allow <code>script-src https://attestos-edge.proofhand.workers.dev</code> and <code>connect-src https://attestos-edge.proofhand.workers.dev</code>; add <code>worker-src blob:</code> for the faster worker solver.</p>
 
 <h2 id="verify">Server verify</h2>
 <p><code>POST /api/siteverify</code> accepts JSON or form-encoded <code>secret</code> and <code>response</code> (a <code>remoteip</code> field is accepted and ignored). Each token verifies <b>once</b>.</p>
@@ -91,7 +91,7 @@ const token = await AttestOS.execute("ao_site_…");</code></pre>
 <div class="tabs" id="doc-lang"><button data-l="node" class="on">Node</button><button data-l="php">PHP</button><button data-l="python">Python</button></div>
 <pre data-code="node"><code>// Express: app.use(express.urlencoded({ extended: false }))
 app.post("/signup", async (req, res) =&gt; {
-  const v = await fetch("https://attestos.whop.site/api/siteverify", {
+  const v = await fetch("https://attestos-edge.proofhand.workers.dev/api/siteverify", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ secret: process.env.ATTESTOS_SECRET, response: req.body["attestos-response"] }),
@@ -102,7 +102,7 @@ app.post("/signup", async (req, res) =&gt; {
   // … create the account
 });</code></pre>
 <pre data-code="php" class="hidden"><code>&lt;?php
-$ch = curl_init("https://attestos.whop.site/api/siteverify");
+$ch = curl_init("https://attestos-edge.proofhand.workers.dev/api/siteverify");
 curl_setopt_array($ch, [
   CURLOPT_POST =&gt; true, CURLOPT_RETURNTRANSFER =&gt; true, CURLOPT_TIMEOUT =&gt; 5,
   CURLOPT_HTTPHEADER =&gt; ["content-type: application/json"],
@@ -118,7 +118,7 @@ from flask import request, abort
 
 def attestos_ok() -&gt; bool:
     try:
-        v = requests.post("https://attestos.whop.site/api/siteverify",
+        v = requests.post("https://attestos-edge.proofhand.workers.dev/api/siteverify",
             json={"secret": os.environ["ATTESTOS_SECRET"], "response": request.form.get("attestos-response", "")},
             timeout=5).json()
     except requests.RequestException:

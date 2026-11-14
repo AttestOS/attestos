@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
-MINT = "https://attestos.whop.site"
+MINT = "https://attestos-edge.proofhand.workers.dev"
 
 
 @pytest.fixture()

@@ -103,7 +103,7 @@ export function findEmails(html: string, domain: string): string[] {
 
 async function fetchText(url: string, max = 1_000_000, timeoutMs = 8000): Promise<{ status: number; url: string; headers: Headers; text: string } | null> {
   try {
-    const res = await fetch(url, { redirect: "follow", headers: { "user-agent": "AttestOS-Scanner/1.0 (+https://attestos.whop.site/scanner/)", accept: "text/html,text/plain;q=0.9,*/*;q=0.5" }, signal: AbortSignal.timeout(timeoutMs) });
+    const res = await fetch(url, { redirect: "follow", headers: { "user-agent": "AttestOS-Scanner/1.0 (+https://attestos-edge.proofhand.workers.dev/scanner/)", accept: "text/html,text/plain;q=0.9,*/*;q=0.5" }, signal: AbortSignal.timeout(timeoutMs) });
     const reader = res.body?.getReader();
     let text = "", size = 0;
     if (reader) {

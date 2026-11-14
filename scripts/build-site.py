@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC, OUT = ROOT / "site-src", ROOT / "site"
-SITE = "https://attestos.whop.site"
+SITE = "https://attestos-edge.proofhand.workers.dev"
 
 NAV = [("home", "/", "Product"), ("pricing", "/pricing/", "Pricing"), ("scanner", "/scanner/", "Free scanner"), ("docs", "/docs/", "Docs"), ("app", "/app/", "Log in")]
 

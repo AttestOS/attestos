@@ -38,8 +38,13 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Smoke test
+        # 2026-11-14: this used to run against the whop.site mirror, which answers 200 HTML for
+        # every path, so it passed for weeks while the API it was meant to prove had no host at
+        # all. It now asks the Worker itself and insists on the JSON body.
         run: |
           set -e
-          curl -fsS https://attestos.whop.site/api/health
-          curl -fsS -o /dev/null https://attestos.whop.site/
-          curl -fsS -o /dev/null https://attestos.whop.site/v1/attestos.js
+          body="$(curl -fsS https://attestos-edge.proofhand.workers.dev/api/health)"
+          echo "$body"
+          case "$body" in *'"ok":true'*) ;; *) echo "::error::/api/health did not answer {\"ok\":true}"; exit 1 ;; esac
+          curl -fsS -o /dev/null https://attestos-edge.proofhand.workers.dev/
+          curl -fsS https://attestos-edge.proofhand.workers.dev/v1/attestos.js | grep -q attestos

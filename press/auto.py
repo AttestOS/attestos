@@ -435,7 +435,7 @@ def fetch_runtime_settings(st: dict) -> None:
     fill any env var that is unset OR empty (a real GitHub secret keeps priority), cadence:
     keys become _CAD_OVERRIDE knobs merged by load_cadence. Never fatal: unreachable
     settings leave the environment exactly as it was."""
-    base_url = os.environ.get("AO_SITE_URL", "https://attestos.whop.site")
+    base_url = os.environ.get("AO_SITE_URL", "https://attestos-edge.proofhand.workers.dev")
     tok = os.environ.get("AO_PRESS_TOKEN", "").strip()
     if not tok:
         return
@@ -1269,7 +1269,7 @@ def mint_base() -> str:
 # link-graph correlation is how paired accounts get banned together). A seller persona's host
 # is set with AO_SITE_URL_A / _B (the same Worker on another route or workers.dev name); until
 # then its rails keep the company host rather than emit dead links.
-MINT_HOSTS = {"": "https://attestos.whop.site"}
+MINT_HOSTS = {"": "https://attestos-edge.proofhand.workers.dev"}
 
 
 def mint_base_for(rail: str) -> str:
@@ -1368,7 +1368,7 @@ _MINT_URLS: dict[str, str] = {}
 
 def _mint_img(png: bytes) -> str:
     """Park the card on mint (D1) and return its public URL; '' when mint is unreachable."""
-    base = (os.environ.get("AO_SITE_URL", "") or "https://attestos.whop.site").rstrip("/")
+    base = (os.environ.get("AO_SITE_URL", "") or "https://attestos-edge.proofhand.workers.dev").rstrip("/")
     tok = os.environ.get("AO_PRESS_TOKEN", "").strip()
     key = hashlib.sha256(png).hexdigest()
     if key in _MINT_URLS:

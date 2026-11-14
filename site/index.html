@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AttestOS · Bot checks your visitors never see</title>
 <meta name="description" content="Replace reCAPTCHA and hCaptcha puzzles with an invisible proof-of-work check and a server-side verify call. Free for 10,000 verifications a month.">
-<link rel="canonical" href="https://attestos.whop.site/">
+<link rel="canonical" href="https://attestos-edge.proofhand.workers.dev/">
 <meta property="og:title" content="AttestOS · Bot checks your visitors never see">
 <meta property="og:description" content="Replace reCAPTCHA and hCaptcha puzzles with an invisible proof-of-work check and a server-side verify call. Free for 10,000 verifications a month.">
-<meta property="og:image" content="https://attestos.whop.site/assets/img/promo.webp">
+<meta property="og:image" content="https://attestos-edge.proofhand.workers.dev/assets/img/promo.webp">
 <meta name="theme-color" content="#060b16">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/css/site.css">
@@ -58,14 +58,14 @@
     <div class="card"><h3>Your server verifies once</h3><p class="muted">Your backend posts the token and your secret key to <code>/api/siteverify</code>. The first call succeeds; any replay fails with <code>timeout-or-duplicate</code>.</p></div>
   </div>
   <div class="grid2" style="margin-top:28px;align-items:start">
-<pre><code>&lt;script src="https://attestos.whop.site/v1/attestos.js" async defer&gt;&lt;/script&gt;
+<pre><code>&lt;script src="https://attestos-edge.proofhand.workers.dev/v1/attestos.js" async defer&gt;&lt;/script&gt;
 &lt;form method="post" action="/signup"&gt;
   …
   &lt;div class="attestos" data-sitekey="ao_site_…"&gt;&lt;/div&gt;
   &lt;button&gt;Sign up&lt;/button&gt;
 &lt;/form&gt;</code></pre>
 <pre><code>// your backend (Node 18+)
-const r = await fetch("https://attestos.whop.site/api/siteverify", {
+const r = await fetch("https://attestos-edge.proofhand.workers.dev/api/siteverify", {
   method: "POST",
   headers: { "content-type": "application/json" },
   body: JSON.stringify({ secret: process.env.ATTESTOS_SECRET,

@@ -34,7 +34,7 @@ jobs:
       - name: Find prospects
         run: node scripts/prospects.mjs
         env:
-          AO_URL: https://attestos.whop.site
+          AO_URL: https://attestos-edge.proofhand.workers.dev
           AO_OPS_TOKEN: ${{ secrets.AO_OPS_TOKEN }}
           BATCH: "600"
           MAX_MINUTES: "12"

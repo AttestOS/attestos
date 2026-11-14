@@ -698,7 +698,7 @@ def test_pinboard_for_resolves_names_and_fallback(auto, monkeypatch):
 def test_mint_hosts_per_persona(auto, monkeypatch):
     for k in ("AO_SITE_URL", "AO_SITE_URL_A", "AO_SITE_URL_B"):
         monkeypatch.delenv(k, raising=False)
-    host = "https://attestos.whop.site"
+    host = "https://attestos-edge.proofhand.workers.dev"
     assert auto.mint_base_for("x") == host and auto.mint_base_for("x_a") == host == auto.mint_base_for("x_b")
     link = auto.go_link("pinterest_a", "landing", "promo-x")
     assert link.startswith(host + "/go/") and "src=pa-promo-x" in link    # seller code rides in src
@@ -803,7 +803,7 @@ def test_three_buffer_accounts_company_and_sellers_routing(auto, monkeypatch):
     monkeypatch.setattr(auto, "VIDEOS_REPO", "")
     assert auto._rail_armed("youtube") is False
     inp = push.build_create_post_input({
-        "channel_id": "ch-co-yt", "text": "Find the leak.\nhttps://attestos.whop.site",
+        "channel_id": "ch-co-yt", "text": "Find the leak.\nhttps://attestos-edge.proofhand.workers.dev",
         "due": "2026-10-18T12:00:00Z", "video_url": "https://example.com/v.mp4", "youtube_title": "T" * 120})
     assert inp["assets"][0]["video"]["url"] == "https://example.com/v.mp4"
     assert inp["metadata"]["youtube"]["title"] == "T" * 100
@@ -1098,7 +1098,7 @@ def test_pub_tumblr_posts_a_text_post_with_tags_and_card(auto, monkeypatch):
         return R()
 
     monkeypatch.setattr(auto.urllib.request, "urlopen", fake_urlopen)
-    img = {"url": "https://attestos.whop.site/api/press/img/x.png", "alt": "card"}
+    img = {"url": "https://attestos-edge.proofhand.workers.dev/api/press/img/x.png", "alt": "card"}
     assert auto.pub_tumblr("A value post about card testing.", img, ["#cardtesting", "#ecommerce"]) is True
     # /post (singular) is the form-encoded legacy route; /posts is NPF and wants JSON
     assert seen["url"] == "https://api.tumblr.com/v2/blog/attestos.tumblr.com/post"

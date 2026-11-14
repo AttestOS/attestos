@@ -85,7 +85,7 @@ describe("honest outreach", () => {
     await processOutbox(env);
     expect(sent).toHaveLength(1);
     const mime = sent[0].mime;
-    expect(mime).toMatch(/List-Unsubscribe: <mailto:me@gmail\.com\?subject=unsubscribe>, <https:\/\/attestos.whop.site/);
+    expect(mime).toMatch(/List-Unsubscribe: <mailto:me@gmail\.com\?subject=unsubscribe>, <https:\/\/attestos-edge.proofhand.workers.dev/);
     const dec = (m: string) => Buffer.from(m.split("\r\n\r\n")[1].replace(/\r\n/g, ""), "base64").toString();
     const body = dec(mime);
     expect(body).toContain("reCAPTCHA v2");

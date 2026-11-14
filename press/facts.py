@@ -36,7 +36,7 @@ PRICE_SHAPE = re.compile(r"\$\s?\d|\bUSD\s?\d|\d\s?USD\b", re.IGNORECASE)
 
 def site_url() -> str:
     """Public host for every link we hand out (never attestos.com until the domain is live)."""
-    return (os.environ.get("AO_SITE_URL", "") or "https://attestos.whop.site").rstrip("/")
+    return (os.environ.get("AO_SITE_URL", "") or "https://attestos-edge.proofhand.workers.dev").rstrip("/")
 
 
 @lru_cache(maxsize=1)

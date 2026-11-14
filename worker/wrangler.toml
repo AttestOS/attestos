@@ -50,7 +50,7 @@ migrations_dir = "migrations"
 enabled = true
 
 [vars]
-SITE_URL = "https://attestos.whop.site"
+SITE_URL = "https://attestos-edge.proofhand.workers.dev"
 BRAND = "AttestOS"
 # OWNER_NAME signs outreach ("Sam, AttestOS"); POSTAL_ADDRESS is REQUIRED before cold outreach can send (CAN-SPAM).
 OWNER_NAME = "Courage"
