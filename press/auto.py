@@ -1888,7 +1888,7 @@ WHOP_MEMBER_EXP_NAME = "Member updates"
 # The company Whop actually created is titled 'AttestoS'; the guard demanded 'AttestOS', so a
 # correct key on a correct company failed preflight and every Whop post was refused.
 WHOP_COMPANY_TITLES = tuple(t.strip() for t in
-                            (os.environ.get("WHOP_COMPANY_TITLES") or "AttestOS,AttestoS").split(",")
+                            (os.environ.get("WHOP_COMPANY_TITLES") or "Proofhand,AttestOS,AttestoS").split(",")
                             if t.strip())
 
 
@@ -2110,12 +2110,19 @@ def pub_whop(text: str, public: bool, title: str = "", img: dict | None = None) 
     verified = []
     for index, key in enumerate(keys):
         status, company = _whop_api(f"/companies/{biz}", key=key)
+        # 2026-11-14: identity is the company ID, not the display name. The Whop company was
+        # renamed AttestOS -> Proofhand and this guard still compared the title against
+        # WHOP_COMPANY_TITLES = ("AttestOS", ...), so every public post was refused as "wrong
+        # company" while both keys were reading the right company (status 200). A rename must not
+        # be able to take a rail down: the id is checked first, the title list is a fallback for
+        # keys that return a company without an id.
         title = (company.get("title") or "").strip().casefold()
-        if status == 200 and title in {c.casefold() for c in WHOP_COMPANY_TITLES}:
+        same_id = (company.get("id") or "").strip() == biz
+        if status == 200 and (same_id or title in {c.casefold() for c in WHOP_COMPANY_TITLES}):
             verified.append(key)
         else:
             log("whop_auth_preflight", key_role="account" if key == os.environ.get("WHOP_API_KEY", "").strip() else "app",
-                status=status, expected_company=False)
+                status=status, expected_company=False, got_id=company.get("id"), got_title=company.get("title"))
     if not verified:
         log("whop_wrong_company", status=0, note="no configured key verified the AttestOS company; no post attempted")
         return False
