@@ -575,3 +575,23 @@
 {"ts": "2026-11-14T02:08:04+00:00", "ev": "reply_planned", "platform": "bsky", "target": "at://did:plc:hze"}
 {"ts": "2026-11-14T02:08:05+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
 {"ts": "2026-11-14T02:08:05+00:00", "ev": "reply_planned", "platform": "bsky", "target": "at://did:plc:m6w"}
+{"ts": "2026-11-14T10:47:54+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "bsky"}
+{"ts": "2026-11-14T10:47:54+00:00", "ev": "bsky_session", "mode": "create"}
+{"ts": "2026-11-14T10:47:56+00:00", "ev": "published", "channel": "bsky", "topic": "accessibility-captcha", "live": true}
+{"ts": "2026-11-14T10:47:58+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-14T10:47:59+00:00", "ev": "published", "channel": "pinterest", "topic": "checkout-puzzle-cost", "live": true}
+{"ts": "2026-11-14T10:48:01+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-14T10:48:03+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "mastodon"}
+{"ts": "2026-11-14T10:48:06+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "discord"}
+{"ts": "2026-11-14T10:48:19+00:00", "ev": "published", "channel": "nostrnote", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-14T10:48:21+00:00", "ev": "published", "channel": "mastodon", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-14T10:48:22+00:00", "ev": "published", "channel": "discord", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-14T10:48:25+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "tumblr"}
+{"ts": "2026-11-14T10:48:26+00:00", "ev": "published", "channel": "tumblr", "topic": "accessibility-captcha", "live": true}
+{"ts": "2026-11-14T10:48:31+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "whop_public"}
+{"ts": "2026-11-14T10:48:31+00:00", "ev": "whop_auth_preflight", "key_role": "account", "status": 200, "expected_company": false}
+{"ts": "2026-11-14T10:48:32+00:00", "ev": "whop_auth_preflight", "key_role": "app", "status": 200, "expected_company": false}
+{"ts": "2026-11-14T10:48:32+00:00", "ev": "whop_wrong_company", "status": 0, "note": "no configured key verified the AttestOS company; no post attempted"}
+{"ts": "2026-11-14T10:48:32+00:00", "ev": "publish_failed", "channel": "whop_public", "topic": "promo-agency-enterprise", "live": true}
+{"ts": "2026-11-14T10:48:32+00:00", "ev": "topic_not_spent", "topic": "promo-agency-enterprise", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-14T10:48:50+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["whop_public"]}

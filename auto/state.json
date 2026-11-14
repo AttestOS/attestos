@@ -15,8 +15,8 @@
   "login-stuffing": 2,
   "promo-plans-store": 1,
   "crawl-logs": 1,
-  "checkout-puzzle-cost": 2,
-  "pow-explained": 1,
+  "checkout-puzzle-cost": 3,
+  "pow-explained": 2,
   "promo-saas-scan": 1,
   "agent-keys": 1,
   "verify-on-server": 2,
@@ -38,7 +38,8 @@
   "honeypot-limits": 1,
   "promo-plans-publisher": 1,
   "client-handover-keys": 1,
-  "promo-agency-scan": 1
+  "promo-agency-scan": 1,
+  "accessibility-captcha": 2
  },
  "published": [
   {
@@ -1320,17 +1321,101 @@
    "topic": "at://did:plc:m6w",
    "due": "",
    "ok": false
+  },
+  {
+   "ts": "2026-11-14T10:47:54+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "accessibility-captcha",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T10:47:58+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "checkout-puzzle-cost",
+   "due": "2026-11-14T11:02:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/6a0256fce2475c6f7eaf5acab95b862f3a0fb35e4b0bafb1afea5b851864d8f4.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T10:48:06+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "pow-explained",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/3ffaf2219d96746d8faa4f1f10074a6ada3a920b1ad67c066e5f5e918c90784f.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T10:48:19+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "pow-explained",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T10:48:21+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "pow-explained",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/d1588a1213336e66fe4b4eea5896198f40013fa16fe49cc04a238fc559d780d1.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T10:48:25+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "accessibility-captcha",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/208d0ee8e2bc0fa567f39df8c52eabc8ee09475d3cb2c413b0643b629e79828d.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-14T10:48:31+00:00",
+   "kind": "promo",
+   "platform": "whop_public",
+   "topic": "promo-agency-enterprise",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/c06bc78b6e0060e465e832298dca59f9714618283377d942d9c942e216b12430.png",
+   "img_src": "card",
+   "img_ok": false
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-07T19:23:35+00:00",
-  "discord": "2026-11-14T02:07:37+00:00",
-  "bsky": "2026-11-14T02:07:36+00:00",
-  "mastodon": "2026-11-14T02:07:36+00:00",
-  "nostrnote": "2026-11-14T02:07:36+00:00",
-  "whop_public": "2026-11-07T20:14:37+00:00",
-  "pinterest": "2026-11-14T02:07:36+00:00",
-  "tumblr": "2026-11-14T02:07:22+00:00"
+  "discord": "2026-11-14T10:48:21+00:00",
+  "bsky": "2026-11-14T10:47:54+00:00",
+  "mastodon": "2026-11-14T10:48:19+00:00",
+  "nostrnote": "2026-11-14T10:48:06+00:00",
+  "whop_public": "2026-11-14T10:48:31+00:00",
+  "pinterest": "2026-11-14T10:47:59+00:00",
+  "tumblr": "2026-11-14T10:48:25+00:00"
  },
  "last_longform": "2026-11-07T19:23:36+00:00",
  "ledger": [],
@@ -1440,12 +1525,13 @@
    "tumblr": 1
   },
   "2026-11-14": {
-   "bsky": 2,
-   "nostrnote": 2,
-   "mastodon": 2,
-   "pinterest": 2,
-   "discord": 2,
-   "tumblr": 1
+   "bsky": 3,
+   "nostrnote": 3,
+   "mastodon": 3,
+   "pinterest": 3,
+   "discord": 3,
+   "tumblr": 2,
+   "whop_public": 1
   }
  },
  "runs_today": {
@@ -1455,7 +1541,7 @@
   "2026-11-10": 1,
   "2026-11-11": 1,
   "2026-11-12": 1,
-  "2026-11-14": 1
+  "2026-11-14": 2
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -1473,8 +1559,8 @@
   "login-stuffing": "2026-11-14T02:07:08+00:00",
   "promo-plans-store": "2026-11-07T20:32:54+00:00",
   "crawl-logs": "2026-11-07T20:43:36+00:00",
-  "checkout-puzzle-cost": "2026-11-07T20:43:46+00:00",
-  "pow-explained": "2026-11-07T20:43:42+00:00",
+  "checkout-puzzle-cost": "2026-11-14T10:47:59+00:00",
+  "pow-explained": "2026-11-14T10:48:22+00:00",
   "promo-saas-scan": "2026-11-07T20:43:52+00:00",
   "agent-keys": "2026-11-07T20:45:42+00:00",
   "verify-on-server": "2026-11-07T20:45:53+00:00",
@@ -1496,14 +1582,15 @@
   "honeypot-limits": "2026-11-12T11:08:26+00:00",
   "promo-plans-publisher": "2026-11-12T11:08:55+00:00",
   "client-handover-keys": "2026-11-14T02:07:22+00:00",
-  "promo-agency-scan": "2026-11-14T02:07:37+00:00"
+  "promo-agency-scan": "2026-11-14T02:07:37+00:00",
+  "accessibility-captcha": "2026-11-14T10:48:26+00:00"
  },
  "llm_cb": {},
  "alerted": {
   "bsky": "2026-11-07",
   "mastodon": "2026-11-07",
   "nostrnote": "2026-11-07",
-  "whop_public": "2026-11-07",
+  "whop_public": "2026-11-14",
   "whop_prices": "2026-11-07",
   "pinterest": "2026-11-07",
   "images": "2026-11-07"
