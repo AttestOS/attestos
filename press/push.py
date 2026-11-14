@@ -32,7 +32,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 QUEUE_F = ROOT / "queue.json"
 SENT_F = ROOT / "sent.json"
-IMG_BASE = "https://attestos-edge.attestos.workers.dev/covers/"
+IMG_BASE = "https://attestos.whop.site/covers/"
 VID_BASE = f"https://raw.githubusercontent.com/{os.environ.get('AO_VIDEOS_REPO', 'AttestOS/attestos-videos')}/main/"
 BUFFER_GQL = "https://api.buffer.com/graphql"
 DEVTO_API = "https://dev.to/api"

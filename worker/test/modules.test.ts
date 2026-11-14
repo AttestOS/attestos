@@ -125,10 +125,10 @@ describe("Private Access Tokens (type 2)", () => {
   it("verifies a valid token and rejects tampering / other challenges", async () => {
     const iss = await issuer();
     const keys = [{ issuer: "issuer.example", key: iss.key, id: iss.id }];
-    const ch = tokenChallenge("issuer.example", new Uint8Array(32).fill(7), "attestos-edge.attestos.workers.dev");
+    const ch = tokenChallenge("issuer.example", new Uint8Array(32).fill(7), "attestos.whop.site");
     const tok = await mint(iss.kp, iss.id, ch);
     expect(await verifyToken2(tok, ch, keys)).toMatch(/^[0-9a-f]{64}$/);
-    const other = tokenChallenge("issuer.example", new Uint8Array(32).fill(8), "attestos-edge.attestos.workers.dev");
+    const other = tokenChallenge("issuer.example", new Uint8Array(32).fill(8), "attestos.whop.site");
     expect(await verifyToken2(tok, other, keys)).toBeNull();
     const bad = tok.slice(); bad[300] ^= 1;
     expect(await verifyToken2(bad, ch, keys)).toBeNull();

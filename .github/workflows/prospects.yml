@@ -34,8 +34,16 @@ jobs:
       - name: Find prospects
         run: node scripts/prospects.mjs
         env:
-          AO_URL: https://attestos-edge.attestos.workers.dev
+          AO_URL: https://attestos.whop.site
           AO_OPS_TOKEN: ${{ secrets.AO_OPS_TOKEN }}
           BATCH: "600"
           MAX_MINUTES: "12"
+      - name: Keep the batch (the Worker may be unreachable)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prospects-${{ github.run_id }}
+          path: data/prospects/
+          if-no-files-found: ignore
+          retention-days: 30
           DRY: ${{ inputs.dry && '1' || '0' }}

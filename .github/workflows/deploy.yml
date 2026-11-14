@@ -40,6 +40,6 @@ jobs:
       - name: Smoke test
         run: |
           set -e
-          curl -fsS https://attestos-edge.attestos.workers.dev/api/health
-          curl -fsS -o /dev/null https://attestos-edge.attestos.workers.dev/
-          curl -fsS -o /dev/null https://attestos-edge.attestos.workers.dev/v1/attestos.js
+          curl -fsS https://attestos.whop.site/api/health
+          curl -fsS -o /dev/null https://attestos.whop.site/
+          curl -fsS -o /dev/null https://attestos.whop.site/v1/attestos.js

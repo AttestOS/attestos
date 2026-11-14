@@ -1,6 +1,6 @@
 {
   "name": "AttestOS",
-  "url": "https://attestos-edge.attestos.workers.dev",
+  "url": "https://attestos.whop.site",
   "tagline": "Bot checks your visitors never see.",
   "promise": "An invisible proof-of-work check plus one server-side verify call replaces image puzzles on sign-up, login and contact forms.",
   "elevator": "AttestOS replaces visible CAPTCHAs with a small proof-of-work check that runs in the background and a reCAPTCHA-shaped siteverify call. Paid modules add a risk score, Private Access Tokens, passkeys and per-crawler AI policy.",

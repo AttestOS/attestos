@@ -5,7 +5,7 @@ import { invalidateSites } from "../../src/sites";
 import { _resetQuotaCache } from "../../src/lib/quota";
 import { hashPassword } from "../../src/lib/auth";
 
-export const ORIGIN = "https://attestos-edge.attestos.workers.dev";
+export const ORIGIN = "https://attestos.whop.site";
 
 export async function makeEnv(extra: Record<string, unknown> = {}) {
   const d1 = await makeD1();

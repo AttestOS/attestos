@@ -13,11 +13,11 @@
  * Input: Tranco top-1M list (research ranking, CC BY 4.0) in tranco.csv ("rank,domain"). A rotating window of
  * ranks 20,000–500,000 (mid-size businesses, not giants) is checked each day.
  *
- * Env: AO_URL (https://attestos-edge.attestos.workers.dev), AO_OPS_TOKEN, BATCH (default 300), DRY=1 (print only).
+ * Env: AO_URL (https://attestos.whop.site), AO_OPS_TOKEN, BATCH (default 300), DRY=1 (print only).
  */
 import fs from "node:fs";
 
-const AO_URL = (process.env.AO_URL || "https://attestos-edge.attestos.workers.dev").replace(/\/$/, "");
+const AO_URL = (process.env.AO_URL || "https://attestos.whop.site").replace(/\/$/, "");
 const TOKEN = process.env.AO_OPS_TOKEN || "";
 const BATCH = Math.min(1000, Number(process.env.BATCH || 300));
 const DRY = process.env.DRY === "1";
@@ -117,9 +117,27 @@ async function main() {
   console.log(`checked ${checked}, homepages loaded ${stats.loaded}, visible challenge ${stats.vendor}, role email ${stats.email}, prospects ${found.length}`);
   if (DRY || !found.length) return;
   if (!TOKEN) { console.log("AO_OPS_TOKEN not set: not posting"); return; }
+  // 2026-11-14: this used to be the last line of the run, unguarded, so a dead ingest host turned a
+  // good day's lead-finding into a red workflow and threw the batch away (measured: ENOTFOUND on
+  // attestos-edge.attestos.workers.dev after finding 7 prospects). Now the batch is written to disk
+  // first — the workflow uploads it as an artifact — and a failed POST is reported, not fatal.
+  const stamp = new Date().toISOString().slice(0, 10);
+  const dir = `data/prospects`;
+  fs.mkdirSync(dir, { recursive: true });
+  const out = `${dir}/${stamp}.json`;
+  fs.writeFileSync(out, JSON.stringify({ at: new Date().toISOString(), site: AO_URL, prospects: found }, null, 1));
+  console.log(`saved ${found.length} prospect(s) to ${out}`);
+  let posted = 0;
   for (let k = 0; k < found.length; k += 100) {
-    const r = await fetch(`${AO_URL}/api/ops/prospects`, { method: "POST", headers: { authorization: `Bearer ${TOKEN}`, "content-type": "application/json" }, body: JSON.stringify({ prospects: found.slice(k, k + 100) }) });
-    console.log("posted", r.status, await r.text());
+    try {
+      const r = await fetch(`${AO_URL}/api/ops/prospects`, { method: "POST", headers: { authorization: `Bearer ${TOKEN}`, "content-type": "application/json" }, body: JSON.stringify({ prospects: found.slice(k, k + 100) }) });
+      if (!r.ok) { console.log(`ingest refused: HTTP ${r.status} ${(await r.text()).slice(0, 120)}`); continue; }
+      posted += 100;
+    } catch (e) {
+      console.log(`ingest unreachable (${AO_URL}): ${e.cause?.code || e.message}. The batch is in ${out}.`);
+    }
   }
+  console.log(`ingested ${Math.min(posted, found.length)}/${found.length}`);
+  if (!posted) console.log("ingest is down: this run's prospects live in the artifact, not the Worker.");
 }
 if (import.meta.url === `file://${process.argv[1]}`) main().catch((e) => { console.error(e); process.exit(1); });

@@ -1,6 +1,6 @@
-/*! AttestOS widget v1 · https://attestos-edge.attestos.workers.dev/docs/ · Apache-2.0
+/*! AttestOS widget v1 · https://attestos.whop.site/docs/ · Apache-2.0
  *
- *  <script src="https://attestos-edge.attestos.workers.dev/v1/attestos.js" async defer></script>
+ *  <script src="https://attestos.whop.site/v1/attestos.js" async defer></script>
  *  <form ...> <div class="attestos" data-sitekey="ao_site_..."></div> ... </form>
  *
  *  The widget fetches a signed challenge, finds a nonce whose SHA-256 has the required leading zero bits (in a Web
@@ -15,7 +15,7 @@
   "use strict";
   if (window.AttestOS && window.AttestOS.version) return;
   var script = document.currentScript;
-  var API = (script && script.src ? new URL(script.src).origin : "https://attestos-edge.attestos.workers.dev");
+  var API = (script && script.src ? new URL(script.src).origin : "https://attestos.whop.site");
   var REFRESH_MS = 4 * 60 * 1000; // pass tokens live 5 minutes; refresh before that
 
   // ---------- SHA-256 (sync, for short ASCII messages: "salt:nonce" always fits one 64-byte block) ----------

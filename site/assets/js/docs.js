@@ -25,7 +25,7 @@
     return '<div><label for="rg-' + g.id + '">' + esc(g.label) + '</label><select id="rg-' + g.id + '"><option value="allow"' + (g.def ? " selected" : "") + '>Allow</option><option value="block"' + (g.def ? "" : " selected") + ">Block</option></select><div class='small muted'>" + esc(g.uas.join(", ")) + "</div></div>";
   }).join("") + '<div><label for="rg-paths">Also keep every bot out of (one path per line)</label><textarea id="rg-paths" rows="3">/app/\n/checkout/</textarea></div>';
   function gen() {
-    var out = ["# AI crawler rules generated with attestos-edge.attestos.workers.dev/docs/#robots", ""];
+    var out = ["# AI crawler rules generated with attestos.whop.site/docs/#robots", ""];
     GROUPS.forEach(function (g) {
       var block = $("#rg-" + g.id).value === "block";
       out.push("# " + g.label + ": " + (block ? "blocked" : "allowed"));

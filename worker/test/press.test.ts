@@ -10,7 +10,7 @@ import { runCron } from "../src/cron";
 import { call, makeEnv, post, cookieOf } from "./helpers/env";
 import { pressHook, pressOverview, setMeshOverride, setPressControl, setPressKey, PRESS_CONTROLS, pressRails } from "../src/press/hooks";
 
-const SITE = "https://attestos-edge.attestos.workers.dev";
+const SITE = "https://attestos.whop.site";
 const TOKEN = "press-secret-token-123";
 let env: any, q: (sql: string, ...b: unknown[]) => any[];
 const PNG = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 1, 2, 3, 4]);

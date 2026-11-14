@@ -32,7 +32,7 @@ def validate(key, value):
 
 
 def _request(path, body=None):
-    base = os.environ.get("AO_SITE_URL", "https://attestos-edge.attestos.workers.dev").rstrip("/")
+    base = os.environ.get("AO_SITE_URL", "https://attestos.whop.site").rstrip("/")
     token = os.environ.get("AO_PRESS_TOKEN", "").strip()
     if not token or not base.startswith("https://"):
         raise RuntimeError("Authenticated HTTPS owner controls are not configured")

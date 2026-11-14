@@ -29,8 +29,8 @@ RELAYS = ["wss://relay.damus.io", "wss://nos.lol", "wss://relay.nostr.band",
           "wss://purplepag.es", "wss://relay.snort.social", "wss://relay.primal.net",
           "wss://offchain.pub", "wss://nostr.mom", "wss://relay.nostr.net"]
 ARTICLE_KIND = 30023
-BRAND = "https://attestos-edge.attestos.workers.dev"
-LANDING = "https://attestos-edge.attestos.workers.dev/"
+BRAND = "https://attestos.whop.site"
+LANDING = "https://attestos.whop.site/"
 
 # ---------- identity ----------
 

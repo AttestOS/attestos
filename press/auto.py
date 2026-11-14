@@ -435,7 +435,7 @@ def fetch_runtime_settings(st: dict) -> None:
     fill any env var that is unset OR empty (a real GitHub secret keeps priority), cadence:
     keys become _CAD_OVERRIDE knobs merged by load_cadence. Never fatal: unreachable
     settings leave the environment exactly as it was."""
-    base_url = os.environ.get("AO_SITE_URL", "https://attestos-edge.attestos.workers.dev")
+    base_url = os.environ.get("AO_SITE_URL", "https://attestos.whop.site")
     tok = os.environ.get("AO_PRESS_TOKEN", "").strip()
     if not tok:
         return
@@ -904,7 +904,12 @@ def llm(prompt: str, kind: str, topic: dict, channel: str, st: dict | None = Non
         + (f"Target channel: {channel} (platform: {rail_family(channel)}; HARD LIMIT "
               f"{LIMITS.get(channel) or LIMITS.get(rail_family(channel)) or 12000} characters -"
               f" anything longer is auto-rejected; stay well under it).\n"
-          if kind != "longform" else f"Target channel: {channel}\n")
+          if kind != "longform" else
+           f"Target channel: {channel}\n"
+           # 2026-11-14: the length gate is hard but the first-attempt brief never named a
+           # length, so drafts of 449 and 579 words were written and then rejected, burning a
+           # retry each. The retry brief already said 850-1200; now the first draft says it too.
+           "Length: 850-1200 words, at least three ## H2 sections, no preamble.\n")
         # 2026-11-07: the longform brief carried no length target while the editor rejects
         # anything outside 700-1700 words. Every essay came back ~470-550 words and was thrown
         # away twice, so the weekly long-form slot never once published. Name the target.
@@ -992,6 +997,12 @@ def compose_fake(kind: str, topic: dict, channel: str) -> str:
         body = f"{t}.\n\n{lines}\n\nHoles hide in defaults nobody re-checks. Verify every token on the server, accept it once, watch the failure rate: that is the whole method, and it survives a busy month better than a harder puzzle does."
     if kind == "promo":
         asset = str(topic.get("asset", "")).strip()
+        # 2026-11-14: topics are allowed to omit `asset` (the factory calls it optional), but a promo
+        # without a pointer is rejected by the editor on every channel — so every promo topic without
+        # one was written and then thrown away, run after run (nostrnote: 2 rejects/night). The pointer
+        # now falls back to the product's own front door instead of to nothing.
+        if not asset and channel not in ("devto", "nostr30023", "whop_private"):
+            asset = facts.site_url() + "/"
         cap = LIMITS.get(channel) or LIMITS.get(rail_family(channel)) or 10 ** 9
         if asset:
             if len(body) + 1 + len(asset) <= cap:
@@ -1258,7 +1269,7 @@ def mint_base() -> str:
 # link-graph correlation is how paired accounts get banned together). A seller persona's host
 # is set with AO_SITE_URL_A / _B (the same Worker on another route or workers.dev name); until
 # then its rails keep the company host rather than emit dead links.
-MINT_HOSTS = {"": "https://attestos-edge.attestos.workers.dev"}
+MINT_HOSTS = {"": "https://attestos.whop.site"}
 
 
 def mint_base_for(rail: str) -> str:
@@ -1357,7 +1368,7 @@ _MINT_URLS: dict[str, str] = {}
 
 def _mint_img(png: bytes) -> str:
     """Park the card on mint (D1) and return its public URL; '' when mint is unreachable."""
-    base = (os.environ.get("AO_SITE_URL", "") or "https://attestos-edge.attestos.workers.dev").rstrip("/")
+    base = (os.environ.get("AO_SITE_URL", "") or "https://attestos.whop.site").rstrip("/")
     tok = os.environ.get("AO_PRESS_TOKEN", "").strip()
     key = hashlib.sha256(png).hexdigest()
     if key in _MINT_URLS:
