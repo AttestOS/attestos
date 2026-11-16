@@ -22,8 +22,8 @@
   "verify-on-server": 3,
   "risk-score-use": 2,
   "promo-saas-integrity": 1,
-  "passkeys-for-saas": 1,
-  "token-single-use": 2,
+  "passkeys-for-saas": 2,
+  "token-single-use": 3,
   "promo-saas-docs": 1,
   "private-access-tokens": 1,
   "fake-account-signals": 2,
@@ -42,7 +42,9 @@
   "accessibility-captcha": 2,
   "replace-captcha-checklist": 1,
   "form-endpoint-exposure": 1,
-  "promo-agency-enterprise": 1
+  "promo-agency-enterprise": 1,
+  "monitor-failure-rates": 1,
+  "promo-plans-agency": 1
  },
  "published": [
   {
@@ -1560,17 +1562,169 @@
    "topic": "at://did:plc:lhu",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:03+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:05+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/4f0a49bdfb712e1a3dd2f73b2410e1b74669b53395736eda97d1f0e95541a978.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:17+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:18+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "passkeys-for-saas",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/b54c43e5d68d707c4962411c57380ebd62062faf291ba071e8fe8c97f3b1337b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:21+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "token-single-use",
+   "due": "2026-11-16T11:43:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/893a332ea793aa688bd821fb932c8c32790d0973e5cfc6cb62f60e47c40ca5cb.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:24+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "monitor-failure-rates",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/4dcb16200eeeb6729fabcffcf173765601e23afae4dbda19036c4a339782c639.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:39+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-plans-agency",
+   "due": "2026-11-16T12:23:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/e74c08f9a7e98533e89cd06452e465f165fc973371b5fbb98027d79ea1204af7.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:40+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-plans-agency",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:42+00:00",
+   "kind": "promo",
+   "platform": "mastodon",
+   "topic": "promo-plans-agency",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:28:44+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-plans-agency",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/3f2d0cffab2a490c1cff6331989b258e01f067a121e39f8e6247da4606328f67.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-16T11:29:04+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:3il",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-16T11:29:06+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:ybd",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-16T11:29:07+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-16T11:29:09+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:qrf",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-15T10:49:34+00:00",
-  "discord": "2026-11-15T10:50:39+00:00",
-  "bsky": "2026-11-15T10:49:56+00:00",
-  "mastodon": "2026-11-15T10:50:37+00:00",
-  "nostrnote": "2026-11-15T10:49:58+00:00",
+  "discord": "2026-11-16T11:28:44+00:00",
+  "bsky": "2026-11-16T11:28:40+00:00",
+  "mastodon": "2026-11-16T11:28:42+00:00",
+  "nostrnote": "2026-11-16T11:28:05+00:00",
   "whop_public": "2026-11-14T10:48:31+00:00",
-  "pinterest": "2026-11-15T10:50:37+00:00",
-  "tumblr": "2026-11-15T10:50:17+00:00"
+  "pinterest": "2026-11-16T11:28:40+00:00",
+  "tumblr": "2026-11-16T11:28:24+00:00"
  },
  "last_longform": "2026-11-15T10:49:46+00:00",
  "ledger": [],
@@ -1606,7 +1760,11 @@
   "at://did:plc:tmelxhboip7iwxj5b3bphcal/app.bsky.feed.post/3n2ctv4kb5g2s",
   "at://did:plc:va5u3rjzuhzw3rvvpe3kk7sa/app.bsky.feed.post/3n2dra5pgs6p2",
   "at://did:plc:fm7crvtisfj5xwzwuxerw32o/app.bsky.feed.post/3n2dqxdzmn4fw",
-  "at://did:plc:lhuito3l45sqw33udtrq2v5o/app.bsky.feed.post/3n2byac7yra2t"
+  "at://did:plc:lhuito3l45sqw33udtrq2v5o/app.bsky.feed.post/3n2byac7yra2t",
+  "at://did:plc:3iltugf5ocp757s6mt3grnmz/app.bsky.feed.post/3n2gfjpcms223",
+  "at://did:plc:ybdhgqqpfei73qgnt242wjbv/app.bsky.feed.post/3n2gaxhyfyf25",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2dts3qtkz2u",
+  "at://did:plc:qrfelhyoimojsydjtrl6nn3z/app.bsky.feed.post/3n2bjsmcx3s2t"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -1631,6 +1789,9 @@
    "bsky": 4
   },
   "2026-11-15": {
+   "bsky": 4
+  },
+  "2026-11-16": {
    "bsky": 4
   }
  },
@@ -1703,6 +1864,14 @@
    "mastodon": 2,
    "discord": 2,
    "tumblr": 1
+  },
+  "2026-11-16": {
+   "bsky": 2,
+   "nostrnote": 1,
+   "mastodon": 2,
+   "discord": 2,
+   "pinterest": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -1713,7 +1882,8 @@
   "2026-11-11": 1,
   "2026-11-12": 1,
   "2026-11-14": 5,
-  "2026-11-15": 1
+  "2026-11-15": 1,
+  "2026-11-16": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -1738,8 +1908,8 @@
   "verify-on-server": "2026-11-15T10:49:49+00:00",
   "risk-score-use": "2026-11-15T10:50:14+00:00",
   "promo-saas-integrity": "2026-11-07T20:45:57+00:00",
-  "passkeys-for-saas": "2026-11-08T10:47:20+00:00",
-  "token-single-use": "2026-11-08T10:47:27+00:00",
+  "passkeys-for-saas": "2026-11-16T11:28:19+00:00",
+  "token-single-use": "2026-11-16T11:28:22+00:00",
   "promo-saas-docs": "2026-11-08T10:47:58+00:00",
   "private-access-tokens": "2026-11-09T11:01:05+00:00",
   "fake-account-signals": "2026-11-09T11:01:16+00:00",
@@ -1758,7 +1928,9 @@
   "accessibility-captcha": "2026-11-14T10:48:26+00:00",
   "replace-captcha-checklist": "2026-11-15T10:49:46+00:00",
   "form-endpoint-exposure": "2026-11-15T10:50:18+00:00",
-  "promo-agency-enterprise": "2026-11-15T10:50:39+00:00"
+  "promo-agency-enterprise": "2026-11-15T10:50:39+00:00",
+  "monitor-failure-rates": "2026-11-16T11:28:25+00:00",
+  "promo-plans-agency": "2026-11-16T11:28:45+00:00"
  },
  "llm_cb": {},
  "alerted": {
@@ -1772,7 +1944,7 @@
  },
  "buffer_channels": {
   "b62fa971978dd910": {
-   "at": 1794739757,
+   "at": 1794828475,
    "map": {
     "mastodon": "6aef6eaae29c69a171977373",
     "pinterest": "6aef6e78e29c69a171976f1b"
