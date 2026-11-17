@@ -3,10 +3,10 @@
   "store-abuse-map": 1,
   "signup-friction": 2,
   "robots-ai-user-agents": 2,
-  "verify-crawler-ip": 1,
+  "verify-crawler-ip": 2,
   "trial-abuse": 2,
   "api-key-farming": 2,
-  "promo-store-scan": 1,
+  "promo-store-scan": 2,
   "http-402-crawling": 1,
   "training-vs-search": 1,
   "promo-store-free-plan": 1,
@@ -26,8 +26,8 @@
   "token-single-use": 3,
   "promo-saas-docs": 1,
   "private-access-tokens": 1,
-  "fake-account-signals": 2,
-  "adaptive-difficulty": 1,
+  "fake-account-signals": 3,
+  "adaptive-difficulty": 2,
   "promo-plans-saas": 1,
   "contact-form-spam": 1,
   "headless-browsers": 2,
@@ -1714,17 +1714,181 @@
    "topic": "at://did:plc:qrf",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-17T11:07:36+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "verify-crawler-ip",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:07:38+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "verify-crawler-ip",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/8f8810fad8ebb5be962834b12c97ecea35d818e0a6c3aeaebbfd84ca0af92ed5.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:07:50+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "verify-crawler-ip",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:07:53+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "fake-account-signals",
+   "due": "2026-11-17T11:22:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/30bb014b6da641fc371e0c44b94459dded9023078b8c30fba4099500226f4518.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:07:58+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "adaptive-difficulty",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/5186dd775599ddda6d3e0c7e4eeb03256e08bfb9ebac49da791d5141d3da0b36.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:02+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "domain-allowlist",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/b90285b5355c8dbe0fec01cf288df5bba7ea18fefa2d15549bdea654419ed1b7.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-17T11:08:15+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-store-scan",
+   "due": "2026-11-17T11:23:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/0ba66c4025f9aa2638086bff6bbde5e3e2ef0d7e3672193c4cb43aab855d4082.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:16+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:18+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/bfadc1232453873368d04de3a2e45bcf4dea656f5ded4c469ece339c7b7fe3e2.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:30+00:00",
+   "kind": "promo",
+   "platform": "mastodon",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:31+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-store-scan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/27a91fc7f73ca7ca7ff83c4fbe337f2d58efdf737f1108e32b6bacccb3934db6.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:50+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:4ef",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:52+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:5zr",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:54+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:c66",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-17T11:08:56+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-15T10:49:34+00:00",
-  "discord": "2026-11-16T11:28:44+00:00",
-  "bsky": "2026-11-16T11:28:40+00:00",
-  "mastodon": "2026-11-16T11:28:42+00:00",
-  "nostrnote": "2026-11-16T11:28:05+00:00",
+  "discord": "2026-11-17T11:08:31+00:00",
+  "bsky": "2026-11-17T11:08:16+00:00",
+  "mastodon": "2026-11-17T11:08:30+00:00",
+  "nostrnote": "2026-11-17T11:08:18+00:00",
   "whop_public": "2026-11-14T10:48:31+00:00",
-  "pinterest": "2026-11-16T11:28:40+00:00",
-  "tumblr": "2026-11-16T11:28:24+00:00"
+  "pinterest": "2026-11-17T11:08:16+00:00",
+  "tumblr": "2026-11-17T11:08:02+00:00"
  },
  "last_longform": "2026-11-15T10:49:46+00:00",
  "ledger": [],
@@ -1764,7 +1928,11 @@
   "at://did:plc:3iltugf5ocp757s6mt3grnmz/app.bsky.feed.post/3n2gfjpcms223",
   "at://did:plc:ybdhgqqpfei73qgnt242wjbv/app.bsky.feed.post/3n2gaxhyfyf25",
   "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2dts3qtkz2u",
-  "at://did:plc:qrfelhyoimojsydjtrl6nn3z/app.bsky.feed.post/3n2bjsmcx3s2t"
+  "at://did:plc:qrfelhyoimojsydjtrl6nn3z/app.bsky.feed.post/3n2bjsmcx3s2t",
+  "at://did:plc:4efkzxgx22vsnuiurnl7guvg/app.bsky.feed.post/3n2huvi5hzs2o",
+  "at://did:plc:5zrgrjk3qdq3lrm6xtdazqjg/app.bsky.feed.post/3n2hqlebtq42b",
+  "at://did:plc:c66daboasb2g53yclb5nu3x5/app.bsky.feed.post/3n2hoerp5ks2p",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ggf3ndmv22"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -1792,6 +1960,9 @@
    "bsky": 4
   },
   "2026-11-16": {
+   "bsky": 4
+  },
+  "2026-11-17": {
    "bsky": 4
   }
  },
@@ -1872,6 +2043,14 @@
    "discord": 2,
    "pinterest": 2,
    "tumblr": 1
+  },
+  "2026-11-17": {
+   "bsky": 2,
+   "nostrnote": 2,
+   "mastodon": 2,
+   "pinterest": 2,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -1883,16 +2062,17 @@
   "2026-11-12": 1,
   "2026-11-14": 5,
   "2026-11-15": 1,
-  "2026-11-16": 1
+  "2026-11-16": 1,
+  "2026-11-17": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
   "signup-friction": "2026-11-11T11:04:19+00:00",
   "robots-ai-user-agents": "2026-11-14T02:07:06+00:00",
-  "verify-crawler-ip": "2026-11-07T19:39:10+00:00",
+  "verify-crawler-ip": "2026-11-17T11:07:51+00:00",
   "trial-abuse": "2026-11-12T11:08:19+00:00",
   "api-key-farming": "2026-11-14T02:07:12+00:00",
-  "promo-store-scan": "2026-11-07T19:39:34+00:00",
+  "promo-store-scan": "2026-11-17T11:08:32+00:00",
   "http-402-crawling": "2026-11-07T19:44:45+00:00",
   "training-vs-search": "2026-11-07T20:22:52+00:00",
   "promo-store-free-plan": "2026-11-07T20:23:16+00:00",
@@ -1912,8 +2092,8 @@
   "token-single-use": "2026-11-16T11:28:22+00:00",
   "promo-saas-docs": "2026-11-08T10:47:58+00:00",
   "private-access-tokens": "2026-11-09T11:01:05+00:00",
-  "fake-account-signals": "2026-11-09T11:01:16+00:00",
-  "adaptive-difficulty": "2026-11-09T11:01:12+00:00",
+  "fake-account-signals": "2026-11-17T11:07:54+00:00",
+  "adaptive-difficulty": "2026-11-17T11:07:58+00:00",
   "promo-plans-saas": "2026-11-09T11:01:39+00:00",
   "contact-form-spam": "2026-11-10T10:56:04+00:00",
   "headless-browsers": "2026-11-10T10:56:37+00:00",
