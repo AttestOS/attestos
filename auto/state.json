@@ -9,7 +9,7 @@
   "promo-store-scan": 2,
   "http-402-crawling": 1,
   "training-vs-search": 1,
-  "promo-store-free-plan": 1,
+  "promo-store-free-plan": 2,
   "robots-mistakes": 1,
   "card-testing-pattern": 2,
   "login-stuffing": 2,
@@ -30,8 +30,8 @@
   "adaptive-difficulty": 2,
   "promo-plans-saas": 1,
   "contact-form-spam": 1,
-  "headless-browsers": 2,
-  "siteverify-errors": 1,
+  "headless-browsers": 3,
+  "siteverify-errors": 2,
   "promo-robots-check": 1,
   "gift-card-abuse": 2,
   "promo-agentpass": 1,
@@ -44,7 +44,8 @@
   "form-endpoint-exposure": 1,
   "promo-agency-enterprise": 1,
   "monitor-failure-rates": 1,
-  "promo-plans-agency": 1
+  "promo-plans-agency": 1,
+  "domain-allowlist": 1
  },
  "published": [
   {
@@ -1878,17 +1879,169 @@
    "topic": "at://did:plc:nfe",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-18T11:08:33+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "domain-allowlist",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:08:36+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "headless-browsers",
+   "due": "2026-11-18T11:23:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/26e598fadd447c0cc717fe68de3f7025eb56429c04f05ce7080c3ccd261ac50c.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:08:49+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "siteverify-errors",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/7bbac64452cd327382ede8cf27857ee7c0957b99c4d04b1bba0d665eeff067d2.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:09:01+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "siteverify-errors",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:09:04+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "siteverify-errors",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/9f8907e1683d9fe337f1b833beccabdbffebbfeae47da864e7fc97c5e2b12f69.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:09:19+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "domain-allowlist",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/1f8de105531bbfe25c7b20d0d8e7acff4e7a288c8f36a1b85ec650993cb5b61a.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-18T11:09:39+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-store-free-plan",
+   "due": "2026-11-18T11:24:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/30253046edb6c5310c6e4bd2f4a9fc468b1a4d7e18790af4ca528e94a787ebfc.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:09:40+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-store-free-plan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:09:42+00:00",
+   "kind": "promo",
+   "platform": "mastodon",
+   "topic": "promo-store-free-plan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:09:43+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-store-free-plan",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/009e3ee98c143b324d14cae50004bd1a1a0c3e3860077a41d65810a68d59d32a.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-18T11:10:03+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:3il",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-18T11:10:05+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:6h4",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-18T11:10:07+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-18T11:10:08+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-15T10:49:34+00:00",
-  "discord": "2026-11-17T11:08:31+00:00",
-  "bsky": "2026-11-17T11:08:16+00:00",
-  "mastodon": "2026-11-17T11:08:30+00:00",
-  "nostrnote": "2026-11-17T11:08:18+00:00",
+  "discord": "2026-11-18T11:09:43+00:00",
+  "bsky": "2026-11-18T11:09:40+00:00",
+  "mastodon": "2026-11-18T11:09:42+00:00",
+  "nostrnote": "2026-11-18T11:08:49+00:00",
   "whop_public": "2026-11-14T10:48:31+00:00",
-  "pinterest": "2026-11-17T11:08:16+00:00",
-  "tumblr": "2026-11-17T11:08:02+00:00"
+  "pinterest": "2026-11-18T11:09:40+00:00",
+  "tumblr": "2026-11-18T11:09:19+00:00"
  },
  "last_longform": "2026-11-15T10:49:46+00:00",
  "ledger": [],
@@ -1932,7 +2085,11 @@
   "at://did:plc:4efkzxgx22vsnuiurnl7guvg/app.bsky.feed.post/3n2huvi5hzs2o",
   "at://did:plc:5zrgrjk3qdq3lrm6xtdazqjg/app.bsky.feed.post/3n2hqlebtq42b",
   "at://did:plc:c66daboasb2g53yclb5nu3x5/app.bsky.feed.post/3n2hoerp5ks2p",
-  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ggf3ndmv22"
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ggf3ndmv22",
+  "at://did:plc:3iltugf5ocp757s6mt3grnmz/app.bsky.feed.post/3n2jn5sdjur2c",
+  "at://did:plc:6h4zakzeeok6jfy6t6dkwt4q/app.bsky.feed.post/3n2j4xsbiek2y",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ivpuq7hr2d",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ivpozd2e2s"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -1963,6 +2120,9 @@
    "bsky": 4
   },
   "2026-11-17": {
+   "bsky": 4
+  },
+  "2026-11-18": {
    "bsky": 4
   }
  },
@@ -2051,6 +2211,14 @@
    "pinterest": 2,
    "discord": 2,
    "tumblr": 1
+  },
+  "2026-11-18": {
+   "bsky": 2,
+   "pinterest": 2,
+   "nostrnote": 1,
+   "mastodon": 2,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -2063,7 +2231,8 @@
   "2026-11-14": 5,
   "2026-11-15": 1,
   "2026-11-16": 1,
-  "2026-11-17": 1
+  "2026-11-17": 1,
+  "2026-11-18": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -2075,7 +2244,7 @@
   "promo-store-scan": "2026-11-17T11:08:32+00:00",
   "http-402-crawling": "2026-11-07T19:44:45+00:00",
   "training-vs-search": "2026-11-07T20:22:52+00:00",
-  "promo-store-free-plan": "2026-11-07T20:23:16+00:00",
+  "promo-store-free-plan": "2026-11-18T11:09:44+00:00",
   "robots-mistakes": "2026-11-07T20:24:43+00:00",
   "card-testing-pattern": "2026-11-12T11:08:23+00:00",
   "login-stuffing": "2026-11-14T02:07:08+00:00",
@@ -2096,8 +2265,8 @@
   "adaptive-difficulty": "2026-11-17T11:07:58+00:00",
   "promo-plans-saas": "2026-11-09T11:01:39+00:00",
   "contact-form-spam": "2026-11-10T10:56:04+00:00",
-  "headless-browsers": "2026-11-10T10:56:37+00:00",
-  "siteverify-errors": "2026-11-10T10:56:32+00:00",
+  "headless-browsers": "2026-11-18T11:08:37+00:00",
+  "siteverify-errors": "2026-11-18T11:09:05+00:00",
   "promo-robots-check": "2026-11-10T10:57:17+00:00",
   "gift-card-abuse": "2026-11-11T11:04:22+00:00",
   "promo-agentpass": "2026-11-11T11:04:53+00:00",
@@ -2110,7 +2279,8 @@
   "form-endpoint-exposure": "2026-11-15T10:50:18+00:00",
   "promo-agency-enterprise": "2026-11-15T10:50:39+00:00",
   "monitor-failure-rates": "2026-11-16T11:28:25+00:00",
-  "promo-plans-agency": "2026-11-16T11:28:45+00:00"
+  "promo-plans-agency": "2026-11-16T11:28:45+00:00",
+  "domain-allowlist": "2026-11-18T11:08:35+00:00"
  },
  "llm_cb": {},
  "alerted": {
@@ -2124,7 +2294,7 @@
  },
  "buffer_channels": {
   "b62fa971978dd910": {
-   "at": 1794828475,
+   "at": 1795000112,
    "map": {
     "mastodon": "6aef6eaae29c69a171977373",
     "pinterest": "6aef6e78e29c69a171976f1b"
