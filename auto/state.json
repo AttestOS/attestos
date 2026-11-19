@@ -1,7 +1,7 @@
 {
  "used": {
   "store-abuse-map": 1,
-  "signup-friction": 2,
+  "signup-friction": 3,
   "robots-ai-user-agents": 2,
   "verify-crawler-ip": 2,
   "trial-abuse": 2,
@@ -13,7 +13,7 @@
   "robots-mistakes": 1,
   "card-testing-pattern": 2,
   "login-stuffing": 2,
-  "promo-plans-store": 1,
+  "promo-plans-store": 2,
   "crawl-logs": 1,
   "checkout-puzzle-cost": 3,
   "pow-explained": 2,
@@ -33,7 +33,7 @@
   "headless-browsers": 3,
   "siteverify-errors": 2,
   "promo-robots-check": 1,
-  "gift-card-abuse": 2,
+  "gift-card-abuse": 3,
   "promo-agentpass": 1,
   "honeypot-limits": 1,
   "promo-plans-publisher": 1,
@@ -2031,17 +2031,181 @@
    "topic": "at://did:plc:nfe",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-19T11:06:28+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "gift-card-abuse",
+   "due": "2026-11-19T11:21:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/3be7ef050c9af8005806aebf9488bc80c952b231bebcf774feb72ebdc9912449.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:06:42+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:06:43+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/05fbc57a4f139a2f19ce2b74dab46ed61c057b0e248762587fd0f6d5e65894f2.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:06:56+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:06:57+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "signup-friction",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/e61bccce587d41ceb5b209e8baeb33138e5fcfbbbc2ef5e80489a9cf95345c03.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:07:03+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "wordpress-forms",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/7caf1d70f2d6ce429f4799f797f37ea48e61f6dda5cfd16cd42790ae079f4213.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-19T11:07:31+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-plans-store",
+   "due": "2026-11-19T11:22:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/549a86e0b6e256bb62a8d3921ca8c9d620ac0d420d9c7919b7900beb0c76744d.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:07:32+00:00",
+   "kind": "promo",
+   "platform": "bsky",
+   "topic": "promo-plans-store",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:07:33+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-plans-store",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/6bd1f72ea3724abf4c1643b210a28f65eb62430d998eed454f1e0fef218d9874.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:07:46+00:00",
+   "kind": "promo",
+   "platform": "mastodon",
+   "topic": "promo-plans-store",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:07:47+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-plans-store",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/6bd1f72ea3724abf4c1643b210a28f65eb62430d998eed454f1e0fef218d9874.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-19T11:08:11+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:zg4",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-19T11:08:13+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:lp6",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-19T11:08:15+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:owo",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-19T11:08:16+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:twx",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-15T10:49:34+00:00",
-  "discord": "2026-11-18T11:09:43+00:00",
-  "bsky": "2026-11-18T11:09:40+00:00",
-  "mastodon": "2026-11-18T11:09:42+00:00",
-  "nostrnote": "2026-11-18T11:08:49+00:00",
+  "discord": "2026-11-19T11:07:47+00:00",
+  "bsky": "2026-11-19T11:07:32+00:00",
+  "mastodon": "2026-11-19T11:07:46+00:00",
+  "nostrnote": "2026-11-19T11:07:33+00:00",
   "whop_public": "2026-11-14T10:48:31+00:00",
-  "pinterest": "2026-11-18T11:09:40+00:00",
-  "tumblr": "2026-11-18T11:09:19+00:00"
+  "pinterest": "2026-11-19T11:07:32+00:00",
+  "tumblr": "2026-11-19T11:07:03+00:00"
  },
  "last_longform": "2026-11-15T10:49:46+00:00",
  "ledger": [],
@@ -2089,7 +2253,11 @@
   "at://did:plc:3iltugf5ocp757s6mt3grnmz/app.bsky.feed.post/3n2jn5sdjur2c",
   "at://did:plc:6h4zakzeeok6jfy6t6dkwt4q/app.bsky.feed.post/3n2j4xsbiek2y",
   "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ivpuq7hr2d",
-  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ivpozd2e2s"
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2ivpozd2e2s",
+  "at://did:plc:zg4fzp6srmuo3yedrpeanana/app.bsky.feed.post/3n2novjb4fk2r",
+  "at://did:plc:lp6dqmstrs6rp3bp7gnv6alx/app.bsky.feed.post/3n2njd6la3b2w",
+  "at://did:plc:owo2l6v35uvk3axlrkz6d2wt/app.bsky.feed.post/3n2mja524fh2i",
+  "at://did:plc:twxkihnpwnl5yygcka25dg6h/app.bsky.feed.post/3n2me32qxcn2b"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -2123,6 +2291,9 @@
    "bsky": 4
   },
   "2026-11-18": {
+   "bsky": 4
+  },
+  "2026-11-19": {
    "bsky": 4
   }
  },
@@ -2219,6 +2390,14 @@
    "mastodon": 2,
    "discord": 2,
    "tumblr": 1
+  },
+  "2026-11-19": {
+   "pinterest": 2,
+   "bsky": 2,
+   "nostrnote": 2,
+   "mastodon": 2,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -2232,11 +2411,12 @@
   "2026-11-15": 1,
   "2026-11-16": 1,
   "2026-11-17": 1,
-  "2026-11-18": 1
+  "2026-11-18": 1,
+  "2026-11-19": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
-  "signup-friction": "2026-11-11T11:04:19+00:00",
+  "signup-friction": "2026-11-19T11:06:58+00:00",
   "robots-ai-user-agents": "2026-11-14T02:07:06+00:00",
   "verify-crawler-ip": "2026-11-17T11:07:51+00:00",
   "trial-abuse": "2026-11-12T11:08:19+00:00",
@@ -2248,7 +2428,7 @@
   "robots-mistakes": "2026-11-07T20:24:43+00:00",
   "card-testing-pattern": "2026-11-12T11:08:23+00:00",
   "login-stuffing": "2026-11-14T02:07:08+00:00",
-  "promo-plans-store": "2026-11-07T20:32:54+00:00",
+  "promo-plans-store": "2026-11-19T11:07:48+00:00",
   "crawl-logs": "2026-11-07T20:43:36+00:00",
   "checkout-puzzle-cost": "2026-11-14T10:47:59+00:00",
   "pow-explained": "2026-11-14T10:48:22+00:00",
@@ -2268,7 +2448,7 @@
   "headless-browsers": "2026-11-18T11:08:37+00:00",
   "siteverify-errors": "2026-11-18T11:09:05+00:00",
   "promo-robots-check": "2026-11-10T10:57:17+00:00",
-  "gift-card-abuse": "2026-11-11T11:04:22+00:00",
+  "gift-card-abuse": "2026-11-19T11:06:29+00:00",
   "promo-agentpass": "2026-11-11T11:04:53+00:00",
   "honeypot-limits": "2026-11-12T11:08:26+00:00",
   "promo-plans-publisher": "2026-11-12T11:08:55+00:00",
@@ -2290,7 +2470,8 @@
   "whop_public": "2026-11-15",
   "whop_prices": "2026-11-07",
   "pinterest": "2026-11-07",
-  "images": "2026-11-07"
+  "images": "2026-11-07",
+  "tumblr": "2026-11-19"
  },
  "buffer_channels": {
   "b62fa971978dd910": {
