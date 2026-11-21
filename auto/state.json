@@ -5,14 +5,14 @@
   "robots-ai-user-agents": 2,
   "verify-crawler-ip": 2,
   "trial-abuse": 3,
-  "api-key-farming": 2,
+  "api-key-farming": 3,
   "promo-store-scan": 2,
-  "http-402-crawling": 1,
+  "http-402-crawling": 2,
   "training-vs-search": 1,
   "promo-store-free-plan": 2,
   "robots-mistakes": 1,
   "card-testing-pattern": 3,
-  "login-stuffing": 2,
+  "login-stuffing": 3,
   "promo-plans-store": 2,
   "crawl-logs": 1,
   "checkout-puzzle-cost": 3,
@@ -21,7 +21,7 @@
   "agent-keys": 1,
   "verify-on-server": 3,
   "risk-score-use": 2,
-  "promo-saas-integrity": 1,
+  "promo-saas-integrity": 2,
   "passkeys-for-saas": 2,
   "token-single-use": 3,
   "promo-saas-docs": 1,
@@ -2347,17 +2347,145 @@
    "topic": "at://did:plc:2uc",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-21T10:52:58+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "http-402-crawling",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:52:59+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "http-402-crawling",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/2054e6d7b973497c6f78068515b8ac300fb3503a5b965e236484e22cf5eda3fc.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:53:11+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "http-402-crawling",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:53:15+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "login-stuffing",
+   "due": "2026-11-21T11:08:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/d41fcf8bd523df4705702007bb14b7c48d314ff6a5792a24dec0eea2ae398e2b.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:53:20+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "api-key-farming",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/c11289141f170ca44aada3bf77013869da29d59f0941e6d644f2b8d8b87ddb95.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:53:25+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "wordpress-forms",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/7caf1d70f2d6ce429f4799f797f37ea48e61f6dda5cfd16cd42790ae079f4213.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-21T10:53:43+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-saas-integrity",
+   "due": "2026-11-21T11:48:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/b6c710bc5cfc5c841486d2d8494f8bc678a52207a4acec72af93dddc4c74e55e.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:53:44+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-saas-integrity",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/59471975466fde692df304e54e381dec656a40a320bc1e99126c4206ad88b212.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-21T10:54:04+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:l5m",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-21T10:54:05+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:67u",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-21T10:54:08+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-21T10:54:09+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-15T10:49:34+00:00",
-  "discord": "2026-11-20T11:07:51+00:00",
-  "bsky": "2026-11-20T11:07:47+00:00",
-  "mastodon": "2026-11-20T11:07:49+00:00",
-  "nostrnote": "2026-11-20T11:07:07+00:00",
+  "discord": "2026-11-21T10:53:44+00:00",
+  "bsky": "2026-11-21T10:52:58+00:00",
+  "mastodon": "2026-11-21T10:53:11+00:00",
+  "nostrnote": "2026-11-21T10:52:59+00:00",
   "whop_public": "2026-11-14T10:48:31+00:00",
-  "pinterest": "2026-11-20T11:07:47+00:00",
-  "tumblr": "2026-11-20T11:07:32+00:00"
+  "pinterest": "2026-11-21T10:53:44+00:00",
+  "tumblr": "2026-11-21T10:53:25+00:00"
  },
  "last_longform": "2026-11-15T10:49:46+00:00",
  "ledger": [],
@@ -2413,7 +2541,11 @@
   "at://did:plc:64uhlki6wldzzxqohgnzglgo/app.bsky.feed.post/3n2pyjsnorc2w",
   "at://did:plc:rz77su5xol2iavf42bu7phkg/app.bsky.feed.post/3n2pohhgye22n",
   "at://did:plc:azs2ic7whqj3cz3vil6cuz46/app.bsky.feed.post/3n2otrvgkor2d",
-  "at://did:plc:2uccdpdhk75kies2czi4wmzy/app.bsky.feed.post/3n2oatiwhxm2w"
+  "at://did:plc:2uccdpdhk75kies2czi4wmzy/app.bsky.feed.post/3n2oatiwhxm2w",
+  "at://did:plc:l5mibzrg5hmqh4gvgas27cgk/app.bsky.feed.post/3n2rditmtq423",
+  "at://did:plc:67u6vekwv4meimluuaa22rix/app.bsky.feed.post/3n2rd52kgtk2p",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2qh3kiqqn2u",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n2qh3c2a3u23"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -2453,6 +2585,9 @@
    "bsky": 4
   },
   "2026-11-20": {
+   "bsky": 4
+  },
+  "2026-11-21": {
    "bsky": 4
   }
  },
@@ -2565,6 +2700,14 @@
    "discord": 2,
    "pinterest": 2,
    "tumblr": 1
+  },
+  "2026-11-21": {
+   "bsky": 1,
+   "nostrnote": 1,
+   "mastodon": 1,
+   "pinterest": 2,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -2580,7 +2723,8 @@
   "2026-11-17": 1,
   "2026-11-18": 1,
   "2026-11-19": 1,
-  "2026-11-20": 1
+  "2026-11-20": 1,
+  "2026-11-21": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -2588,14 +2732,14 @@
   "robots-ai-user-agents": "2026-11-14T02:07:06+00:00",
   "verify-crawler-ip": "2026-11-17T11:07:51+00:00",
   "trial-abuse": "2026-11-20T11:07:21+00:00",
-  "api-key-farming": "2026-11-14T02:07:12+00:00",
+  "api-key-farming": "2026-11-21T10:53:21+00:00",
   "promo-store-scan": "2026-11-17T11:08:32+00:00",
-  "http-402-crawling": "2026-11-07T19:44:45+00:00",
+  "http-402-crawling": "2026-11-21T10:53:13+00:00",
   "training-vs-search": "2026-11-07T20:22:52+00:00",
   "promo-store-free-plan": "2026-11-18T11:09:44+00:00",
   "robots-mistakes": "2026-11-07T20:24:43+00:00",
   "card-testing-pattern": "2026-11-20T11:07:24+00:00",
-  "login-stuffing": "2026-11-14T02:07:08+00:00",
+  "login-stuffing": "2026-11-21T10:53:16+00:00",
   "promo-plans-store": "2026-11-19T11:07:48+00:00",
   "crawl-logs": "2026-11-07T20:43:36+00:00",
   "checkout-puzzle-cost": "2026-11-14T10:47:59+00:00",
@@ -2604,7 +2748,7 @@
   "agent-keys": "2026-11-07T20:45:42+00:00",
   "verify-on-server": "2026-11-15T10:49:49+00:00",
   "risk-score-use": "2026-11-15T10:50:14+00:00",
-  "promo-saas-integrity": "2026-11-07T20:45:57+00:00",
+  "promo-saas-integrity": "2026-11-21T10:53:45+00:00",
   "passkeys-for-saas": "2026-11-16T11:28:19+00:00",
   "token-single-use": "2026-11-16T11:28:22+00:00",
   "promo-saas-docs": "2026-11-08T10:47:58+00:00",
@@ -2639,7 +2783,7 @@
   "whop_prices": "2026-11-07",
   "pinterest": "2026-11-07",
   "images": "2026-11-07",
-  "tumblr": "2026-11-20"
+  "tumblr": "2026-11-21"
  },
  "buffer_channels": {
   "b62fa971978dd910": {
