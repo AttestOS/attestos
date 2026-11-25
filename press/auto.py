@@ -837,9 +837,11 @@ def author_chain() -> list:
     cfk = (os.environ.get("AO_CF_AI_TOKEN") or os.environ.get("CLOUDFLARE_API_TOKEN") or "").strip()
     cfa = (os.environ.get("AO_CF_AI_ACCOUNT") or os.environ.get("CLOUDFLARE_ACCOUNT_ID") or "").strip()
     if cfk and cfa:
-        chain.append(("cloudflare-ai", "openai",
-                      f"https://api.cloudflare.com/client/v4/accounts/{cfa}/ai/v1/chat/completions",
-                      ("@cf/meta/llama-3.3-70b-instruct-fp8-fast",), cfk))
+        # FIRST, not last: this is the primary lane (verified live 2026-11-25, 200 on this account).
+        # Everything above is a fallback for the day Workers AI is unreachable, not the default.
+        chain.insert(0, ("cloudflare-ai", "openai",
+                         f"https://api.cloudflare.com/client/v4/accounts/{cfa}/ai/v1/chat/completions",
+                         ("@cf/meta/llama-3.3-70b-instruct-fp8-fast",), cfk))
     return chain
 
 
