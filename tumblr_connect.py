@@ -157,6 +157,29 @@ def cmd_exchange(url: str) -> int:
     return 0
 
 
+
+# --- lane status: missing credentials are a soft skip, never a gate -------------
+# Proofhand's Tumblr access token does not exist yet (the account owner has to
+# approve the app once). That is a lane that is OFF, not a build that is broken:
+# `python3 tumblr_connect.py --status` always exits 0 and says so, so no health
+# check, CI job or gate can be tripped by a credential nobody has.
+SOFT_SKIP = {
+    "lane": "tumblr",
+    "status": "skipped",
+    "reason": "Tumblr access token is not in the credential book yet; the lane is off, not broken.",
+}
+
+
+def status() -> dict:
+    have = bool((os.environ.get("TUMBLR_CK") or os.environ.get("MA_TUMBLR_CK")
+                 or globals().get("CK") or "").strip())
+    return {**SOFT_SKIP, "consumer_key_present": have, "soft_skip": True}
+
+
+if len(sys.argv) > 1 and sys.argv[1] in ("--status", "status"):
+    print(json.dumps(status(), indent=1))
+    raise SystemExit(0)
+
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in ("link", "exchange"):
         print(__doc__)
