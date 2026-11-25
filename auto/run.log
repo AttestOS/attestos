@@ -879,3 +879,51 @@
 {"ts": "2026-11-21T10:54:08+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
 {"ts": "2026-11-21T10:54:09+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:nfe"}
 {"ts": "2026-11-21T10:54:09+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["tumblr"]}
+{"ts": "2026-11-25T16:23:01+00:00", "ev": "buffer_discovered", "services": ["mastodon", "pinterest"], "boards": ["AttestoS"]}
+{"ts": "2026-11-25T16:23:23+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "longform", "channel": "nostr30023"}
+{"ts": "2026-11-25T16:23:23+00:00", "ev": "rejected", "channel": "nostr30023", "topic": "signup-defence-stack", "attempt": 1, "problems": ["nostr30023: hype vocabulary ('seamless')"]}
+{"ts": "2026-11-25T16:23:40+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "longform", "channel": "nostr30023"}
+{"ts": "2026-11-25T16:23:52+00:00", "ev": "published", "channel": "nostr30023", "topic": "signup-defence-stack", "live": true}
+{"ts": "2026-11-25T16:23:54+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "bsky"}
+{"ts": "2026-11-25T16:23:55+00:00", "ev": "bsky_session", "mode": "create"}
+{"ts": "2026-11-25T16:23:56+00:00", "ev": "published", "channel": "bsky", "topic": "wordpress-forms", "live": true}
+{"ts": "2026-11-25T16:24:00+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "pinterest"}
+{"ts": "2026-11-25T16:24:01+00:00", "ev": "published", "channel": "pinterest", "topic": "checkout-puzzle-cost", "live": true}
+{"ts": "2026-11-25T16:24:04+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-25T16:24:04+00:00", "ev": "rejected", "channel": "nostrnote", "topic": "pow-explained", "attempt": 1, "problems": ["nostrnote: 388 chars over 300"]}
+{"ts": "2026-11-25T16:24:06+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "nostrnote"}
+{"ts": "2026-11-25T16:24:09+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "mastodon"}
+{"ts": "2026-11-25T16:24:13+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "discord"}
+{"ts": "2026-11-25T16:24:26+00:00", "ev": "published", "channel": "nostrnote", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-25T16:24:28+00:00", "ev": "published", "channel": "mastodon", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-25T16:24:29+00:00", "ev": "published", "channel": "discord", "topic": "pow-explained", "live": true}
+{"ts": "2026-11-25T16:24:32+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "value", "channel": "tumblr"}
+{"ts": "2026-11-25T16:24:32+00:00", "ev": "publish_error", "platform": "tumblr", "err": "{\"meta\":{\"status\":401,\"msg\":\"Unauthorized\"},\"errors\":[{\"title\":\"Unauthorized\",\"code\":1009,\"detail\":\"Unable to authorize\"}],\"response\":[]}"}
+{"ts": "2026-11-25T16:24:32+00:00", "ev": "publish_failed", "channel": "tumblr", "topic": "wordpress-forms", "live": true}
+{"ts": "2026-11-25T16:24:32+00:00", "ev": "topic_not_spent", "topic": "wordpress-forms", "note": "every channel failed; the topic stays fresh"}
+{"ts": "2026-11-25T16:24:36+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-25T16:24:36+00:00", "ev": "rejected", "channel": "pinterest", "topic": "promo-saas-docs", "attempt": 1, "problems": ["pinterest: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-25T16:24:38+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "pinterest"}
+{"ts": "2026-11-25T16:24:40+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "bsky"}
+{"ts": "2026-11-25T16:24:40+00:00", "ev": "rejected", "channel": "bsky", "topic": "promo-saas-docs", "attempt": 1, "problems": ["bsky: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-25T16:24:41+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "bsky"}
+{"ts": "2026-11-25T16:24:43+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "nostrnote"}
+{"ts": "2026-11-25T16:24:45+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "mastodon"}
+{"ts": "2026-11-25T16:24:45+00:00", "ev": "rejected", "channel": "mastodon", "topic": "promo-saas-docs", "attempt": 1, "problems": ["mastodon: promo with no pointer link is just vibes"]}
+{"ts": "2026-11-25T16:24:47+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "mastodon"}
+{"ts": "2026-11-25T16:24:49+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "promo", "channel": "discord"}
+{"ts": "2026-11-25T16:24:50+00:00", "ev": "published", "channel": "pinterest", "topic": "promo-saas-docs", "live": true}
+{"ts": "2026-11-25T16:24:50+00:00", "ev": "bsky_session", "mode": "refresh"}
+{"ts": "2026-11-25T16:24:52+00:00", "ev": "published", "channel": "bsky", "topic": "promo-saas-docs", "live": true}
+{"ts": "2026-11-25T16:25:04+00:00", "ev": "published", "channel": "nostrnote", "topic": "promo-saas-docs", "live": true}
+{"ts": "2026-11-25T16:25:06+00:00", "ev": "published", "channel": "mastodon", "topic": "promo-saas-docs", "live": true}
+{"ts": "2026-11-25T16:25:07+00:00", "ev": "published", "channel": "discord", "topic": "promo-saas-docs", "live": true}
+{"ts": "2026-11-25T16:25:26+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-25T16:25:26+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:klc"}
+{"ts": "2026-11-25T16:25:29+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-25T16:25:29+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:obt"}
+{"ts": "2026-11-25T16:25:31+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-25T16:25:31+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:cfp"}
+{"ts": "2026-11-25T16:25:33+00:00", "ev": "author", "provider": "cloudflare-ai", "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "kind": "reply", "channel": "bsky"}
+{"ts": "2026-11-25T16:25:33+00:00", "ev": "reply_sent", "platform": "bsky", "target": "at://did:plc:hze"}
+{"ts": "2026-11-25T16:25:34+00:00", "ev": "rail_alert_sent", "status": 200, "rails": ["tumblr"]}
