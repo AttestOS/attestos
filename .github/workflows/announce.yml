@@ -1,0 +1,24 @@
+name: announce-storefront
+# 2026-11-25: the storefront a buyer lands on carried no link to the answer pages or the writing.
+# Whop has no API for storefront navigation; the public forum post is the one block a script may
+# write there. Idempotent: does nothing if the pinned post already exists.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 7 1 * *"   # first of the month, re-assert in case it is deleted
+permissions: { contents: read }
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: post the answers entry
+        env:
+          WHOP_API_KEY: ${{ secrets.WHOP_API_KEY }}
+          WHOP_COMPANY_ID: ${{ secrets.WHOP_COMPANY_ID }}
+          WHOP_PUBLIC_EXP_ID: ${{ secrets.WHOP_PUBLIC_EXP_ID }}
+          VENTURE_NAME: "Proofhand"
+          ANSWERS_URL: "https://proofhand-store.pages.dev/answers/"
+          WRITING_URL: "https://proofhand-store.pages.dev/writing/"
+        run: python3 ops/announce_storefront.py
