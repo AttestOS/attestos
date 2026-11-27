@@ -8,7 +8,7 @@
   "api-key-farming": 3,
   "promo-store-scan": 2,
   "http-402-crawling": 2,
-  "training-vs-search": 1,
+  "training-vs-search": 2,
   "promo-store-free-plan": 2,
   "robots-mistakes": 1,
   "card-testing-pattern": 3,
@@ -23,18 +23,18 @@
   "risk-score-use": 3,
   "promo-saas-integrity": 2,
   "passkeys-for-saas": 3,
-  "token-single-use": 3,
+  "token-single-use": 4,
   "promo-saas-docs": 2,
   "private-access-tokens": 1,
   "fake-account-signals": 3,
-  "adaptive-difficulty": 2,
+  "adaptive-difficulty": 3,
   "promo-plans-saas": 2,
   "contact-form-spam": 2,
   "headless-browsers": 3,
   "siteverify-errors": 2,
   "promo-robots-check": 2,
   "gift-card-abuse": 3,
-  "promo-agentpass": 1,
+  "promo-agentpass": 2,
   "honeypot-limits": 1,
   "promo-plans-publisher": 1,
   "client-handover-keys": 1,
@@ -2877,17 +2877,157 @@
    "topic": "at://did:plc:5rj",
    "due": "",
    "ok": true
+  },
+  {
+   "ts": "2026-11-27T19:26:53+00:00",
+   "kind": "value",
+   "platform": "bsky",
+   "topic": "training-vs-search",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:26:54+00:00",
+   "kind": "value",
+   "platform": "nostrnote",
+   "topic": "training-vs-search",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/436a6c7eaa4ea17c282b58c7bd7b42039db11fbbca39e8b11521fa6e14db621d.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:27:07+00:00",
+   "kind": "value",
+   "platform": "mastodon",
+   "topic": "training-vs-search",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "upload",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:27:18+00:00",
+   "kind": "value",
+   "platform": "pinterest",
+   "topic": "token-single-use",
+   "due": "2026-11-27T19:42:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/75f9968a7aea239314d5e4cc6399eed5aa9b9276f4b3aa3abb60887d55ac02ec.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:27:22+00:00",
+   "kind": "value",
+   "platform": "discord",
+   "topic": "adaptive-difficulty",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/e3d7bf4854d292805b4d5cf27cebf32ef165535bc3cf07b1c0badb8f8b0a2a50.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:27:26+00:00",
+   "kind": "value",
+   "platform": "tumblr",
+   "topic": "training-vs-search",
+   "due": "",
+   "ok": false,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/f0fad40cbe74eaf2c1433206a701956ccc44ae6a5ecf3f8051741079abf0b1df.png",
+   "img_src": "card",
+   "img_ok": false
+  },
+  {
+   "ts": "2026-11-27T19:27:43+00:00",
+   "kind": "promo",
+   "platform": "pinterest",
+   "topic": "promo-agentpass",
+   "due": "2026-11-27T20:22:00Z",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/1ce5ba17404da4fa5ae152f7cbfae00a8c9f79f49af7a6011cd197448d8232b9.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:27:44+00:00",
+   "kind": "promo",
+   "platform": "nostrnote",
+   "topic": "promo-agentpass",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/4362f5801f981e39cb5e6b77c86767960a7c949c018561396abbacdc36f9e6d7.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:27:56+00:00",
+   "kind": "promo",
+   "platform": "discord",
+   "topic": "promo-agentpass",
+   "due": "",
+   "ok": true,
+   "live": true,
+   "img": "https://attestos-edge.proofhand.workers.dev/api/press/img/462d5bbfbb9011303c95dbe7ebbd53eab06324b5969180e0e88e838139e457a2.png",
+   "img_src": "card",
+   "img_ok": true
+  },
+  {
+   "ts": "2026-11-27T19:28:16+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:nfe",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-27T19:28:17+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:3km",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-27T19:28:19+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:y6q",
+   "due": "",
+   "ok": true
+  },
+  {
+   "ts": "2026-11-27T19:28:21+00:00",
+   "kind": "reply",
+   "platform": "bsky",
+   "topic": "at://did:plc:k44",
+   "due": "",
+   "ok": true
   }
  ],
  "channel_last": {
   "nostr30023": "2026-11-25T16:23:40+00:00",
-  "discord": "2026-11-26T11:04:14+00:00",
-  "bsky": "2026-11-26T11:03:10+00:00",
-  "mastodon": "2026-11-26T11:04:12+00:00",
-  "nostrnote": "2026-11-26T11:04:00+00:00",
+  "discord": "2026-11-27T19:27:56+00:00",
+  "bsky": "2026-11-27T19:26:53+00:00",
+  "mastodon": "2026-11-27T19:27:07+00:00",
+  "nostrnote": "2026-11-27T19:27:44+00:00",
   "whop_public": "2026-11-25T18:25:03+00:00",
-  "pinterest": "2026-11-26T11:04:00+00:00",
-  "tumblr": "2026-11-26T11:03:40+00:00"
+  "pinterest": "2026-11-27T19:27:44+00:00",
+  "tumblr": "2026-11-27T19:27:26+00:00"
  },
  "last_longform": "2026-11-25T16:23:52+00:00",
  "ledger": [],
@@ -2955,7 +3095,11 @@
   "at://did:plc:p5dj5en72bzf34l4ucnuo5oc/app.bsky.feed.post/3n375w66r7eyu",
   "at://did:plc:syhdi2dlwabkwrvklwykkxjb/app.bsky.feed.post/3n375bwhizk2a",
   "at://did:plc:as45ma7v4dkxdt3mc6tlacyn/app.bsky.feed.post/3n36g4nxg4n25",
-  "at://did:plc:5rj6tdsnw3ph527xgfjodsux/app.bsky.feed.post/3n36eo76dfn24"
+  "at://did:plc:5rj6tdsnw3ph527xgfjodsux/app.bsky.feed.post/3n36eo76dfn24",
+  "at://did:plc:nfegbj52dwzsncnjh74tyqom/app.bsky.feed.post/3n3cw7j4eqp22",
+  "at://did:plc:3km22bpzwqhtykvu3ush5tla/app.bsky.feed.post/3n3cc2fsoci25",
+  "at://did:plc:y6qrtgcecy5q5tt7nbw76ivm/app.bsky.feed.post/3n3adftvudi22",
+  "at://did:plc:k44rb7ixxrkbqtaen5eanvvz/app.bsky.feed.post/3n37l5nt3iv2g"
  ],
  "reply_day": {
   "2026-11-07": {
@@ -3004,6 +3148,9 @@
    "bsky": 4
   },
   "2026-11-26": {
+   "bsky": 4
+  },
+  "2026-11-27": {
    "bsky": 4
   }
  },
@@ -3142,6 +3289,14 @@
    "discord": 2,
    "tumblr": 1,
    "pinterest": 1
+  },
+  "2026-11-27": {
+   "bsky": 1,
+   "nostrnote": 2,
+   "mastodon": 1,
+   "pinterest": 2,
+   "discord": 2,
+   "tumblr": 1
   }
  },
  "runs_today": {
@@ -3160,7 +3315,8 @@
   "2026-11-20": 1,
   "2026-11-21": 1,
   "2026-11-25": 2,
-  "2026-11-26": 1
+  "2026-11-26": 1,
+  "2026-11-27": 1
  },
  "used_ts": {
   "store-abuse-map": "2026-11-07T19:23:36+00:00",
@@ -3171,7 +3327,7 @@
   "api-key-farming": "2026-11-21T10:53:21+00:00",
   "promo-store-scan": "2026-11-17T11:08:32+00:00",
   "http-402-crawling": "2026-11-21T10:53:13+00:00",
-  "training-vs-search": "2026-11-07T20:22:52+00:00",
+  "training-vs-search": "2026-11-27T19:27:09+00:00",
   "promo-store-free-plan": "2026-11-18T11:09:44+00:00",
   "robots-mistakes": "2026-11-07T20:24:43+00:00",
   "card-testing-pattern": "2026-11-20T11:07:24+00:00",
@@ -3186,18 +3342,18 @@
   "risk-score-use": "2026-11-25T18:24:55+00:00",
   "promo-saas-integrity": "2026-11-21T10:53:45+00:00",
   "passkeys-for-saas": "2026-11-26T11:03:36+00:00",
-  "token-single-use": "2026-11-16T11:28:22+00:00",
+  "token-single-use": "2026-11-27T19:27:19+00:00",
   "promo-saas-docs": "2026-11-25T16:25:07+00:00",
   "private-access-tokens": "2026-11-09T11:01:05+00:00",
   "fake-account-signals": "2026-11-17T11:07:54+00:00",
-  "adaptive-difficulty": "2026-11-17T11:07:58+00:00",
+  "adaptive-difficulty": "2026-11-27T19:27:23+00:00",
   "promo-plans-saas": "2026-11-25T18:25:04+00:00",
   "contact-form-spam": "2026-11-26T11:03:13+00:00",
   "headless-browsers": "2026-11-18T11:08:37+00:00",
   "siteverify-errors": "2026-11-18T11:09:05+00:00",
   "promo-robots-check": "2026-11-26T11:04:14+00:00",
   "gift-card-abuse": "2026-11-19T11:06:29+00:00",
-  "promo-agentpass": "2026-11-11T11:04:53+00:00",
+  "promo-agentpass": "2026-11-27T19:27:57+00:00",
   "honeypot-limits": "2026-11-12T11:08:26+00:00",
   "promo-plans-publisher": "2026-11-12T11:08:55+00:00",
   "client-handover-keys": "2026-11-14T02:07:22+00:00",
@@ -3221,11 +3377,11 @@
   "whop_prices": "2026-11-07",
   "pinterest": "2026-11-07",
   "images": "2026-11-07",
-  "tumblr": "2026-11-26"
+  "tumblr": "2026-11-27"
  },
  "buffer_channels": {
   "b62fa971978dd910": {
-   "at": 1795623781,
+   "at": 1795807608,
    "map": {
     "mastodon": "6aef6eaae29c69a171977373",
     "pinterest": "6aef6e78e29c69a171976f1b"
